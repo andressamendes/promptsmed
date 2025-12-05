@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptLab MED | Plataforma de Prompts para Estudantes de Medicina</title>
+    <meta name="description" content="Plataforma profissional de prompts com estratégias de aprendizado baseadas em evidência para estudantes de medicina.">
+    <meta name="author" content="Andressa Mendes - Afya Guanambi">
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════
+           DESIGN SYSTEM - Plataforma de Prompts para Estudantes de Medicina
+           Desenvolvido por: Andressa Mendes (Afya Guanambi)
+           ═══════════════════════════════════════════════════════════════════════ */
+        
+        :root {
+            /* CORES PRIMÁRIAS - PALETA MÉDICA */
+            --bg-primary: #0a0e14;
+            --bg-secondary: #0f1419;
+            --bg-tertiary: #151b23;
+            --bg-card: #1a222d;
+            --bg-elevated: #1f2937;
+            
+            /* ACENTOS MÉDICOS */
+            --medical-blue: #0ea5e9;
+            --medical-cyan: #06b6d4;
+            --medical-green: #10b981;
+            --medical-emerald: #34d399;
+            --medical-purple: #8b5cf6;
+            --medical-amber: #f59e0b;
+            --medical-red: #ef4444;
+            
+            /* GRADIENTES */
+            --gradient-primary: linear-gradient(135deg, #0ea5e9, #06b6d4);
+            --gradient-success: linear-gradient(135deg, #10b981, #34d399);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            --gradient-warm: linear-gradient(135deg, #f59e0b, #fbbf24);
+            
+            /* TEXTO */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: #0ea5e9;
+            
+            /* BORDAS */
+            --border-subtle: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.2);
+            --border-accent: rgba(14, 165, 233, 0.3);
+            
+            /* SOMBRAS */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(14, 165, 233, 0.15);
+            
+            /* TIPOGRAFIA */
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            
+            /* ESPAÇAMENTO */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            
+            /* RAIOS */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            /* TRANSIÇÕES */
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+            --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* RESET & BASE */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* BACKGROUND PATTERN */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14, 165, 233, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(16, 185, 129, 0.1), transparent);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           NAVBAR
+           ═══════════════════════════════════════════════════════════════════════ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-md) 0;
+            background: rgba(10, 14, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: var(--transition-base);
+        }
+
+        .navbar.scrolled {
+            padding: var(--space-sm) 0;
+            background: rgba(10, 14, 20, 0.95);
+        }
+
+        .navbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .navbar-brand svg {
+            width: 28px;
+            height: 28px;
+            color: var(--medical-cyan);
+        }
+
+        .navbar-brand span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--medical-cyan);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px var(--space-lg) var(--space-3xl);
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--medical-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-xl);
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title .gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--space-2xl);
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: var(--space-3xl);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-xl);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-base);
+            border: none;
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md), 0 0 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-accent);
+        }
+
+        /* HERO STATS */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3xl);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--medical-cyan);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: var(--space-xs);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           SECTIONS
+           ═══════════════════════════════════════════════════════════════════════ */
+        .section {
+            padding: var(--space-3xl) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-md);
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--medical-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-md);
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           GENERATOR
+           ═══════════════════════════════════════════════════════════════════════ */
+        .generator-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .toggle-group {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            gap: 4px;
+            margin-bottom: var(--space-xl);
+        }
+
+        .toggle-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .toggle-btn.active {
+            color: var(--medical-cyan);
+            background: var(--bg-tertiary);
+        }
+
+        .toggle-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .input-mode {
+            display: none;
+        }
+
+        .input-mode.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-md);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--medical-cyan);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: var(--space-xs);
+        }
+
+        /* UPLOAD ZONE */
+        .upload-zone {
+            position: relative;
+            padding: var(--space-2xl);
+            border: 2px dashed var(--border-medium);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-base);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--medical-cyan);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .upload-zone.has-file {
+            border-color: var(--medical-green);
+            border-style: solid;
+        }
+
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--space-md);
+            color: var(--text-muted);
+        }
+
+        .upload-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .upload-formats {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .file-preview {
+            display: none;
+            margin-top: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+        }
+
+        .file-preview.visible {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius-sm);
+            color: var(--medical-green);
+        }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .file-remove {
+            padding: var(--space-sm);
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .file-remove:hover {
+            color: var(--medical-red);
+        }
+
+        /* FORMAT GRID */
+        .format-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .format-option {
+            position: relative;
+        }
+
+        .format-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .format-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-lg);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-base);
+            text-align: center;
+        }
+
+        .format-card:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-medium);
+        }
+
+        .format-option input:checked + .format-card {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: var(--medical-cyan);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .format-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--medical-cyan);
+        }
+
+        .format-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .format-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .format-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            padding: 2px 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+            background: var(--gradient-warm);
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        /* RESULT SECTION */
+        .result-section {
+            display: none;
+            margin-top: var(--space-xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-subtle);
+            animation: slideUp 0.4s ease;
+        }
+
+        .result-section.visible {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .result-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--medical-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-title svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .result-output {
+            padding: var(--space-lg);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .result-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .tip-card {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+        }
+
+        .tip-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: var(--radius-sm);
+            color: var(--medical-cyan);
+            flex-shrink: 0;
+        }
+
+        .tip-content h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tip-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           ARSENAL
+           ═══════════════════════════════════════════════════════════════════════ */
+        .filter-group {
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: var(--space-xl);
+        }
+
+        .filter-btn {
+            padding: var(--space-sm) var(--space-lg);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-medium);
+        }
+
+        .filter-btn.active {
+            color: var(--medical-cyan);
+            background: rgba(14, 165, 233, 0.1);
+            border-color: var(--medical-cyan);
+        }
+
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        /* PROMPT CARD */
+        .prompt-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-medium);
+        }
+
+        .prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .prompt-header.chatgpt { border-left: 3px solid #10a37f; }
+        .prompt-header.claude { border-left: 3px solid #cc785c; }
+        .prompt-header.notebooklm { border-left: 3px solid #ea4335; }
+        .prompt-header.perplexity { border-left: 3px solid #20808d; }
+
+        .prompt-tool {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .prompt-tool-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .prompt-tool-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prompt-tool-name.chatgpt { color: #10a37f; }
+        .prompt-tool-name.claude { color: #cc785c; }
+        .prompt-tool-name.notebooklm { color: #ea4335; }
+        .prompt-tool-name.perplexity { color: #20808d; }
+
+        .prompt-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            background: var(--bg-primary);
+            border-radius: 100px;
+        }
+
+        .prompt-body {
+            flex: 1;
+            padding: var(--space-lg);
+        }
+
+        .prompt-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .prompt-strategy {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--medical-purple);
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 100px;
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prompt-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .prompt-code {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: var(--space-md);
+            border-radius: var(--radius-sm);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .prompt-code .role { color: #f59e0b; }
+        .prompt-code .task { color: #10b981; }
+        .prompt-code .format { color: #0ea5e9; }
+        .prompt-code .rule { color: #ef4444; }
+        .prompt-code .var { color: #8b5cf6; }
+
+        .prompt-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .prompt-meta {
+            display: flex;
+            gap: var(--space-md);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--medical-cyan);
+            background: rgba(14, 165, 233, 0.1);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .copy-btn:hover {
+            background: rgba(14, 165, 233, 0.2);
+        }
+
+        .copy-btn.copied {
+            color: var(--medical-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           MENTOR / WIZARD
+           ═══════════════════════════════════════════════════════════════════════ */
+        .wizard-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .wizard-avatar {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-lg);
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wizard-avatar svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .wizard-progress {
+            margin-bottom: var(--space-xl);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--bg-primary);
+            border-radius: 100px;
+            overflow: hidden;
+            margin-bottom: var(--space-sm);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.4s ease;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .wizard-question {
+            display: none;
+            text-align: center;
+        }
+
+        .wizard-question.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .question-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xl);
+        }
+
+        .question-text svg {
+            width: 24px;
+            height: 24px;
+            color: var(--medical-cyan);
+        }
+
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            border: none;
+        }
+
+        .option-btn {
+            padding: var(--space-md) var(--space-lg);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+
+        .option-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+            border-color: var(--border-medium);
+        }
+
+        .option-btn.selected {
+            color: var(--medical-cyan);
+            background: rgba(14, 165, 233, 0.1);
+            border-color: var(--medical-cyan);
+        }
+
+        .wizard-result {
+            display: none;
+            text-align: center;
+        }
+
+        .wizard-result.visible {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-loading {
+            padding: var(--space-2xl);
+        }
+
+        .processing-spinner {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--space-md);
+            border: 3px solid var(--border-medium);
+            border-top-color: var(--medical-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .result-content {
+            display: none;
+        }
+
+        .result-content.visible {
+            display: block;
+        }
+
+        .summary-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            text-align: left;
+            margin-bottom: var(--space-xl);
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+        }
+
+        .summary-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: var(--radius-sm);
+            color: var(--medical-cyan);
+            flex-shrink: 0;
+        }
+
+        .summary-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .summary-content h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .summary-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .wizard-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            align-items: center;
+        }
+
+        .reset-btn {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .reset-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════════════ */
+        .footer {
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-credit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-xs);
+        }
+
+        .footer-credit strong {
+            color: var(--medical-cyan);
+        }
+
+        .footer-version {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero-stats {
+                gap: var(--space-xl);
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .format-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .generator-card,
+            .wizard-card {
+                padding: var(--space-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .format-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .result-actions {
+                width: 100%;
+            }
+
+            .result-actions .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NAVBAR
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-content">
+            <a href="#" class="navbar-brand">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                <span>PromptLab Medical</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="#gerador" class="nav-link">GERADOR</a></li>
+                <li><a href="#arsenal" class="nav-link">ARSENAL</a></li>
+                <li><a href="#mentor" class="nav-link">MENTOR</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         HERO
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                PLATAFORMA PARA ESTUDANTES DE MEDICINA
+            </div>
+            <h1 class="hero-title">
+                Prompts com <span class="gradient">Estratégias Baseadas em Evidência</span>
+            </h1>
+            <p class="hero-subtitle">
+                Transforme seu estudo com prompts otimizados que aplicam Active Recall, Spaced Repetition, Elaborative Interrogation e outras técnicas comprovadas cientificamente para maximizar sua retenção e desempenho.
+            </p>
+            <div class="hero-actions">
+                <a href="#gerador" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    GERAR PROMPT AGORA
+                </a>
+                <a href="#arsenal" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    VER ARSENAL COMPLETO
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">12+</div>
+                    <div class="stat-label">PROMPTS OTIMIZADOS</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">FORMATOS DE SAÍDA</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">IAS ESPECIALIZADAS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         GERADOR DE PROMPTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section" id="gerador">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">MÓDULO 01</span>
+                <h2 class="section-title">Gerador de Prompts Avançado</h2>
+                <p class="section-subtitle">Digite um tema ou faça upload do seu material. Nossa engenharia de prompts aplica estratégias de aprendizado baseadas em evidência.</p>
+            </div>
+
+            <div class="generator-card">
+                <form id="generatorForm" onsubmit="return generatePrompt(event)">
+                    
+                    <!-- TOGGLE -->
+                    <div class="toggle-group">
+                        <button type="button" class="toggle-btn active" data-mode="topic" onclick="toggleInputMode('topic')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                            DIGITAR TEMA
+                        </button>
+                        <button type="button" class="toggle-btn" data-mode="file" onclick="toggleInputMode('file')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="12" y1="18" x2="12" y2="12"/>
+                                <line x1="9" y1="15" x2="15" y2="15"/>
+                            </svg>
+                            ENVIAR ARQUIVO
+                        </button>
+                    </div>
+
+                    <!-- MODO: TEMA -->
+                    <div id="topicMode" class="input-mode active">
+                        <div class="form-group">
+                            <label for="topicInput" class="form-label">QUAL TEMA VOCÊ QUER ESTUDAR? *</label>
+                            <input 
+                                type="text" 
+                                id="topicInput" 
+                                class="form-input"
+                                placeholder="Ex.: Insuficiência cardíaca, Farmacologia cardiovascular, Semiologia abdominal..."
+                            />
+                            <span class="form-hint">Seja específico para obter um prompt mais direcionado.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="contextInput" class="form-label">CONTEXTO ADICIONAL (OPCIONAL)</label>
+                            <textarea 
+                                id="contextInput" 
+                                class="form-input"
+                                rows="3"
+                                placeholder="Ex.: Foco em fisiopatologia, nível avançado, para prova de residência, integração com casos clínicos..."
+                            ></textarea>
+                            <span class="form-hint">Adicione informações sobre seu objetivo, nível ou foco específico.</span>
+                        </div>
+                    </div>
+
+                    <!-- MODO: ARQUIVO -->
+                    <div id="fileMode" class="input-mode">
+                        <div class="form-group">
+                            <label class="form-label">FAÇA UPLOAD DO SEU MATERIAL *</label>
+                            <div class="upload-zone" id="uploadZone">
+                                <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt,.md" onchange="handleFileSelect(event)"/>
+                                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <p class="upload-title">ARRASTE SEU ARQUIVO OU CLIQUE PARA SELECIONAR</p>
+                                <p class="upload-formats">PDF, DOC, DOCX, TXT, MD (máx. 10MB)</p>
+                            </div>
+                            <div class="file-preview" id="filePreview">
+                                <div class="file-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                </div>
+                                <div class="file-info">
+                                    <p class="file-name" id="fileName">documento.pdf</p>
+                                    <p class="file-size" id="fileSize">2.4 MB</p>
+                                </div>
+                                <button type="button" class="file-remove" onclick="removeFile()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileContextInput" class="form-label">O QUE VOCÊ QUER FAZER COM ESTE MATERIAL?</label>
+                            <textarea 
+                                id="fileContextInput" 
+                                class="form-input"
+                                rows="3"
+                                placeholder="Ex.: Criar flashcards para revisão, gerar questões de prova, fazer resumo com mapa mental..."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <!-- FORMATOS -->
+                    <div class="format-section">
+                        <label class="form-label">SELECIONE O FORMATO DE SAÍDA *</label>
+                        <div class="format-grid">
+                            <label class="format-option">
+                                <input type="radio" name="format" value="podcast"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                                    </svg>
+                                    <span class="format-name">PODCAST</span>
+                                    <span class="format-desc">Áudio educativo.</span>
+                                </div>
+                                <span class="format-badge">POPULAR</span>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="flashcards"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                        <line x1="8" y1="10" x2="16" y2="10"/>
+                                        <line x1="8" y1="14" x2="13" y2="14"/>
+                                    </svg>
+                                    <span class="format-name">FLASHCARDS</span>
+                                    <span class="format-desc">Cards para Anki.</span>
+                                </div>
+                                <span class="format-badge">POPULAR</span>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="quiz"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"/>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                                    </svg>
+                                    <span class="format-name">QUESTÕES</span>
+                                    <span class="format-desc">Simulado com gabarito.</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="mapa"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M12 3v6M12 15v6M3 12h6M15 12h6"/>
+                                    </svg>
+                                    <span class="format-name">MAPA MENTAL</span>
+                                    <span class="format-desc">Estrutura visual.</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="caso"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                        <rect x="8" y="2" width="8" height="4" rx="1"/>
+                                        <path d="M9 14l2 2 4-4"/>
+                                    </svg>
+                                    <span class="format-name">CASO CLÍNICO</span>
+                                    <span class="format-desc">Simulação interativa.</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="resumo"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                        <line x1="16" y1="13" x2="8" y2="13"/>
+                                        <line x1="16" y1="17" x2="8" y2="17"/>
+                                    </svg>
+                                    <span class="format-name">RESUMO</span>
+                                    <span class="format-desc">Síntese estruturada.</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="tcc"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                        <line x1="8" y1="6" x2="16" y2="6"/>
+                                        <line x1="8" y1="10" x2="16" y2="10"/>
+                                        <line x1="8" y1="14" x2="12" y2="14"/>
+                                    </svg>
+                                    <span class="format-name">TCC / ARTIGO</span>
+                                    <span class="format-desc">Estrutura acadêmica.</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="format" value="tutor"/>
+                                <div class="format-card">
+                                    <svg class="format-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    <span class="format-name">TUTOR SOCRÁTICO</span>
+                                    <span class="format-desc">Aprendizado guiado.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        GERAR PROMPT OTIMIZADO
+                    </button>
+
+                    <!-- RESULTADO -->
+                    <div class="result-section" id="resultSection">
+                        <div class="result-header">
+                            <div class="result-title">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                PROMPT GERADO COM SUCESSO
+                            </div>
+                            <div class="result-actions">
+                                <button type="button" class="btn btn-primary" onclick="copyResult()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                    COPIAR
+                                </button>
+                            </div>
+                        </div>
+                        <pre class="result-output" id="resultOutput"></pre>
+                        <div class="result-tips">
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="16" x2="12" y2="12"/>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                    </svg>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>DICA DE USO</h4>
+                                    <p>Copie o prompt e cole na IA indicada para obter os melhores resultados.</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5"/>
+                                        <path d="M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>PERSONALIZAÇÃO</h4>
+                                    <p>Substitua os campos entre [colchetes] com suas informações específicas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ARSENAL DE PROMPTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section" id="arsenal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">MÓDULO 02</span>
+                <h2 class="section-title">Arsenal de Prompts Médicos</h2>
+                <p class="section-subtitle">Prompts otimizados com estratégias de aprendizado baseadas em evidência científica.</p>
+            </div>
+
+            <!-- FILTROS -->
+            <div class="filter-group">
+                <button type="button" class="filter-btn active" data-filter="all" onclick="filterPrompts('all')">TODOS</button>
+                <button type="button" class="filter-btn" data-filter="recall" onclick="filterPrompts('recall')">ACTIVE RECALL</button>
+                <button type="button" class="filter-btn" data-filter="spaced" onclick="filterPrompts('spaced')">REPETIÇÃO ESPAÇADA</button>
+                <button type="button" class="filter-btn" data-filter="clinical" onclick="filterPrompts('clinical')">RACIOCÍNIO CLÍNICO</button>
+                <button type="button" class="filter-btn" data-filter="academic" onclick="filterPrompts('academic')">TCC / ARTIGOS</button>
+            </div>
+
+            <!-- GRID DE PROMPTS -->
+            <div class="prompts-grid" id="promptsGrid">
+                
+                <!-- PROMPT 1: FLASHCARDS COM SPACED REPETITION -->
+                <article class="prompt-card" data-category="spaced" data-tool="chatgpt">
+                    <div class="prompt-header chatgpt">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span class="prompt-tool-name chatgpt">CHATGPT</span>
+                        </div>
+                        <span class="prompt-category">REVISÃO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ SPACED REPETITION + ACTIVE RECALL</span>
+                        <h3 class="prompt-title">Flashcards Otimizados para Anki</h3>
+                        <p class="prompt-description">Cria 30 flashcards seguindo os princípios da ciência cognitiva para máxima retenção de longo prazo.</p>
+                        <div class="prompt-code" id="prompt-flashcards"><span class="role"># PAPEL</span>
+Você é especialista em ciência cognitiva e técnicas de memorização.
+
+<span class="task"># TAREFA</span>
+Crie 30 flashcards sobre <span class="var">[TEMA]</span> para Anki.
+
+<span class="format"># FORMATO</span>
+Frente;Verso (separado por ponto e vírgula).
+
+<span class="rule"># REGRAS DE OURO</span>
+1. UMA informação por card.
+2. Perguntas ESPECÍFICAS, nunca genéricas.
+3. Respostas CURTAS (máximo 2 linhas).
+4. Inclua mnemônicos quando útil.
+
+<span class="format"># TIPOS DE PERGUNTA (VARIE!)</span>
+- 30% Definição: "O que é X?"
+- 25% Comparação: "Qual a diferença entre X e Y?"
+- 20% Aplicação: "Quando usar X?"
+- 15% Causa/Efeito: "Por que X causa Y?"
+- 10% Identificação: "Qual condição apresenta X, Y e Z?"</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~5 MIN</span>
+                            <span>INICIANTE</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-flashcards', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 2: QUESTÕES COM RETRIEVAL PRACTICE -->
+                <article class="prompt-card" data-category="recall" data-tool="claude">
+                    <div class="prompt-header claude">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="prompt-tool-name claude">CLAUDE</span>
+                        </div>
+                        <span class="prompt-category">PRÁTICA</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ RETRIEVAL PRACTICE + ELABORATION</span>
+                        <h3 class="prompt-title">Banco de Questões com Análise Profunda</h3>
+                        <p class="prompt-description">Gera questões no estilo USMLE/ENARE com justificativas detalhadas que explicam o raciocínio clínico.</p>
+                        <div class="prompt-code" id="prompt-questoes"><span class="role"># PAPEL</span>
+Você é um elaborador de provas médicas com 15 anos de experiência.
+
+<span class="task"># TAREFA</span>
+Crie 10 questões sobre <span class="var">[TEMA]</span> estilo residência médica.
+
+<span class="format"># DISTRIBUIÇÃO</span>
+- 3 FÁCEIS (conceitos diretos).
+- 4 MÉDIAS (aplicação clínica).
+- 3 DIFÍCEIS (análise e síntese).
+
+<span class="format"># FORMATO POR QUESTÃO</span>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTÃO [X] | Nível: [Fácil/Médio/Difícil]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Enunciado com cenário clínico - 3 a 5 linhas.]
+
+a) [Alternativa]
+b) [Alternativa]
+c) [Alternativa]
+d) [Alternativa]
+e) [Alternativa]
+
+✓ GABARITO: [LETRA]
+📝 JUSTIFICATIVA: [Por que está correta + análise das incorretas.]
+⚠️ PEGADINHA: [Erro comum nesta questão.]
+💡 DICA: [Como não errar questões similares.]</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~10 MIN</span>
+                            <span>INTERMEDIÁRIO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-questoes', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 3: CASO CLÍNICO INTERATIVO -->
+                <article class="prompt-card" data-category="clinical" data-tool="claude">
+                    <div class="prompt-header claude">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="prompt-tool-name claude">CLAUDE</span>
+                        </div>
+                        <span class="prompt-category">RACIOCÍNIO CLÍNICO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ PROBLEM-BASED LEARNING</span>
+                        <h3 class="prompt-title">Simulação de Caso Clínico Interativo</h3>
+                        <p class="prompt-description">Treina raciocínio clínico com feedback progressivo a cada etapa da investigação diagnóstica.</p>
+                        <div class="prompt-code" id="prompt-caso"><span class="role"># PAPEL</span>
+Você é um preceptor experiente em ensino médico baseado em casos.
+
+<span class="task"># TAREFA</span>
+Simule um caso clínico interativo sobre <span class="var">[ESPECIALIDADE/CONDIÇÃO]</span>.
+
+<span class="format"># ESTRUTURA PROGRESSIVA</span>
+1. APRESENTAÇÃO: Queixa principal + dados demográficos.
+   → Aguarde minha anamnese.
+
+2. ANAMNESE: Revele história conforme minhas perguntas.
+   → Após 5 perguntas, pergunte minhas hipóteses.
+
+3. EXAME FÍSICO: Descreva achados relevantes.
+   → Pergunte quais exames solicitaria.
+
+4. EXAMES: Mostre resultados.
+   → Peça diagnóstico e conduta.
+
+5. DISCUSSÃO: Analise meu raciocínio e corrija erros.
+
+<span class="rule"># REGRAS</span>
+- NUNCA revele o diagnóstico antes da hora.
+- Dê feedback construtivo a cada resposta.
+- Use perguntas guia se eu travar.
+- Ao final, resuma os pontos de aprendizado.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~15 MIN</span>
+                            <span>AVANÇADO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-caso', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 4: PODCAST EDUCATIVO -->
+                <article class="prompt-card" data-category="recall" data-tool="notebooklm">
+                    <div class="prompt-header notebooklm">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                            </svg>
+                            <span class="prompt-tool-name notebooklm">NOTEBOOKLM</span>
+                        </div>
+                        <span class="prompt-category">PRÁTICA</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ DUAL CODING + ELABORATION</span>
+                        <h3 class="prompt-title">Podcast Estilo Debate Acadêmico</h3>
+                        <p class="prompt-description">Gera áudio educativo com dois apresentadores que debatem o tema de forma didática e envolvente.</p>
+                        <div class="prompt-code" id="prompt-podcast"><span class="role"># INSTRUÇÕES PARA NOTEBOOKLM</span>
+Gere um podcast sobre <span class="var">[TEMA]</span> com as seguintes características:
+
+<span class="format"># ESTRUTURA</span>
+1. ABERTURA (1-2 min): Gancho + por que isso importa.
+2. FUNDAMENTOS (3-4 min): Conceitos com analogias.
+3. APROFUNDAMENTO (4-5 min): Casos práticos e exemplos.
+4. ARMADILHAS (2-3 min): Erros comuns e como evitá-los.
+5. FECHAMENTO (1-2 min): Resumo + próximos passos.
+
+<span class="format"># APRESENTADORES</span>
+- Ana: Abordagem teórica e conceitual.
+- Lucas: Visão prática e casos reais.
+
+<span class="rule"># DIRETRIZES</span>
+- Tom: Profissional mas acessível.
+- Duração: 12-15 minutos.
+- Inclua momentos de discordância construtiva.
+- Use analogias do cotidiano para explicar conceitos.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~3 MIN</span>
+                            <span>INICIANTE</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-podcast', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 5: CRONOGRAMA ESPAÇADO -->
+                <article class="prompt-card" data-category="spaced" data-tool="chatgpt">
+                    <div class="prompt-header chatgpt">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span class="prompt-tool-name chatgpt">CHATGPT</span>
+                        </div>
+                        <span class="prompt-category">PLANEJAMENTO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ SPACED REPETITION + INTERLEAVING</span>
+                        <h3 class="prompt-title">Cronograma com Repetição Espaçada</h3>
+                        <p class="prompt-description">Cria plano de estudo com intervalos otimizados (1, 3, 7, 14 dias) e intercalação de temas.</p>
+                        <div class="prompt-code" id="prompt-cronograma"><span class="role"># PAPEL</span>
+Você é especialista em ciência do aprendizado e planejamento de estudos.
+
+<span class="task"># TAREFA</span>
+Crie um cronograma de <span class="var">[X DIAS]</span> para estudar <span class="var">[TEMAS]</span>.
+
+<span class="format"># PARÂMETROS</span>
+- Tempo disponível: <span class="var">[X HORAS/DIA]</span>.
+- Objetivo: <span class="var">[PROVA/RESIDÊNCIA/APRENDIZADO]</span>.
+
+<span class="rule"># REGRAS CIENTÍFICAS</span>
+1. REPETIÇÃO ESPAÇADA: Revise cada tema nos dias 1, 3, 7 e 14.
+2. INTERLEAVING: Alterne entre temas diferentes no mesmo dia.
+3. PRÁTICA ATIVA: 60% do tempo em questões/casos, 40% em teoria.
+4. SESSÕES: Blocos de 25-50 minutos com pausas de 5-10 minutos.
+
+<span class="format"># FORMATO DE SAÍDA</span>
+Tabela com: Dia | Horário | Tema | Tipo (Novo/Revisão) | Atividade.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~5 MIN</span>
+                            <span>INICIANTE</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-cronograma', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 6: DIAGNÓSTICO DE ERROS -->
+                <article class="prompt-card" data-category="recall" data-tool="claude">
+                    <div class="prompt-header claude">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="prompt-tool-name claude">CLAUDE</span>
+                        </div>
+                        <span class="prompt-category">ANÁLISE</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ DELIBERATE PRACTICE + METACOGNITION</span>
+                        <h3 class="prompt-title">Diagnóstico de Erros em Provas</h3>
+                        <p class="prompt-description">Analisa padrões de erro e cria plano de estudo focado nas suas fraquezas específicas.</p>
+                        <div class="prompt-code" id="prompt-erros"><span class="role"># PAPEL</span>
+Você é especialista em diagnóstico de aprendizagem e prática deliberada.
+
+<span class="task"># TAREFA</span>
+Analise meus erros e crie um plano de melhoria.
+
+<span class="format"># MEUS ERROS</span>
+<span class="var">[Cole aqui as questões que você errou com o gabarito]</span>
+
+<span class="format"># ANÁLISE SOLICITADA</span>
+1. CATEGORIZAÇÃO: Classifique cada erro:
+   - Conceitual: Não sabia o conteúdo.
+   - Interpretação: Não entendeu o enunciado.
+   - Aplicação: Sabia, mas aplicou errado.
+   - Desatenção: Erro evitável.
+
+2. PADRÕES: Identifique temas/tipos recorrentes.
+
+3. PRIORIZAÇÃO: Ordene por impacto na nota.
+
+4. PLANO: Para cada fraqueza:
+   - O que estudar.
+   - Como estudar.
+   - Tempo estimado.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~10 MIN</span>
+                            <span>AVANÇADO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-erros', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 7: ESTRUTURA DE TCC -->
+                <article class="prompt-card" data-category="academic" data-tool="claude">
+                    <div class="prompt-header claude">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="prompt-tool-name claude">CLAUDE</span>
+                        </div>
+                        <span class="prompt-category">TCC / ARTIGO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ ESCRITA ACADÊMICA</span>
+                        <h3 class="prompt-title">Estruturação de TCC Médico</h3>
+                        <p class="prompt-description">Auxilia na construção completa do TCC: tema, objetivos, metodologia e estrutura.</p>
+                        <div class="prompt-code" id="prompt-tcc"><span class="role"># PAPEL</span>
+Você é orientador de TCC em medicina com experiência em metodologia científica.
+
+<span class="task"># TAREFA</span>
+Me ajude a estruturar meu TCC sobre <span class="var">[TEMA]</span>.
+
+<span class="format"># ETAPAS</span>
+1. DELIMITAÇÃO DO TEMA:
+   - Refine meu tema para algo específico e viável.
+   - Sugira 3 recortes possíveis.
+
+2. PROBLEMA DE PESQUISA:
+   - Formule a pergunta norteadora.
+   - Justifique a relevância.
+
+3. OBJETIVOS:
+   - Objetivo geral (1).
+   - Objetivos específicos (3-4).
+
+4. METODOLOGIA:
+   - Tipo de estudo mais adequado.
+   - População e amostra.
+   - Critérios de inclusão/exclusão.
+   - Instrumentos de coleta.
+
+5. ESTRUTURA:
+   - Sumário preliminar.
+   - Estimativa de páginas por seção.
+
+<span class="rule"># NORMAS</span>
+- Siga ABNT.
+- Linguagem acadêmica impessoal.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~15 MIN</span>
+                            <span>AVANÇADO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-tcc', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 8: REVISÃO SISTEMÁTICA -->
+                <article class="prompt-card" data-category="academic" data-tool="perplexity">
+                    <div class="prompt-header perplexity">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            <span class="prompt-tool-name perplexity">PERPLEXITY</span>
+                        </div>
+                        <span class="prompt-category">PESQUISA</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ EVIDENCE-BASED MEDICINE</span>
+                        <h3 class="prompt-title">Pesquisa de Evidências Atualizadas</h3>
+                        <p class="prompt-description">Busca guidelines atuais, revisões sistemáticas e evidências de alta qualidade.</p>
+                        <div class="prompt-code" id="prompt-pesquisa"><span class="task"># TAREFA</span>
+Pesquise evidências científicas atualizadas sobre <span class="var">[TEMA]</span>.
+
+<span class="format"># BUSCAR</span>
+1. Guidelines mais recentes (últimos 5 anos).
+2. Revisões sistemáticas e meta-análises.
+3. Mudanças recentes nas recomendações.
+4. Controvérsias atuais na literatura.
+5. Lacunas no conhecimento.
+
+<span class="rule"># REQUISITOS</span>
+- Priorize fontes: UpToDate, Cochrane, NICE, AHA, ESC.
+- Cite o nível de evidência quando disponível.
+- Indique o ano de publicação.
+- Destaque mudanças em relação a guidelines anteriores.
+
+<span class="format"># FORMATO</span>
+Organize por subtemas com bullets sucintos.
+Inclua links para as fontes originais.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~5 MIN</span>
+                            <span>INTERMEDIÁRIO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-pesquisa', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 9: TUTOR SOCRÁTICO -->
+                <article class="prompt-card" data-category="recall" data-tool="chatgpt">
+                    <div class="prompt-header chatgpt">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span class="prompt-tool-name chatgpt">CHATGPT</span>
+                        </div>
+                        <span class="prompt-category">PRÁTICA</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ ELABORATIVE INTERROGATION</span>
+                        <h3 class="prompt-title">Tutor Socrático Personalizado</h3>
+                        <p class="prompt-description">Usa o método maiêutico para guiar você à resposta através de perguntas progressivas.</p>
+                        <div class="prompt-code" id="prompt-tutor"><span class="role"># PAPEL</span>
+Você é um tutor socrático especialista em medicina.
+
+<span class="task"># TAREFA</span>
+Me ensine sobre <span class="var">[TEMA]</span> usando o método maiêutico.
+
+<span class="rule"># REGRAS ABSOLUTAS</span>
+1. NUNCA dê respostas diretas.
+2. SEMPRE faça perguntas que guiem meu raciocínio.
+3. Decomponha conceitos complexos em partes menores.
+4. Valide meus acertos antes de avançar.
+5. Use analogias quando eu travar.
+
+<span class="format"># ESTRUTURA DA SESSÃO</span>
+ABERTURA: "Vamos explorar [TEMA]. Me conta: o que você já sabe sobre isso?"
+
+DESENVOLVIMENTO: Perguntas progressivas baseadas nas minhas respostas.
+- "Interessante. E por que você acha que [X]?"
+- "O que aconteceria se [Y]?"
+- "Como isso se conecta com [Z]?"
+
+SE EU ERRAR: Não corrija diretamente. Pergunte: "O que te levou a essa conclusão?"
+
+SE EU ACERTAR: Celebre e aprofunde: "Exatamente! Agora, como você aplicaria isso em [situação]?"
+
+FECHAMENTO: Peça que eu resuma o que aprendi.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~10 MIN</span>
+                            <span>INTERMEDIÁRIO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-tutor', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 10: MAPA MENTAL -->
+                <article class="prompt-card" data-category="spaced" data-tool="notebooklm">
+                    <div class="prompt-header notebooklm">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                            </svg>
+                            <span class="prompt-tool-name notebooklm">NOTEBOOKLM</span>
+                        </div>
+                        <span class="prompt-category">REVISÃO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ DUAL CODING + CHUNKING</span>
+                        <h3 class="prompt-title">Mapa Mental Hierárquico</h3>
+                        <p class="prompt-description">Organiza conceitos visualmente com conexões lógicas e palavras-chave para revisão rápida.</p>
+                        <div class="prompt-code" id="prompt-mapa"><span class="task"># TAREFA</span>
+Crie um mapa mental estruturado sobre <span class="var">[TEMA]</span>.
+
+<span class="format"># ESTRUTURA</span>
+```
+🎯 CONCEITO CENTRAL: [TEMA]
+│
+├── 📌 RAMO 1: [Categoria]
+│   ├── Subtópico 1.1
+│   │   └── Detalhe importante.
+│   └── Subtópico 1.2
+│
+├── 📌 RAMO 2: [Categoria]
+│   ├── Subtópico 2.1
+│   └── Subtópico 2.2
+│
+└── 🔗 CONEXÕES
+    └── Ramo 1 → Ramo 2 (tipo de relação).
+```
+
+<span class="rule"># REGRAS</span>
+- Máximo 5 ramos principais.
+- Use palavras-chave, não frases longas.
+- Indique relações com setas e verbos.
+- Destaque os 3 conceitos mais importantes.
+
+<span class="format"># SEÇÃO FINAL</span>
+Liste os 5 conceitos-chave para memorizar.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~3 MIN</span>
+                            <span>INICIANTE</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-mapa', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 11: REVISÃO DE ARTIGO -->
+                <article class="prompt-card" data-category="academic" data-tool="claude">
+                    <div class="prompt-header claude">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="prompt-tool-name claude">CLAUDE</span>
+                        </div>
+                        <span class="prompt-category">TCC / ARTIGO</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ REVISÃO ACADÊMICA</span>
+                        <h3 class="prompt-title">Revisão e Melhoria de Texto Científico</h3>
+                        <p class="prompt-description">Revisa artigos e TCCs com foco em clareza, coesão, normas ABNT e rigor científico.</p>
+                        <div class="prompt-code" id="prompt-revisao"><span class="role"># PAPEL</span>
+Você é revisor de artigos científicos em periódicos médicos.
+
+<span class="task"># TAREFA</span>
+Revise o texto abaixo com foco em qualidade acadêmica.
+
+<span class="var">[COLE SEU TEXTO AQUI]</span>
+
+<span class="format"># ANÁLISE SOLICITADA</span>
+1. CLAREZA: Frases confusas ou ambíguas.
+2. COESÃO: Conexões entre parágrafos e seções.
+3. LINGUAGEM: Tom acadêmico e impessoal.
+4. NORMAS: Conformidade com ABNT.
+5. ARGUMENTAÇÃO: Lógica e fundamentação.
+
+<span class="format"># FORMATO DE SAÍDA</span>
+Para cada problema encontrado:
+- ORIGINAL: [Trecho problemático.]
+- PROBLEMA: [Tipo de erro.]
+- SUGESTÃO: [Versão corrigida.]
+
+Ao final, dê uma nota de 1-10 e priorize as 3 melhorias mais urgentes.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~10 MIN</span>
+                            <span>AVANÇADO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-revisao', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PROMPT 12: FEYNMAN TECHNIQUE -->
+                <article class="prompt-card" data-category="recall" data-tool="chatgpt">
+                    <div class="prompt-header chatgpt">
+                        <div class="prompt-tool">
+                            <svg class="prompt-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span class="prompt-tool-name chatgpt">CHATGPT</span>
+                        </div>
+                        <span class="prompt-category">PRÁTICA</span>
+                    </div>
+                    <div class="prompt-body">
+                        <span class="prompt-strategy">⚡ FEYNMAN TECHNIQUE</span>
+                        <h3 class="prompt-title">Explicação para Leigo (Técnica Feynman)</h3>
+                        <p class="prompt-description">Testa sua compreensão real explicando o tema de forma simples e identificando lacunas.</p>
+                        <div class="prompt-code" id="prompt-feynman"><span class="role"># PAPEL</span>
+Você é um avaliador de compreensão usando a Técnica Feynman.
+
+<span class="task"># TAREFA</span>
+Vou explicar <span class="var">[TEMA]</span> como se fosse para uma criança de 12 anos.
+
+<span class="format"># SUA FUNÇÃO</span>
+1. AVALIE minha explicação:
+   - Clareza (1-10).
+   - Precisão científica (1-10).
+   - Uso de analogias (1-10).
+
+2. IDENTIFIQUE lacunas:
+   - O que faltou?
+   - O que estava incorreto?
+   - O que poderia ser mais simples?
+
+3. FAÇA PERGUNTAS de acompanhamento:
+   - "E se alguém perguntasse...?"
+   - "Como você explicaria...?"
+
+4. SUGIRA uma explicação modelo.
+
+<span class="rule"># REGRA</span>
+Se eu usar jargão técnico, me interrompa e peça para simplificar.</div>
+                    </div>
+                    <div class="prompt-footer">
+                        <div class="prompt-meta">
+                            <span>~8 MIN</span>
+                            <span>INTERMEDIÁRIO</span>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPrompt('prompt-feynman', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            COPIAR
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         MENTOR IA
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section" id="mentor">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">MÓDULO 03</span>
+                <h2 class="section-title">Mentor de Aprendizado</h2>
+                <p class="section-subtitle">Responda 5 perguntas e receba recomendações personalizadas baseadas no seu perfil.</p>
+            </div>
+
+            <div class="wizard-card">
+                <div class="wizard-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+
+                <div class="wizard-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 20%;"></div>
+                    </div>
+                    <p class="progress-label" id="progressLabel">PERGUNTA 1 DE 5</p>
+                </div>
+
+                <div id="wizardBody">
+                    <!-- PERGUNTA 1 -->
+                    <div class="wizard-question active" data-question="1">
+                        <p class="question-text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            QUANTOS DIAS POR SEMANA VOCÊ ESTUDA?
+                        </p>
+                        <fieldset class="question-options">
+                            <legend class="sr-only">DIAS DE ESTUDO</legend>
+                            <button type="button" class="option-btn" data-value="pouco" onclick="selectOption(this)">3-4 DIAS</button>
+                            <button type="button" class="option-btn" data-value="medio" onclick="selectOption(this)">5-6 DIAS</button>
+                            <button type="button" class="option-btn" data-value="muito" onclick="selectOption(this)">TODOS OS DIAS</button>
+                        </fieldset>
+                    </div>
+
+                    <!-- PERGUNTA 2 -->
+                    <div class="wizard-question" data-question="2">
+                        <p class="question-text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            QUANTO TEMPO POR SESSÃO DE ESTUDO?
+                        </p>
+                        <fieldset class="question-options">
+                            <legend class="sr-only">TEMPO DE ESTUDO</legend>
+                            <button type="button" class="option-btn" data-value="curto" onclick="selectOption(this)">MENOS DE 2 HORAS</button>
+                            <button type="button" class="option-btn" data-value="medio" onclick="selectOption(this)">2 A 4 HORAS</button>
+                            <button type="button" class="option-btn" data-value="longo" onclick="selectOption(this)">MAIS DE 4 HORAS</button>
+                        </fieldset>
+                    </div>
+
+                    <!-- PERGUNTA 3 -->
+                    <div class="wizard-question" data-question="3">
+                        <p class="question-text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="7"/>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                            </svg>
+                            QUAL SEU OBJETIVO PRINCIPAL?
+                        </p>
+                        <fieldset class="question-options">
+                            <legend class="sr-only">OBJETIVO</legend>
+                            <button type="button" class="option-btn" data-value="prova" onclick="selectOption(this)">PROVAS DA FACULDADE</button>
+                            <button type="button" class="option-btn" data-value="residencia" onclick="selectOption(this)">RESIDÊNCIA MÉDICA</button>
+                            <button type="button" class="option-btn" data-value="continuo" onclick="selectOption(this)">APRENDIZADO CONTÍNUO</button>
+                        </fieldset>
+                    </div>
+
+                    <!-- PERGUNTA 4 -->
+                    <div class="wizard-question" data-question="4">
+                        <p class="question-text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            QUAL SEU MAIOR DESAFIO NOS ESTUDOS?
+                        </p>
+                        <fieldset class="question-options">
+                            <legend class="sr-only">DESAFIO</legend>
+                            <button type="button" class="option-btn" data-value="foco" onclick="selectOption(this)">MANTER O FOCO</button>
+                            <button type="button" class="option-btn" data-value="retencao" onclick="selectOption(this)">RETER O CONTEÚDO</button>
+                            <button type="button" class="option-btn" data-value="organizacao" onclick="selectOption(this)">ORGANIZAR OS ESTUDOS</button>
+                        </fieldset>
+                    </div>
+
+                    <!-- PERGUNTA 5 -->
+                    <div class="wizard-question" data-question="5">
+                        <p class="question-text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2h-4a2 2 0 0 1-2-2 4 4 0 0 1 4-4z"/>
+                                <path d="M9 22v-4H6v-2l3-4"/>
+                                <path d="M15 22v-4h3v-2l-3-4"/>
+                                <circle cx="12" cy="14" r="3"/>
+                            </svg>
+                            QUAL SUA EXPERIÊNCIA COM IA PARA ESTUDOS?
+                        </p>
+                        <fieldset class="question-options">
+                            <legend class="sr-only">EXPERIÊNCIA COM IA</legend>
+                            <button type="button" class="option-btn" data-value="nenhuma" onclick="selectOption(this)">NUNCA USEI</button>
+                            <button type="button" class="option-btn" data-value="pouca" onclick="selectOption(this)">USO OCASIONALMENTE</button>
+                            <button type="button" class="option-btn" data-value="muita" onclick="selectOption(this)">USO FREQUENTEMENTE</button>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <!-- RESULTADO -->
+                <div class="wizard-result" id="wizardResult">
+                    <div class="result-loading" id="resultLoading">
+                        <div class="processing-spinner"></div>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">ANALISANDO SEU PERFIL...</p>
+                    </div>
+                    <div class="result-content" id="resultContent">
+                        <h3 style="text-align: center; margin-bottom: var(--space-lg); color: var(--medical-amber);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px; display: inline; vertical-align: middle; margin-right: 0.5rem;">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                            SEU PLANO PERSONALIZADO
+                        </h3>
+                        <div class="summary-grid" id="wizardSummary"></div>
+                        <div class="wizard-actions">
+                            <a href="#arsenal" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                </svg>
+                                VER PROMPTS RECOMENDADOS
+                            </a>
+                            <button type="button" class="reset-btn" onclick="resetWizard()">↻ REFAZER DIAGNÓSTICO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-brand">PromptLab Medical</p>
+            <p class="footer-credit">Desenvolvido por <strong>Andressa Mendes</strong> — Afya Guanambi</p>
+            <p class="footer-version">Versão 1.0 | Plataforma de Prompts para Estudantes de Medicina</p>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════
+        // VARIÁVEIS GLOBAIS
+        // ═══════════════════════════════════════════════════════════════════════
+        let currentInputMode = 'topic';
+        let selectedFile = null;
+        let wizardAnswers = {};
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // TOGGLE TEMA/ARQUIVO
+        // ═══════════════════════════════════════════════════════════════════════
+        function toggleInputMode(mode) {
+            currentInputMode = mode;
+            
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+            
+            document.getElementById('topicMode').classList.toggle('active', mode === 'topic');
+            document.getElementById('fileMode').classList.toggle('active', mode === 'file');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // UPLOAD DE ARQUIVO
+        // ═══════════════════════════════════════════════════════════════════════
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+                document.getElementById('filePreview').classList.add('visible');
+                document.getElementById('uploadZone').classList.add('has-file');
+            }
+        }
+
+        function removeFile() {
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('filePreview').classList.remove('visible');
+            document.getElementById('uploadZone').classList.remove('has-file');
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // GERADOR DE PROMPTS
+        // ═══════════════════════════════════════════════════════════════════════
+        const promptTemplates = {
+            podcast: (topic, context) => `# INSTRUÇÕES PARA NOTEBOOKLM
+Gere um podcast educativo sobre "${topic}"${context ? ` (${context})` : ''}.
+
+# ESTRUTURA DO PODCAST
+1. ABERTURA (1-2 min): Gancho inicial + contextualização do tema.
+2. FUNDAMENTOS (3-4 min): Conceitos essenciais com analogias do cotidiano.
+3. APROFUNDAMENTO (4-5 min): Casos práticos e exemplos clínicos.
+4. ARMADILHAS (2-3 min): Erros comuns e como evitá-los.
+5. FECHAMENTO (1-2 min): Resumo + próximos passos de estudo.
+
+# APRESENTADORES
+- Ana: Abordagem teórica e fundamentação científica.
+- Lucas: Visão prática e aplicação clínica.
+
+# DIRETRIZES
+- Tom: Profissional mas acessível.
+- Duração: 12-15 minutos.
+- Inclua momentos de discordância construtiva.
+- Use analogias do cotidiano para explicar conceitos complexos.`,
+
+            flashcards: (topic, context) => `# PAPEL
+Você é especialista em ciência cognitiva e técnicas de memorização.
+
+# TAREFA
+Crie 30 flashcards sobre "${topic}"${context ? ` (${context})` : ''} para Anki.
+
+# FORMATO
+Frente;Verso (separado por ponto e vírgula).
+
+# PRINCÍPIOS CIENTÍFICOS
+1. INFORMAÇÃO MÍNIMA: Uma informação por card.
+2. ESPECIFICIDADE: Perguntas diretas, nunca genéricas.
+3. CONCISÃO: Respostas de máximo 2 linhas.
+4. MNEMÔNICOS: Inclua quando facilitar memorização.
+
+# TIPOS DE PERGUNTA (VARIE!)
+- 30% Definição: "O que é X?"
+- 25% Comparação: "Qual a diferença entre X e Y?"
+- 20% Aplicação: "Quando usar X?"
+- 15% Causa/Efeito: "Por que X causa Y?"
+- 10% Identificação: "Qual condição apresenta X, Y e Z?"
+
+# ORGANIZAÇÃO
+Agrupe por subtemas com cabeçalhos.`,
+
+            quiz: (topic, context) => `# PAPEL
+Você é elaborador de provas médicas com 15 anos de experiência.
+
+# TAREFA
+Crie 10 questões sobre "${topic}"${context ? ` (${context})` : ''} estilo residência médica.
+
+# DISTRIBUIÇÃO
+- 3 FÁCEIS (conceitos diretos).
+- 4 MÉDIAS (aplicação clínica).
+- 3 DIFÍCEIS (análise e síntese).
+
+# FORMATO POR QUESTÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTÃO [X] | Nível: [Fácil/Médio/Difícil]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Enunciado com cenário clínico realista - 3 a 5 linhas.]
+
+a) [Alternativa plausível]
+b) [Alternativa plausível]
+c) [Alternativa plausível]
+d) [Alternativa plausível]
+e) [Alternativa plausível]
+
+✓ GABARITO: [LETRA]
+📝 JUSTIFICATIVA: [Por que está correta + análise das incorretas.]
+⚠️ PEGADINHA: [Erro comum nesta questão.]
+💡 DICA: [Como não errar questões similares.]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+
+            mapa: (topic, context) => `# TAREFA
+Crie um mapa mental estruturado sobre "${topic}"${context ? ` (${context})` : ''}.
+
+# ESTRUTURA
+\`\`\`
+🎯 CONCEITO CENTRAL: ${topic.toUpperCase()}
+│
+├── 📌 RAMO 1: [Categoria Principal]
+│   ├── Subtópico 1.1
+│   │   └── Detalhe importante.
+│   └── Subtópico 1.2
+│
+├── 📌 RAMO 2: [Categoria Principal]
+│   ├── Subtópico 2.1
+│   └── Subtópico 2.2
+│
+├── 📌 RAMO 3: [Categoria Principal]
+│   └── ...
+│
+└── 🔗 CONEXÕES
+    └── Ramo 1 → Ramo 2 (tipo de relação).
+\`\`\`
+
+# REGRAS
+- Máximo 5 ramos principais.
+- Máximo 3 níveis de profundidade.
+- Use palavras-chave, não frases longas.
+- Indique relações com setas (→) e verbos.
+- Destaque os 3 conceitos mais importantes.
+
+# SEÇÃO FINAL
+Liste os 5 conceitos-chave para memorização.`,
+
+            caso: (topic, context) => `# PAPEL
+Você é preceptor experiente em ensino médico baseado em casos.
+
+# TAREFA
+Simule um caso clínico interativo sobre "${topic}"${context ? ` (${context})` : ''}.
+
+# ESTRUTURA PROGRESSIVA
+1. APRESENTAÇÃO INICIAL
+   Paciente: [idade], [sexo], [queixa principal].
+   → Aguarde minhas perguntas de anamnese.
+
+2. ANAMNESE DIRIGIDA
+   Revele informações conforme eu perguntar.
+   → Após 5 perguntas, me peça as hipóteses diagnósticas.
+
+3. EXAME FÍSICO
+   Descreva os achados relevantes.
+   → Pergunte quais exames eu solicitaria.
+
+4. EXAMES COMPLEMENTARES
+   Mostre os resultados.
+   → Peça meu diagnóstico final e conduta.
+
+5. DISCUSSÃO
+   Analise meu raciocínio e aponte erros/acertos.
+   → Encerre com os pontos de aprendizado.
+
+# REGRAS
+- NUNCA revele o diagnóstico antes da hora.
+- Dê feedback construtivo a cada resposta.
+- Use perguntas guia se eu travar.
+- Seja realista nos dados clínicos.`,
+
+            resumo: (topic, context) => `# PAPEL
+Você é especialista em síntese acadêmica para medicina.
+
+# TAREFA
+Crie um resumo estruturado sobre "${topic}"${context ? ` (${context})` : ''}.
+
+# ESTRUTURA
+
+## 📋 VISÃO GERAL
+[O que é + por que importa + quando se aplica - máximo 3 linhas.]
+
+## 🎯 CONCEITOS FUNDAMENTAIS
+### Conceito 1
+- **Definição:** [1-2 linhas.]
+- **Exemplo:** [Aplicação prática.]
+- **Conexão:** [Relação com outros conceitos.]
+
+### Conceito 2
+[Mesmo formato.]
+
+## ⚡ PONTOS-CHAVE (PARA MEMORIZAR)
+1. [Ponto essencial 1.]
+2. [Ponto essencial 2.]
+3. [Ponto essencial 3.]
+4. [Ponto essencial 4.]
+5. [Ponto essencial 5.]
+
+## ⚠️ ARMADILHAS COMUNS
+- ❌ [Erro comum] → ✅ [Correto.]
+
+## 💡 APLICAÇÃO PRÁTICA
+[Como usar este conhecimento na clínica.]`,
+
+            tcc: (topic, context) => `# PAPEL
+Você é orientador de TCC em medicina com experiência em metodologia científica.
+
+# TAREFA
+Me ajude a estruturar meu TCC sobre "${topic}"${context ? ` (${context})` : ''}.
+
+# ETAPAS DE CONSTRUÇÃO
+
+## 1. DELIMITAÇÃO DO TEMA
+- Refine meu tema para algo específico e viável.
+- Sugira 3 recortes possíveis.
+- Avalie a viabilidade de cada um.
+
+## 2. PROBLEMA DE PESQUISA
+- Formule a pergunta norteadora.
+- Justifique a relevância científica e social.
+
+## 3. OBJETIVOS
+- Objetivo geral (1).
+- Objetivos específicos (3-4).
+- Verifique se são mensuráveis.
+
+## 4. METODOLOGIA
+- Tipo de estudo mais adequado.
+- População e amostra.
+- Critérios de inclusão/exclusão.
+- Instrumentos de coleta de dados.
+- Análise de dados proposta.
+- Considerações éticas.
+
+## 5. ESTRUTURA DO DOCUMENTO
+- Sumário preliminar.
+- Estimativa de páginas por seção.
+- Cronograma de execução.
+
+# NORMAS
+- Siga ABNT.
+- Linguagem acadêmica impessoal.
+- Evite primeira pessoa.`,
+
+            tutor: (topic, context) => `# PAPEL
+Você é um tutor socrático especialista em medicina.
+
+# TAREFA
+Me ensine sobre "${topic}"${context ? ` (${context})` : ''} usando o método maiêutico.
+
+# REGRAS ABSOLUTAS
+1. NUNCA dê respostas diretas.
+2. SEMPRE faça perguntas que guiem meu raciocínio.
+3. Decomponha conceitos complexos em partes menores.
+4. Valide meus acertos antes de avançar.
+5. Use analogias quando eu travar.
+
+# ESTRUTURA DA SESSÃO
+
+## ABERTURA
+"Vamos explorar ${topic}. Me conta: o que você já sabe sobre isso?"
+
+## DESENVOLVIMENTO
+[Baseado na resposta, faça perguntas progressivas.]
+
+"Interessante. E por que você acha que [X]?"
+"O que aconteceria se [Y]?"
+"Como isso se conecta com [Z]?"
+
+## SE EU ERRAR
+- Não corrija diretamente.
+- Pergunte: "O que te levou a essa conclusão?"
+- Guie para a resposta correta com novas perguntas.
+
+## SE EU ACERTAR
+- Celebre: "Exatamente! Você chegou ao ponto crucial."
+- Aprofunde: "Agora, como você aplicaria isso em [situação]?"
+
+## FECHAMENTO
+- Peça que eu resuma o que aprendi.
+- Destaque os insights principais.
+- Sugira próximos passos de estudo.`
+        };
+
+        function generatePrompt(event) {
+            event.preventDefault();
+            
+            let topic, context;
+            
+            if (currentInputMode === 'topic') {
+                topic = document.getElementById('topicInput').value.trim();
+                context = document.getElementById('contextInput').value.trim();
+                
+                if (!topic) {
+                    alert('Por favor, digite um tema para estudar.');
+                    return false;
+                }
+            } else {
+                if (!selectedFile) {
+                    alert('Por favor, selecione um arquivo.');
+                    return false;
+                }
+                topic = `o conteúdo do arquivo "${selectedFile.name}"`;
+                context = document.getElementById('fileContextInput').value.trim();
+            }
+            
+            const format = document.querySelector('input[name="format"]:checked');
+            if (!format) {
+                alert('Por favor, selecione um formato de saída.');
+                return false;
+            }
+            
+            const template = promptTemplates[format.value];
+            if (!template) {
+                alert('Formato não disponível.');
+                return false;
+            }
+            
+            const prompt = template(topic, context);
+            
+            document.getElementById('resultOutput').textContent = prompt;
+            document.getElementById('resultSection').classList.add('visible');
+            
+            setTimeout(() => {
+                document.getElementById('resultSection').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 100);
+            
+            return false;
+        }
+
+        function copyResult() {
+            const text = document.getElementById('resultOutput').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target.closest('.btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    COPIADO!
+                `;
+                btn.style.background = 'var(--medical-green)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // FILTROS DO ARSENAL
+        // ═══════════════════════════════════════════════════════════════════════
+        function filterPrompts(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.prompt-card');
+            
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === category);
+            });
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                    card.style.animation = 'fadeIn 0.4s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // COPIAR PROMPTS
+        // ═══════════════════════════════════════════════════════════════════════
+        function copyPrompt(elementId, button) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                button.classList.add('copied');
+                button.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    COPIADO!
+                `;
+                
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                        </svg>
+                        COPIAR
+                    `;
+                }, 2000);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // WIZARD DO MENTOR
+        // ═══════════════════════════════════════════════════════════════════════
+        function selectOption(button) {
+            const question = button.closest('.wizard-question');
+            const questionNum = parseInt(question.dataset.question);
+            
+            question.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            button.classList.add('selected');
+            wizardAnswers[questionNum] = button.dataset.value;
+            
+            setTimeout(() => {
+                if (questionNum < totalQuestions) {
+                    goToQuestion(questionNum + 1);
+                } else {
+                    showWizardResult();
+                }
+            }, 300);
+        }
+
+        function goToQuestion(num) {
+            currentQuestion = num;
+            
+            const progress = (num / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressLabel').textContent = `PERGUNTA ${num} DE ${totalQuestions}`;
+            
+            document.querySelectorAll('.wizard-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.querySelector(`.wizard-question[data-question="${num}"]`).classList.add('active');
+        }
+
+        function showWizardResult() {
+            document.getElementById('wizardBody').style.display = 'none';
+            document.querySelector('.wizard-progress').style.display = 'none';
+            document.getElementById('wizardResult').classList.add('visible');
+            
+            setTimeout(() => {
+                document.getElementById('resultLoading').style.display = 'none';
+                document.getElementById('resultContent').classList.add('visible');
+                generateWizardSummary();
+            }, 1500);
+        }
+
+        function generateWizardSummary() {
+            const summary = document.getElementById('wizardSummary');
+            const recommendations = [];
+            
+            // Recomendações baseadas nas respostas.
+            if (wizardAnswers[4] === 'retencao') {
+                recommendations.push({
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg>`,
+                    title: 'FLASHCARDS + REPETIÇÃO ESPAÇADA',
+                    desc: 'Use o gerador de flashcards e revise com intervalos de 1, 3, 7 e 14 dias.'
+                });
+            }
+            
+            if (wizardAnswers[3] === 'residencia') {
+                recommendations.push({
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+                    title: 'QUESTÕES ESTILO PROVA',
+                    desc: 'Gere questões no formato da residência e analise erros com o diagnóstico de fraquezas.'
+                });
+            }
+            
+            if (wizardAnswers[4] === 'foco') {
+                recommendations.push({
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+                    title: 'TÉCNICA POMODORO + PODCASTS',
+                    desc: 'Sessões de 25 minutos com podcasts educativos. Use o formato Podcast no gerador.'
+                });
+            }
+            
+            if (wizardAnswers[2] === 'curto') {
+                recommendations.push({
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3"/></svg>`,
+                    title: 'APRENDIZADO EM ÁUDIO',
+                    desc: 'Podcasts são ideais para otimizar tempo curto. Ouça durante deslocamentos.'
+                });
+            }
+
+            if (wizardAnswers[4] === 'organizacao') {
+                recommendations.push({
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>`,
+                    title: 'CRONOGRAMA ESPAÇADO',
+                    desc: 'Use o prompt de cronograma com repetição espaçada e intercalação de temas.'
+                });
+            }
+            
+            // Sempre adicionar pelo menos uma recomendação geral.
+            recommendations.push({
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg>`,
+                title: 'MAPAS MENTAIS PARA VISÃO GERAL',
+                desc: 'Comece cada tema com um mapa mental para entender a estrutura antes dos detalhes.'
+            });
+            
+            summary.innerHTML = recommendations.map(rec => `
+                <div class="summary-item">
+                    <div class="summary-icon">${rec.icon}</div>
+                    <div class="summary-content">
+                        <h4>${rec.title}</h4>
+                        <p>${rec.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetWizard() {
+            wizardAnswers = {};
+            currentQuestion = 1;
+            
+            document.getElementById('wizardBody').style.display = 'block';
+            document.querySelector('.wizard-progress').style.display = 'block';
+            document.getElementById('wizardResult').classList.remove('visible');
+            document.getElementById('resultLoading').style.display = 'block';
+            document.getElementById('resultContent').classList.remove('visible');
+            
+            document.querySelectorAll('.wizard-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.querySelector('.wizard-question[data-question="1"]').classList.add('active');
+            
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            document.getElementById('progressFill').style.width = '20%';
+            document.getElementById('progressLabel').textContent = 'PERGUNTA 1 DE 5';
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // NAVEGAÇÃO
+        // ═══════════════════════════════════════════════════════════════════════
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+            });
+        });
+
+        // Drag and drop para upload.
+        const uploadZone = document.getElementById('uploadZone');
+        if (uploadZone) {
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    document.getElementById('fileInput').files = e.dataTransfer.files;
+                    handleFileSelect({ target: { files: [file] } });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
