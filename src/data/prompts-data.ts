@@ -160,7 +160,7 @@ Frente;Verso (separado por ponto e vírgula).
     evidenceLevel: "Alta",
     difficulty: "Intermediário",
     tags: ["dual-coding", "visualização", "memória"],
-    aiRecommended: "claude",
+    aiRecommended: "gemini",
     prompt: `# PAPEL
 Você é especialista em teoria da codificação dupla (Paivio) aplicada à medicina.
 
@@ -1503,7 +1503,7 @@ Me ajude a estruturar meu TCC sobre [TEMA].
     evidenceLevel: "Alta",
     difficulty: "Intermediário",
     tags: ["PICO", "PubMed", "evidências"],
-    aiRecommended: "claude",
+    aiRecommended: "perplexity",
     prompt: `# PAPEL
 Você é bibliotecário especialista em busca de evidências médicas.
 
@@ -1612,7 +1612,7 @@ Classifique os problemas em:
     evidenceLevel: "Emergente",
     difficulty: "Intermediário",
     tags: ["podcast", "áudio", "aprendizado-passivo"],
-    aiRecommended: "chatgpt",
+    aiRecommended: "notebooklm",
     prompt: `# INSTRUÇÕES PARA NOTEBOOKLM / GERAÇÃO DE PODCAST
 Gere um podcast educativo sobre [TEMA].
 
@@ -1644,7 +1644,7 @@ Gere um podcast educativo sobre [TEMA].
     evidenceLevel: "Alta",
     difficulty: "Iniciante",
     tags: ["mapa-mental", "visual", "conexões"],
-    aiRecommended: "chatgpt",
+    aiRecommended: "gemini",
     prompt: `# TAREFA
 Crie um mapa mental estruturado sobre [TEMA].
 
