@@ -1,10 +1,10 @@
 import { Brain, Sparkles, Target, BookOpen, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { prompts, sections } from "@/data/prompts-data";
-import { useParallax, useParallaxElement } from "@/hooks/use-parallax";
+import { useParallaxElement } from "@/hooks/use-parallax";
+import { Hero3D } from "@/components/Hero3D";
 
 export function Hero() {
-  const parallaxBg = useParallax(0.3);
   const parallaxContent = useParallaxElement(0.15);
   
   const stats = [
@@ -16,17 +16,10 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-[90vh] flex items-center justify-center pt-20 pb-16 bg-pattern relative overflow-hidden"
+      className="min-h-[90vh] flex items-center justify-center pt-20 pb-16 relative overflow-hidden bg-gradient-to-b from-background via-background to-background/95"
     >
-      {/* Parallax Background Elements */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{ transform: `translateY(${parallaxBg}px)` }}
-      >
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute top-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" />
-      </div>
+      {/* 3D Background */}
+      <Hero3D />
 
       <div className="container relative z-10">
         <div 
