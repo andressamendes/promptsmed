@@ -10,7 +10,7 @@ export interface Prompt {
   difficulty: "Iniciante" | "Intermediário" | "Avançado";
   tags: string[];
   prompt: string;
-  aiRecommended: "chatgpt" | "claude" | "gemini";
+  aiRecommended: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity";
 }
 
 export interface Section {
@@ -102,6 +102,14 @@ export const sections: Section[] = [
     slug: "otimizacao-tracking",
     description: "Revisões semanais e eliminação de distrações",
     color: "hsl(var(--medical-red))"
+  },
+  {
+    id: "cognitive-science",
+    number: 11,
+    title: "Ciência Cognitiva Avançada",
+    slug: "ciencia-cognitiva",
+    description: "Técnicas baseadas em evidências científicas de alto impacto",
+    color: "hsl(var(--primary))"
   }
 ];
 
@@ -1961,6 +1969,877 @@ Ex: "Estudar farmacologia" → "Abrir o livro na página certa"
 # AÇÃO IMEDIATA
 Sua micro-tarefa para AGORA (menos de 2 min):
 → [Defina e faça IMEDIATAMENTE]`
+  },
+
+  // SEÇÃO 11: CIÊNCIA COGNITIVA AVANÇADA (NOVOS PROMPTS)
+  {
+    id: "gerador-dificuldades-desejaveis",
+    title: "Gerador de Dificuldades Desejáveis",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Cria desafios calibrados que otimizam consolidação de longo prazo",
+    estimatedTime: "12 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["dificuldades-desejáveis", "bjork", "consolidação"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Técnica baseada na teoria de Dificuldades Desejáveis (Bjork & Bjork, 2011) - obstáculos estratégicos que parecem dificultar o aprendizado imediato, mas fortalecem a memória de longo prazo.
+
+# PAPEL
+Você é neurocientista especializado em otimização de aprendizado médico através de esforço cognitivo calibrado.
+
+# TAREFA
+Para o tema [TEMA MÉDICO], construa uma sequência de exercícios com dificuldade progressiva que maximize a consolidação neural.
+
+# ESTRUTURA DE SAÍDA
+
+## FASE 1: GERAÇÃO ATIVA (vs. leitura passiva)
+Em vez de apresentar a informação, crie lacunas estratégicas:
+"O mecanismo fisiopatológico da _____ envolve [processo A] → [?] → [processo C], resultando em _____."
+
+## FASE 2: VARIAÇÃO CONTEXTUAL
+Apresente o MESMO conceito em 3 cenários completamente diferentes:
+- Cenário ambulatorial
+- Cenário de emergência
+- Cenário de pesquisa/artigo
+
+## FASE 3: ESPAÇAMENTO FORÇADO
+Divida o conteúdo em 3 micro-sessões com instruções para intervalos:
+- Sessão 1: Agora
+- Sessão 2: Em 4-6 horas
+- Sessão 3: Amanhã
+
+## FASE 4: INTERCALAÇÃO IMPREVISÍVEL
+Misture [TEMA] com 2 temas relacionados sem aviso prévio.
+
+## FASE 5: TESTE ANTES DE REVISAR
+Crie 5 perguntas para responder SEM consultar material.
+
+# CALIBRAÇÃO DE DIFICULDADE
+- Alvo: 60-80% de acerto (zona de aprendizado ótimo)
+- Se muito fácil: aumentar complexidade
+- Se muito difícil: adicionar scaffolding
+
+# AVISO IMPORTANTE
+"A sensação de dificuldade é o sinal de que seu cérebro está criando conexões duradouras. Confie no processo."`
+  },
+  {
+    id: "codificacao-dupla-visual",
+    title: "Codificação Dupla Visual-Verbal",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Integra representações visuais e verbais para múltiplas vias de memória",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["dual-coding", "paivio", "visualização"],
+    aiRecommended: "gemini",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado na Teoria da Codificação Dupla (Paivio, 1986) - informações codificadas tanto verbal quanto visualmente criam múltiplas rotas de recuperação na memória.
+
+# PAPEL
+Você é especialista em design instrucional multimodal para educação médica.
+
+# TAREFA
+Para [CONCEITO MÉDICO], crie material que ative simultaneamente os sistemas verbal e imagético do cérebro.
+
+# ESTRUTURA DE SAÍDA
+
+## 1. REPRESENTAÇÃO VERBAL ESTRUTURADA
+[Explicação textual clara e hierárquica - máximo 150 palavras]
+- Conceito central
+- Subcomponentes
+- Relações causais
+
+## 2. BLUEPRINT VISUAL DETALHADO
+Descreva precisamente um diagrama para criar ou imaginar:
+
+### Elementos Visuais Principais
+- Forma central: [descrição]
+- Elementos secundários: [lista]
+- Posicionamento espacial: [instruções]
+
+### Código de Cores (com significado)
+- Cor 1: [hsl/nome] = [representa]
+- Cor 2: [hsl/nome] = [representa]
+
+### Setas e Conexões
+- [Origem] → [Destino]: [tipo de relação]
+
+### Legendas e Rótulos
+- [Posição]: [texto]
+
+## 3. PONTE VERBAL-VISUAL
+3 afirmações que conectam explicitamente texto e imagem:
+"Quando você lê [conceito X], visualize [elemento Y do diagrama]..."
+
+## 4. EXERCÍCIO DE RECUPERAÇÃO DUAL
+2 perguntas que exigem lembrar AMBAS as representações:
+- "Descreva verbalmente E desenhe..."
+- "Localize no diagrama mental E explique o mecanismo..."
+
+# REGRAS
+- Priorize conceitos com alta carga visual natural
+- Use metáforas visuais do cotidiano
+- Mantenha consistência entre verbal e visual`
+  },
+  {
+    id: "priming-cognitivo-preteste",
+    title: "Priming Cognitivo Pré-Teste",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Ativa atenção seletiva e conhecimento prévio antes do estudo",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["priming", "pré-teste", "atenção-seletiva"],
+    aiRecommended: "chatgpt",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Priming Cognitivo (Tulving, 1983) e Efeito de Pré-Teste (Richland et al., 2009) - tentar responder antes de estudar aumenta atenção seletiva e retenção subsequente.
+
+# PAPEL
+Você é especialista em preparação cognitiva e ativação de esquemas mentais para aprendizado.
+
+# TAREFA
+Crie uma sessão de priming pré-estudo para [TEMA MÉDICO].
+
+# ESTRUTURA DE SAÍDA
+
+## INSTRUÇÕES PARA O ESTUDANTE
+"Responda estas perguntas ANTES de estudar o material. O objetivo NÃO é acertar, mas ativar sua curiosidade e preparar seu cérebro para absorver informações relevantes."
+
+## ATIVAÇÃO DE CONHECIMENTO PRÉVIO (2 min)
+"O que você JÁ SABE sobre [TEMA]? Liste 3-5 fatos, mesmo incertos:"
+1. _____
+2. _____
+3. _____
+
+## PRÉ-TESTE PRIMING (5 perguntas)
+
+### Pergunta 1: Conceito Fundamental
+[Pergunta sobre definição/conceito básico]
+- Minha resposta agora: _____
+- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
+
+### Pergunta 2: Mecanismo
+[Pergunta sobre processo/fisiopatologia]
+- Minha resposta agora: _____
+- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
+
+### Pergunta 3: Aplicação Clínica
+[Pergunta sobre caso prático]
+- Minha resposta agora: _____
+- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
+
+### Pergunta 4: Diferenciação
+[Pergunta comparativa com conceito similar]
+- Minha resposta agora: _____
+- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
+
+### Pergunta 5: Consequência/Complicação
+[Pergunta sobre desfechos]
+- Minha resposta agora: _____
+- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
+
+## APÓS ESTUDAR - RETORNE AQUI
+1. Corrija suas respostas com cor diferente
+2. Marque os "aha moments" (onde sua intuição estava errada)
+3. Identifique onde tinha conhecimento parcial
+
+## BENEFÍCIO NEUROLÓGICO
+- Perguntas não respondidas criam "curiosity gaps"
+- Seu cérebro priorizará informações que preenchem esses gaps
+- Erros no pré-teste potencializam correção (hipercorreção)`
+  },
+  {
+    id: "intercalacao-inteligente",
+    title: "Intercalação Inteligente de Temas",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Mistura temas relacionados forçando discriminação e conexões profundas",
+    estimatedTime: "15 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["interleaving", "discriminação", "transferência"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Interleaving Practice (Rohrer & Taylor, 2007) - alternar entre tópicos durante o estudo força o cérebro a discriminar entre conceitos similares, fortalecendo aprendizado profundo.
+
+# PAPEL
+Você é especialista em design de prática intercalada para maximizar discriminação e transferência em medicina.
+
+# TAREFA
+Crie uma sessão de estudo intercalado misturando [TÓPICO A], [TÓPICO B] e [TÓPICO C] de forma estratégica.
+
+# ESTRUTURA DE SAÍDA
+
+## AQUECIMENTO CONCEITUAL (5 min)
+Revisão ultrarápida - 1 frase definidora de cada:
+- [Tópico A]: _____
+- [Tópico B]: _____
+- [Tópico C]: _____
+
+## BLOCO INTERCALADO IMPREVISÍVEL (25 min)
+Apresente 12 problemas/casos em ordem ALEATÓRIA (não agrupe por tema):
+
+### Problema 1: [TÓPICO ?]
+[Caso clínico ou pergunta conceitual]
+→ Qual tópico? _____ 
+→ Sua resposta: _____
+→ Por que NÃO é [outro tópico]? _____
+
+### Problema 2: [TÓPICO ?]
+[Continue com ordem imprevisível...]
+
+[Repita para 12 problemas, variando dificuldade]
+
+## FOCO EM DISCRIMINAÇÃO
+Para CADA problema, inclua:
+1. "Qual característica-chave identificou o tópico correto?"
+2. "Que pista poderia ter enganado você para outro tópico?"
+
+## CASOS AMBÍGUOS INTENCIONAIS
+Inclua 2-3 casos onde múltiplos tópicos poderiam se aplicar:
+"Este caso poderia ser A ou B. Que informação adicional diferenciaria?"
+
+## REFLEXÃO METACOGNITIVA
+Após completar:
+1. Onde você confundiu os tópicos? Por quê?
+2. Que regra discriminativa você pode criar?
+3. Quais conexões inesperadas descobriu entre os tópicos?
+
+# AVISO
+"A dificuldade de alternar temas É o aprendizado acontecendo. Se parecesse fácil, você estaria apenas reconhecendo, não aprendendo."`
+  },
+  {
+    id: "diario-metacognitivo",
+    title: "Diário Metacognitivo Estruturado",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Desenvolve consciência sobre o próprio processo de aprendizagem",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["metacognição", "autorregulação", "reflexão"],
+    aiRecommended: "chatgpt",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Metacognição e Aprendizagem Autorregulada (Flavell, 1979; Zimmerman, 2002) - refletir sobre o próprio pensamento melhora estratégias de estudo e identifica blind spots.
+
+# PAPEL
+Você é especialista em desenvolvimento metacognitivo e coaching de aprendizagem autorregulada.
+
+# TAREFA
+Guie uma sessão de reflexão metacognitiva sobre meu estudo de [TEMA] hoje.
+
+# ESTRUTURA DO DIÁRIO METACOGNITIVO
+
+## FASE 1: PRÉ-ESTUDO (Planejamento) - 2 min
+Responda antes de começar:
+
+### Consciência do Conhecimento
+"Meu nível atual neste tema (1-10): _____"
+"O que JÁ SEI sobre isso: _____"
+"Minhas lacunas conhecidas: _____"
+
+### Planejamento Estratégico
+"Meu objetivo específico para esta sessão: _____"
+"Estratégias que vou usar: _____"
+"Tempo planejado: _____ min"
+"Possíveis obstáculos: _____"
+
+## FASE 2: DURANTE O ESTUDO (Monitoramento) - Check a cada 20 min
+
+### Checkpoint de Compreensão
+"Estou entendendo? [ ] Sim [ ] Parcialmente [ ] Não"
+"Preciso reler algo? [ ] Sim - o quê? _____ [ ] Não"
+"Minha estratégia está funcionando? [ ] Sim [ ] Preciso mudar"
+
+### Detecção de Confusão
+"Momento de confusão: _____"
+"O que fiz quando confundi: _____"
+"Funcionou? _____"
+
+## FASE 3: PÓS-ESTUDO (Avaliação) - 5 min
+
+### Avaliação de Aprendizado
+"Meu nível AGORA (1-10): _____"
+"O que aprendi DE FATO (sem olhar anotações): _____"
+"O que ainda está confuso: _____"
+
+### Avaliação de Estratégia
+"Estratégia mais eficaz: _____"
+"Estratégia que não funcionou: _____"
+"O que farei diferente amanhã: _____"
+
+### Calibração de Confiança
+"Minha confiança neste tema: [ ] Subestimo [ ] Calibrada [ ] Superestimo"
+"Evidência para isso: _____"
+
+## INSIGHT METACOGNITIVO DO DIA
+"A descoberta mais importante sobre COMO eu aprendo foi: _____"
+
+# PADRÕES A LONGO PRAZO
+Após 7 dias de diário, analise:
+- Em que horários você aprende melhor?
+- Quais estratégias aparecem como mais eficazes?
+- Onde você consistentemente superestima/subestima?`
+  },
+  {
+    id: "gerador-exemplos-concretos",
+    title: "Gerador de Exemplos Concretos",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Transforma abstrações em casos específicos e memoráveis",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["exemplificação", "concretude", "ancoragem"],
+    aiRecommended: "chatgpt",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado na Hipótese de Concretude (Paivio, 1991) e Efeito de Exemplificação (Rawson & Dunlosky, 2016) - conceitos abstratos ancorados em exemplos concretos são significativamente mais memoráveis.
+
+# PAPEL
+Você é especialista em tornar conceitos médicos abstratos em exemplos vívidos, específicos e memoráveis.
+
+# TAREFA
+Para [CONCEITO MÉDICO ABSTRATO], gere uma cascata de exemplos em múltiplos níveis de concretude.
+
+# ESTRUTURA DE SAÍDA
+
+## CONCEITO ABSTRATO ORIGINAL
+"[Definição técnica em linguagem acadêmica - 1-2 linhas]"
+
+## CASCATA DE EXEMPLIFICAÇÃO
+
+### NÍVEL 1: Analogia do Cotidiano
+[Metáfora usando algo familiar: cozinha, trânsito, esportes, tecnologia]
+- Analogia: "[Conceito] é como [situação cotidiana] porque..."
+- Correspondência ponto-a-ponto:
+  - [Elemento abstrato A] = [Elemento concreto A']
+  - [Elemento abstrato B] = [Elemento concreto B']
+- Limitações da analogia: "Onde a comparação quebra..."
+
+### NÍVEL 2: Caso Clínico Típico Vívido
+Paciente: [Nome fictício], [idade], [ocupação]
+- Queixa: "[Palavras exatas do paciente]"
+- História: [Detalhes sensoriais - o que você vê, ouve, sente]
+- Como [CONCEITO] se manifesta: [Conexão explícita]
+- Desfecho: [O que aconteceu]
+
+### NÍVEL 3: Caso Atípico Memorável
+[Apresentação incomum do mesmo conceito]
+- Por que é importante conhecer: "Se você só conhecer o típico, vai perder..."
+- Pista diferenciadora: [O que deveria ter chamado atenção]
+
+### NÍVEL 4: Contraexemplo Esclarecedor
+"[CONCEITO] NÃO é [conceito frequentemente confundido]"
+- Diferença crucial: [Em uma frase]
+- Teste discriminativo: "Se você vir [X], é [A]. Se vir [Y], é [B]."
+
+### NÍVEL 5: Exemplo Extremo/Limite
+[Caso no limite do conceito - onde a definição é testada]
+- Por que é interessante: [Revela nuances da definição]
+
+## MNEMÔNICO ANCORADO
+"Para lembrar [CONCEITO], pense em [imagem/frase baseada nos exemplos]"
+
+# EXERCÍCIO DE TRANSFERÊNCIA
+"Agora você: crie um exemplo próprio de [CONCEITO] diferente dos apresentados."`
+  },
+  {
+    id: "autoexplicacao-guiada",
+    title: "Autoexplicação Guiada",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Força articulação do raciocínio revelando lacunas lógicas",
+    estimatedTime: "12 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["self-explanation", "elaboração", "compreensão"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado na Técnica de Autoexplicação (Chi et al., 1994) - explicar cada etapa do raciocínio em voz alta ou por escrito identifica lacunas e fortalece compreensão profunda.
+
+# PAPEL
+Você é tutor socrático especializado em guiar autoexplicação elaborativa para maximizar compreensão em medicina.
+
+# TAREFA
+Conduza uma sessão de autoexplicação sobre [TEMA/MECANISMO MÉDICO].
+
+# ESTRUTURA DA SESSÃO
+
+## FASE 1: APRESENTAÇÃO SEGMENTADA
+Apresente o conteúdo em 4-5 segmentos curtos (3-4 frases cada).
+
+### Segmento 1:
+"[Primeira parte do conceito/mecanismo]"
+
+→ PAUSA PARA AUTOEXPLICAÇÃO
+Pergunte:
+1. "O que este trecho está dizendo COM SUAS PALAVRAS?"
+2. "POR QUE isso faz sentido? Qual o mecanismo subjacente?"
+3. "COMO isso se conecta com algo que você já sabe?"
+4. "QUE INFERÊNCIAS você pode fazer a partir disso?"
+5. "O que AINDA NÃO ESTÁ CLARO para você?"
+
+[Aguarde minha resposta antes de continuar]
+
+### Segmento 2:
+"[Segunda parte...]"
+
+→ PAUSA PARA AUTOEXPLICAÇÃO
+[Repita as 5 perguntas]
+
+[Continue para todos os segmentos]
+
+## FASE 2: DETECÇÃO DE LACUNAS
+Após cada explicação minha:
+- Se correta: "Exatamente! Você capturou [ponto-chave]. Agora, o que isso implica para [situação clínica]?"
+- Se parcial: "Você está no caminho. O que acontece entre [A] e [B]?"
+- Se incorreta: "Interessante raciocínio. O que te levou a essa conclusão? Vamos examinar..."
+
+## FASE 3: SÍNTESE INTEGRADA
+"Agora, explique TODO o [TEMA] como se estivesse ensinando a um colega de turma. Comece do zero."
+
+[Avalie a síntese e aponte:]
+- Pontos de força
+- Lacunas remanescentes
+- Conexões que poderiam ser feitas
+
+## FASE 4: APLICAÇÃO
+"Dado um paciente com [cenário], como você aplicaria este conhecimento? Explique seu raciocínio passo a passo."
+
+# REGRAS ABSOLUTAS
+- NUNCA pule para a resposta
+- Use silêncio produtivo (espere eu elaborar)
+- Elogie o PROCESSO de raciocínio, não apenas respostas corretas
+- Se eu travar, ofereça scaffolding: "E se você pensasse sobre [aspecto X]..."`
+  },
+  {
+    id: "otimizador-carga-cognitiva",
+    title: "Otimizador de Carga Cognitiva",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Gerencia sobrecarga mental fragmentando e sequenciando conteúdo",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["carga-cognitiva", "sweller", "scaffolding"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado na Teoria da Carga Cognitiva (Sweller, 1988) - a memória de trabalho tem capacidade limitada; otimizar a apresentação do conteúdo maximiza aprendizado.
+
+# PAPEL
+Você é especialista em design instrucional baseado na Teoria da Carga Cognitiva para educação médica.
+
+# TAREFA
+Otimize o material sobre [TEMA COMPLEXO] para gerenciar carga cognitiva e maximizar aprendizado.
+
+# ANÁLISE DE CARGA
+
+## DIAGNÓSTICO DE COMPLEXIDADE
+
+### Carga Intrínseca (inerente ao conteúdo)
+- Nível estimado: [ ] Baixa [ ] Média [ ] Alta
+- Número de elementos interativos: _____
+- Pré-requisitos necessários: [lista]
+- Interatividade entre elementos: [descrição]
+
+### Carga Extrínseca (má apresentação) - ELIMINAR
+Identifique e remova:
+- [ ] Informação redundante (texto + imagem dizendo o mesmo)
+- [ ] Split attention (texto longe de imagem relacionada)
+- [ ] Detalhes irrelevantes
+- [ ] Excesso de cores/formatação
+- [ ] Linguagem desnecessariamente complexa
+
+### Carga Relevante (esforço produtivo) - MAXIMIZAR
+- [ ] Conexões com conhecimento prévio
+- [ ] Exemplos e contra-exemplos
+- [ ] Prática de recuperação
+- [ ] Elaboração ativa
+
+## REESTRUTURAÇÃO DO CONTEÚDO
+
+### 1. CHUNKING ESTRATÉGICO
+Divida em chunks de 3-4 elementos (limite da memória de trabalho):
+
+**Chunk 1: [Nome descritivo]**
+- Elemento A
+- Elemento B
+- Elemento C
+→ Conexão unificadora: _____
+
+**Chunk 2: [Nome descritivo]**
+- Elemento D
+- Elemento E
+- Elemento F
+→ Conexão unificadora: _____
+
+[Continue conforme necessário]
+
+### 2. SCAFFOLDING PROGRESSIVO
+Construa em camadas:
+
+**Camada 1 - Esqueleto:** [Conceito central apenas, máxima simplificação]
+
+**Camada 2 - Estrutura:** [Adiciona detalhes essenciais]
+
+**Camada 3 - Nuances:** [Exceções, casos especiais, profundidade]
+
+### 3. INTEGRAÇÃO GRADUAL
+Exercício que conecta chunks progressivamente:
+- "Depois de dominar Chunk 1, como ele se relaciona com Chunk 2?"
+- "Agora integre Chunks 1+2+3 em uma explicação unificada."
+
+## SINAIS DE ALERTA DE SOBRECARGA
+Se sentir:
+- [ ] Confusão crescente
+- [ ] Frustração
+- [ ] "Brancos" frequentes
+- [ ] Releitura sem compreensão
+
+→ AÇÃO: Volte ao chunk anterior. Domine antes de avançar.
+
+## CHECKLIST DE OTIMIZAÇÃO
+- [ ] Removi redundâncias?
+- [ ] Integrei texto e imagem?
+- [ ] Eliminei detalhes não essenciais?
+- [ ] Sequenciei do simples ao complexo?
+- [ ] Criei conexões explícitas entre partes?`
+  },
+  {
+    id: "programador-recuperacao-espacada",
+    title: "Programador de Recuperação Espaçada",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Cria cronograma de testes de memória em intervalos expandidos ótimos",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["recuperação-espaçada", "testing-effect", "distribuição"],
+    aiRecommended: "chatgpt",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado no Efeito de Testagem (Roediger & Karpicke, 2006) e Espaçamento Ótimo (Cepeda et al., 2008) - testar-se em intervalos expandidos fortalece memória mais que reler.
+
+# PAPEL
+Você é especialista em programação de prática de recuperação distribuída para retenção médica de longo prazo.
+
+# TAREFA
+Crie um programa de retrieval practice para [TEMA] ao longo de [PERÍODO até prova/uso].
+
+# ESTRUTURA DO PROGRAMA
+
+## PARÂMETROS INICIAIS
+- Tema: [TEMA]
+- Data de início: [hoje]
+- Data alvo: [prova/uso clínico]
+- Dias disponíveis: [calcular]
+- Volume de conteúdo: [ ] Pequeno [ ] Médio [ ] Grande
+
+## CRONOGRAMA DE INTERVALOS EXPANDIDOS
+Baseado em curva de esquecimento otimizada:
+
+| Sessão | Intervalo | Data | Tipo de Teste | Status |
+|--------|-----------|------|---------------|--------|
+| 1 | D+0 | [data] | Estudo inicial + teste imediato | [ ] |
+| 2 | D+1 | [data] | Free recall (sem pistas) | [ ] |
+| 3 | D+3 | [data] | Cued recall (com pistas) | [ ] |
+| 4 | D+7 | [data] | Questões aplicadas | [ ] |
+| 5 | D+14 | [data] | Casos clínicos | [ ] |
+| 6 | D+30 | [data] | Integração com outros temas | [ ] |
+
+## PROTOCOLOS POR TIPO DE SESSÃO
+
+### SESSÃO TIPO A: FREE RECALL (mais difícil, mais eficaz)
+1. Feche TODO o material
+2. Configure timer: 5 minutos
+3. Escreva TUDO que lembra sobre [subtópico]
+4. Não pare de escrever até o timer
+5. Compare com material original
+6. Marque gaps com cor diferente
+
+### SESSÃO TIPO B: CUED RECALL
+Use estas pistas para recuperar informações:
+- Pista 1: "[Primeira palavra]" → Complete: _____
+- Pista 2: "[Sintoma X]" → Diagnósticos: _____
+- Pista 3: "[Mecanismo]" → Consequências: _____
+
+### SESSÃO TIPO C: APLICAÇÃO
+[3-5 questões de múltipla escolha ou casos curtos]
+
+## REGRA CRÍTICA
+"Recupere da memória ANTES de revisar. O esforço de lembrar é o que fortalece a memória, não a releitura."
+
+## AJUSTES DINÂMICOS
+- Se taxa de acerto >85%: Aumente intervalo em 50%
+- Se taxa de acerto <60%: Diminua intervalo em 50%
+- Se taxa de acerto 60-85%: Mantenha intervalo
+
+## MÉTRICAS DE ACOMPANHAMENTO
+| Data | Sessão | Itens testados | Acertos | Taxa | Tempo |
+|------|--------|----------------|---------|------|-------|
+| | | | | % | min |`
+  },
+  {
+    id: "analisador-padroes-erro",
+    title: "Analisador de Padrões de Erro",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Identifica misconceptions e gera ensino corretivo personalizado",
+    estimatedTime: "15 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["análise-erros", "misconceptions", "correção-direcionada"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Feedback Formativo (Hattie & Timperley, 2007) e Análise de Misconceptions (Chi, 2005) - identificar PADRÕES de erro revela concepções errôneas subjacentes que uma correção pontual não resolve.
+
+# PAPEL
+Você é especialista em diagnóstico de dificuldades de aprendizagem e ensino corretivo direcionado em medicina.
+
+# TAREFA
+Faça uma análise profunda dos meus padrões de erro em [ÁREA/DISCIPLINA] e crie intervenções corretivas específicas.
+
+# INPUT NECESSÁRIO
+Forneça seus últimos 10-20 erros no formato:
+- Questão: [tema]
+- Sua resposta: [X] | Correta: [Y]
+- Seu raciocínio na hora: [o que você pensou]
+
+## ANÁLISE MULTINÍVEL
+
+### NÍVEL 1: CATEGORIZAÇÃO DE ERROS
+
+| Questão | Tipo de Erro | Frequência |
+|---------|--------------|------------|
+| | Conhecimento (não sabia) | |
+| | Aplicação (sabia, aplicou errado) | |
+| | Interpretação (entendeu errado o enunciado) | |
+| | Atenção (descuido/pressa) | |
+| | Raciocínio (pulou etapa lógica) | |
+
+### NÍVEL 2: PADRÕES COGNITIVOS (vieses identificados)
+Avalie presença de:
+- [ ] Viés de confirmação: "Busquei informação que confirmava minha hipótese inicial"
+- [ ] Ancoragem: "Fiquei preso na primeira ideia"
+- [ ] Fechamento prematuro: "Parei de considerar alternativas muito cedo"
+- [ ] Disponibilidade: "Lembrei do caso mais recente/marcante, não do mais provável"
+- [ ] Representatividade: "Busquei o diagnóstico 'clássico' ignorando variações"
+
+### NÍVEL 3: MAPA DE GAPS DE CONHECIMENTO
+[Conceito com erro] → [Pré-requisito possivelmente faltante]
+[Conceito com erro] → [Pré-requisito possivelmente faltante]
+
+## ENSINO CORRETIVO PERSONALIZADO
+
+### Para cada padrão identificado:
+
+**Padrão 1: [Nome do padrão]**
+- Por que isso acontece: [Explicação cognitiva]
+- Estratégia de prevenção: [O que fazer diferente]
+- Exercício de prática deliberada: [Atividade específica]
+- Gatilho mental para prova: "Quando perceber [sinal], faça [ação]"
+
+**Padrão 2: [Nome do padrão]**
+[Repita estrutura]
+
+## QUESTÕES CORRETIVAS
+[3-5 novas questões especificamente desenhadas para treinar os pontos fracos identificados]
+
+## CHECKLIST DE MONITORAMENTO
+Para próximas questões sobre estes temas:
+- [ ] Antes de responder, considerei diagnósticos alternativos?
+- [ ] Li o enunciado completamente, incluindo negativas?
+- [ ] Verifiquei se minha resposta responde O QUE foi perguntado?
+- [ ] Busquei ativamente evidências CONTRA minha hipótese?`
+  },
+  {
+    id: "mapeador-integracao-conhecimento",
+    title: "Mapeador de Integração de Conhecimento",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Conecta novo conhecimento à base existente via interrogação elaborativa",
+    estimatedTime: "12 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["integração", "elaboração", "rede-semântica"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Interrogação Elaborativa (Pressley et al., 1987) e Construção de Esquemas (Bartlett, 1932) - perguntas "por quê?" e "como?" forçam conexão do novo com o existente, criando redes semânticas robustas.
+
+# PAPEL
+Você é especialista em integração de conhecimento médico e construção de esquemas mentais interconectados.
+
+# TAREFA
+Ajude-me a integrar profundamente [NOVO TEMA] com minha base de conhecimento existente.
+
+# ESTRUTURA DA SESSÃO
+
+## FASE 1: MAPEAMENTO DO CONHECIMENTO PRÉVIO
+"Antes de explorarmos [NOVO TEMA], me conte:"
+1. O que você JÁ SABE sobre temas relacionados?
+2. Que disciplinas/sistemas você já estudou que podem se conectar?
+3. Que casos clínicos você já viu que podem ser relevantes?
+
+[Aguarde minha resposta]
+
+## FASE 2: APRESENTAÇÃO + INTERROGAÇÃO ELABORATIVA
+Para cada conceito novo, faça:
+
+### Conceito: [X]
+Apresentação: "[Informação nova]"
+
+→ Interrogação imediata:
+1. "POR QUE isso faz sentido fisiologicamente?"
+2. "COMO isso se relaciona com [conceito prévio que você mencionou]?"
+3. "O QUE aconteceria se [variação do mecanismo]?"
+4. "QUANDO clinicamente você veria isso?"
+
+[Aguarde minhas respostas e aprofunde]
+
+## FASE 3: MAPA DE CONEXÕES
+Baseado em nossas discussões, construa:
+
+### Conexões Diretas (mesmo sistema)
+- [Conceito Prévio A] ↔ [Novo tema]: [tipo: causa/efeito/complementar/oposto]
+- [Conceito Prévio B] ↔ [Novo tema]: [tipo]
+
+### Conexões Transversais (outros sistemas)
+- [Conceito de outra área] ↔ [Novo tema]: [relação inesperada mas válida]
+
+### Conexões Clínicas
+- [Situação clínica 1] onde ambos os conhecimentos se aplicam
+- [Situação clínica 2] onde a conexão muda a conduta
+
+## FASE 4: PERGUNTAS INTEGRATIVAS
+Crie 3 perguntas que EXIGEM usar múltiplos conceitos conectados:
+1. [Pergunta integrando 2 conceitos]
+2. [Pergunta integrando 3 conceitos]
+3. [Caso clínico exigindo integração completa]
+
+## FASE 5: MAPA CONCEITUAL INTEGRADO
+Descreva visualmente as conexões:
+\`\`\`
+[Novo Tema]
+    ├── conecta-se a → [Conceito Prévio A]
+    │       └── que por sua vez → [Consequência Clínica 1]
+    ├── contrasta com → [Conceito Prévio B]
+    └── aplica-se em → [Situação Clínica]
+            └── junto com → [Outro Conhecimento]
+\`\`\`
+
+## SÍNTESE FINAL
+"Em uma frase, como [NOVO TEMA] se encaixa no seu modelo mental de [área maior]?"`
+  },
+  {
+    id: "simulador-pressao-contextual",
+    title: "Simulador de Pressão Contextual",
+    category: "Ciência Cognitiva Avançada",
+    categorySlug: "ciencia-cognitiva",
+    sectionNumber: 11,
+    description: "Treina recuperação em condições similares à prova real",
+    estimatedTime: "20 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["memória-dependente-contexto", "pressão", "performance"],
+    aiRecommended: "claude",
+    prompt: `# CONTEXTO CIENTÍFICO
+Baseado em Memória Dependente de Contexto (Godden & Baddeley, 1975) e Inoculação de Estresse (Meichenbaum, 1985) - treinar em condições similares às da prova melhora recuperação sob pressão.
+
+# PAPEL
+Você é especialista em psicologia do desempenho e preparação para provas de alta pressão em medicina.
+
+# TAREFA
+Crie uma simulação de pressão progressiva para [TEMA/TIPO DE PROVA].
+
+# CONFIGURAÇÃO DO AMBIENTE
+Instruções obrigatórias para o estudante:
+1. [ ] Timer VISÍVEL configurado
+2. [ ] Material de consulta FECHADO/fora de alcance
+3. [ ] Celular em modo avião em OUTRO cômodo
+4. [ ] Sentado como estará na prova
+5. [ ] Água disponível (como na prova)
+
+## SIMULAÇÃO EM 4 FASES
+
+### FASE 1: AQUECIMENTO SOB TEMPO (5 min)
+5 questões de recall direto - 1 minuto cada
+"Responda SEM PENSAR MUITO. Primeira resposta que vier."
+
+Q1: [Questão direta de conhecimento]
+Tempo: 60s | Sua resposta: _____ | Confiança: [1-5]
+
+[Q2-Q5 similar]
+
+→ CHECKPOINT: Como está sua ansiedade? [1-10]
+
+### FASE 2: PRESSÃO MODERADA (10 min)
+3 questões complexas com tempo apertado
+
+Q6: [Caso clínico curto exigindo raciocínio]
+Tempo: 3 minutos
+[ADICIONE DISTRATOR: "Enquanto responde, imagine que alguém está observando você"]
+
+Q7: [Questão de múltiplas etapas]
+Tempo: 3 minutos
+[DISTRATOR: "Você tem mais 2 questões difíceis depois desta"]
+
+Q8: [Questão com alternativas muito similares]
+Tempo: 2 minutos
+[DISTRATOR: "Lembre-se: errar aqui pode custar a aprovação"]
+
+→ CHECKPOINT: Como está sua ansiedade? [1-10]
+→ Se >7: Faça 3 respirações 4-7-8 antes de continuar
+
+### FASE 3: PRESSÃO ALTA (15 min)
+2 casos clínicos completos com tempo 30% menor que o confortável
+
+CASO 1: [Caso complexo com múltiplas perguntas]
+Tempo total: 6 minutos para 4 perguntas
+
+CASO 2: [Caso com informações ambíguas/incompletas]
+Tempo total: 5 minutos para 3 perguntas
+[INSTRUÇÃO: "Se não souber, marque sua melhor estimativa e siga"]
+
+→ CHECKPOINT: Como está sua ansiedade? [1-10]
+
+### FASE 4: DEBRIEFING REFLEXIVO (10 min)
+
+#### Análise de Performance
+1. Em que momento a ansiedade mais atrapalhou?
+2. Que pensamentos negativos surgiram?
+3. Onde você "travou"? O que fez para destravar?
+4. A pressão fez você errar algo que saberia normalmente?
+
+#### Estratégias Utilizadas
+- O que funcionou para manejar a pressão?
+- O que você faria diferente?
+
+#### Técnicas de Regulação (pratique agora)
+1. **Respiração 4-7-8:** Inspire 4s, segure 7s, expire 8s (3x)
+2. **Âncora de confiança:** Lembre de uma prova que foi bem
+3. **Self-talk:** "Eu me preparei. Eu sei isso. Uma questão de cada vez."
+4. **Grounding:** 5 coisas que você vê, 4 que ouve, 3 que sente
+
+## PROTOCOLO DE EXPOSIÇÃO GRADUAL
+Repita esta simulação 1x por semana, aumentando:
+- Semana 1: Tempo 50% maior que real
+- Semana 2: Tempo 20% maior que real
+- Semana 3: Tempo real
+- Semana 4: Tempo 10% menor que real`
   }
 ];
 
