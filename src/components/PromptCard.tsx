@@ -5,11 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
 
 interface PromptCardProps {
   prompt: Prompt;
+  index?: number;
 }
 
 const aiColors = {
@@ -30,12 +32,15 @@ const aiNames = {
   gemini: "Gemini",
 };
 
-export function PromptCard({ prompt }: PromptCardProps) {
+export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
   const favorite = isFavorite(prompt.id);
+  
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>();
+  const animationDelay = Math.min(index * 100, 500); // Max 500ms delay
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(prompt.prompt);
@@ -60,7 +65,16 @@ export function PromptCard({ prompt }: PromptCardProps) {
 
   return (
     <>
-      <article className="prompt-card flex flex-col h-full">
+      <article 
+        ref={ref}
+        className={cn(
+          "prompt-card flex flex-col h-full transition-all duration-500 ease-out",
+          isVisible 
+            ? "opacity-100 translate-y-0" 
+            : "opacity-0 translate-y-8"
+        )}
+        style={{ transitionDelay: isVisible ? `${animationDelay}ms` : "0ms" }}
+      >
         {/* Header */}
         <div
           className={cn(
