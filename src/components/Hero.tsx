@@ -13,7 +13,7 @@ export function Hero() {
         <div className="max-w-2xl">
           <div className="flex items-center gap-2 mb-3">
             <Stethoscope className="w-5 h-5 text-primary" />
-            <span className="text-sm text-primary font-medium">Para futuros médicos</span>
+            <span className="text-sm text-primary font-medium">Para Acadêmicos em Medicina</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold mb-3">
             Biblioteca de Prompts de IA Baseados em Evidências Científicas de Aprendizagem
