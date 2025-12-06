@@ -110,6 +110,14 @@ export const sections: Section[] = [
     slug: "ciencia-cognitiva",
     description: "Técnicas baseadas em evidências científicas de alto impacto",
     color: "hsl(var(--primary))"
+  },
+  {
+    id: "essential-medicine",
+    number: 12,
+    title: "Essenciais para Medicina",
+    slug: "essenciais-medicina",
+    description: "Top 25 prompts selecionados especialmente para estudantes de medicina",
+    color: "hsl(var(--medical-cyan))"
   }
 ];
 
@@ -2840,6 +2848,1546 @@ Repita esta simulação 1x por semana, aumentando:
 - Semana 2: Tempo 20% maior que real
 - Semana 3: Tempo real
 - Semana 4: Tempo 10% menor que real`
+  },
+
+  // SEÇÃO 12: ESSENCIAIS PARA MEDICINA - TOP 25
+  {
+    id: "resumir-notas-estudo",
+    title: "Resumir Notas de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Sintetiza informações complexas de anatomia, fisiologia e patologia",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["síntese", "organização", "fisiopatologia"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em síntese de conteúdo médico denso.
+
+# TAREFA
+Resuma meus estudos sobre [SÍNDROME/DOENÇA] de forma estruturada e hierárquica.
+
+# FORMATO DE SAÍDA
+
+## 1. FISIOPATOLOGIA
+[Mecanismo subjacente em 3-5 pontos-chave]
+
+## 2. QUADRO CLÍNICO
+- Sinais cardinais:
+- Sintomas típicos:
+- Apresentação atípica:
+
+## 3. DIAGNÓSTICO DIFERENCIAL
+| Condição | Diferenciador-chave |
+|----------|---------------------|
+| [DD 1]   | [Como distinguir]   |
+| [DD 2]   | [Como distinguir]   |
+
+## 4. EXAMES COMPLEMENTARES
+- Laboratoriais:
+- Imagem:
+- Especializados:
+
+## 5. TRATAMENTO
+- Primeira linha:
+- Alternativas:
+- Suporte:
+
+## 6. PROGNÓSTICO
+[Fatores de bom/mau prognóstico]
+
+# REGRAS
+- Use hierarquia clara
+- Priorize informações de alto rendimento
+- Inclua mnemônicos quando útil`
+  },
+  {
+    id: "estrategia-exame-medico",
+    title: "Criar Estratégia de Exame",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Plano estratégico 360° para provas de medicina e residência",
+    estimatedTime: "15 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["estratégia", "provas", "residência", "planejamento"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é coach especializado em preparação para exames médicos de alto impacto.
+
+# TAREFA
+Crie plano estratégico de 8 semanas para prova de [DISCIPLINA MÉDICA/RESIDÊNCIA].
+
+# FORMATO DE SAÍDA
+
+## 1. DIAGNÓSTICO INICIAL
+- Avaliação de conhecimento base
+- Identificação de lacunas prioritárias
+- Tempo disponível vs. conteúdo
+
+## 2. CRONOGRAMA SEMANAL
+
+### Semanas 1-2: Fundamentos
+[Distribuição de tópicos prioritários]
+
+### Semanas 3-4: Aprofundamento
+[Integração de sistemas e casos clínicos]
+
+### Semanas 5-6: Consolidação
+[Revisão espaçada e simulados]
+
+### Semanas 7-8: Sprint Final
+[Revisão de alto rendimento e gestão de ansiedade]
+
+## 3. SIMULADOS PROGRESSIVOS
+- Frequência:
+- Análise de erros:
+- Métricas de acompanhamento:
+
+## 4. PROTOCOLO DE REVISÃO FINAL
+[Últimos 3 dias antes da prova]
+
+## 5. GESTÃO DE ANSIEDADE
+- Técnicas pré-prova:
+- No dia da prova:
+
+# APLICAÇÕES
+- Provas de ciclo básico (Anatomia, Fisiologia, Bioquímica)
+- OSCE (Objective Structured Clinical Examination)
+- Preparação para residência médica
+- Provas práticas`
+  },
+  {
+    id: "melhorar-anotacoes-med",
+    title: "Melhorar Anotações Médicas",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Sistema híbrido de notas para volume massivo de informações",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["anotações", "cornell", "mind-map", "organização"],
+    aiRecommended: "gemini",
+    prompt: `# PAPEL
+Você é especialista em sistemas de anotação para alta carga informacional.
+
+# TAREFA
+Crie sistema híbrido de anotações para medicina combinando Cornell + Mind Map digital.
+
+# FORMATO DE SAÍDA
+
+## 1. TEMPLATE CORNELL ADAPTADO PARA CASOS CLÍNICOS
+
+### Coluna Esquerda (Cues)
+- Diagnósticos diferenciais
+- Perguntas-chave
+
+### Área Principal
+- Dados do caso
+- Raciocínio clínico
+- Exames e resultados
+
+### Rodapé
+- Síntese do caso
+- Pontos de aprendizado
+
+## 2. CODIFICAÇÃO POR GRAVIDADE
+🔴 Vermelho: Urgência/Emergência
+🟡 Amarelo: Diagnóstico diferencial importante
+🟢 Verde: Conduta padrão
+🔵 Azul: Conceito-base
+
+## 3. MIND MAP PARA INTEGRAÇÃO DE SISTEMAS
+[Estrutura para conectar sistemas corporais]
+- Nó central: [Sistema principal]
+- Ramos: [Conexões com outros sistemas]
+- Links bidirecionais
+
+## 4. WORKFLOW DE REVISÃO
+- Diário: 5 min scanning
+- Semanal: Conexões entre notas
+- Mensal: Reorganização e gaps
+
+## 5. FERRAMENTAS RECOMENDADAS
+- Notion/Obsidian para digital
+- Codificação de cores consistente
+- Sistema de tags semântico`
+  },
+  {
+    id: "truques-memoria-med",
+    title: "Truques de Retenção de Memória",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Técnicas de memorização baseadas em neurociência para medicina",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["memorização", "mnemônicos", "anki", "neurociência"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é neurocientista especializado em técnicas de memorização aplicadas à medicina.
+
+# TAREFA
+Crie técnicas de memorização baseadas em neurociência para [ANATOMIA/FARMACOLOGIA/TEMA].
+
+# FORMATO DE SAÍDA
+
+## 1. MNEMÔNICOS VISUAIS
+[Criar 5 mnemônicos vívidos e memoráveis]
+
+Exemplo para nervos cranianos:
+"On Old Olympus Towering Tops A Finn And German Viewed Some Hops"
+
+## 2. SISTEMA LEITNER DIGITALIZADO
+### Configuração Anki
+- Deck principal: [TEMA]
+- Subdecks por dificuldade
+- Intervalos customizados para medicina
+
+### Regras de Progressão
+- Acertou fácil: +3 dias
+- Acertou com esforço: +1 dia
+- Errou: Volta ao início
+
+## 3. METHOD OF LOCI PARA ANATOMIA
+[Palácio da memória adaptado para estruturas anatômicas]
+
+### Seu Palácio
+- Sala 1: [Sistema/Região]
+- Objetos: [Estruturas anatômicas]
+- Cenas memoráveis
+
+## 4. ELABORATIVE INTERROGATION
+Para cada conceito, responda:
+- POR QUE isso funciona assim?
+- COMO isso se conecta com X?
+- O QUE acontece SE...?
+
+## 5. GERAÇÃO ATIVA DE PERGUNTAS
+Transforme cada tópico em 3 perguntas:
+1. Conceitual (O que é?)
+2. Mecanística (Como funciona?)
+3. Clínica (Quando é relevante?)`
+  },
+  {
+    id: "preparacao-exames-med",
+    title: "Preparação Completa para Exames",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Técnicas específicas para provas médicas tipo USMLE/REVALIDA",
+    estimatedTime: "12 min",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["provas", "usmle", "revalida", "técnicas"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em preparação para concursos médicos de alto nível.
+
+# TAREFA
+Desenvolva plano de preparação para [PROVA MÉDICA ESPECÍFICA].
+
+# FORMATO DE SAÍDA
+
+## 1. ANÁLISE DE PADRÕES DE QUESTÕES
+### Distribuição por Área
+| Área | % Histórico | Prioridade |
+|------|-------------|------------|
+| Clínica Médica | X% | Alta |
+| Cirurgia | X% | Média |
+| [etc] | X% | [nível] |
+
+### Tipos de Questão
+- Múltipla escolha direta: X%
+- Casos clínicos: X%
+- Imagens/exames: X%
+
+## 2. ESTRATÉGIAS POR TIPO
+
+### Questões de Anatomia
+[Técnicas específicas]
+
+### Questões de Farmacologia
+[Abordagem por classe de fármacos]
+
+### Casos Clínicos
+[Framework de resolução em 5 passos]
+
+## 3. GERENCIAMENTO DE ANSIEDADE
+- Técnicas de respiração pré-prova
+- Ancoragem de confiança
+- Self-talk positivo
+
+## 4. ALOCAÇÃO DE TEMPO
+- Questões fáceis: X segundos
+- Questões médias: X minutos
+- Casos complexos: X minutos
+- Revisão final: X minutos
+
+## 5. PROTOCOLO DE REVISÃO
+- O que revisar no último dia
+- O que NÃO fazer antes da prova
+- Checklist do dia da prova`
+  },
+  {
+    id: "cronograma-estudo-med",
+    title: "Cronograma de Estudo Otimizado",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Distribuição algorítmica de 8+ disciplinas simultâneas",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["cronograma", "planejamento", "organização", "tempo"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em otimização de cronogramas de estudo para medicina.
+
+# TAREFA
+Gere cronograma otimizado para estudante de medicina com [X] disciplinas.
+
+# INFORMAÇÕES NECESSÁRIAS
+- Número de disciplinas:
+- Horas disponíveis por dia:
+- Dias até a próxima prova:
+- Dificuldades específicas:
+
+# FORMATO DE SAÍDA
+
+## 1. ALGORITMO DE DISTRIBUIÇÃO DE CARGA COGNITIVA
+
+### Manhã (alta energia)
+- Disciplinas que exigem raciocínio: [lista]
+
+### Tarde (energia média)
+- Revisão ativa e questões: [lista]
+
+### Noite (baixa energia)
+- Revisão passiva e Anki: [lista]
+
+## 2. BLOCOS TEMÁTICOS INTERCALADOS
+Exemplo para Cardiologia:
+- Bloco 1: Anatomia cardíaca
+- Bloco 2: Fisiologia cardiovascular
+- Bloco 3: Patologia cardíaca
+- Bloco 4: Integração clínica
+
+## 3. REVISÃO ESPAÇADA INTEGRADA
+| Dia | Novo Conteúdo | Revisão D+1 | Revisão D+7 |
+|-----|---------------|-------------|-------------|
+| Seg | [Tema A] | - | - |
+| Ter | [Tema B] | Tema A | - |
+| [etc] | | | |
+
+## 4. FLEXIBILIDADE PARA PLANTÕES
+- Blocos de contingência
+- Recuperação de atrasos
+- Ajustes semanais
+
+## 5. SINCRONIZAÇÃO COM CALENDÁRIO
+- Formato exportável para Google Calendar
+- Alertas e lembretes
+- Checkpoints semanais`
+  },
+  {
+    id: "estrategias-fazer-provas",
+    title: "Estratégias para Fazer Provas",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Técnicas de eliminação e raciocínio clínico em provas",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["provas", "técnicas", "eliminação", "raciocínio"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é coach de performance em provas médicas.
+
+# TAREFA
+Otimize minha performance em provas de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. ESTRATÉGIAS POR TIPO DE QUESTÃO
+
+### Anatomia
+- Visualize a estrutura
+- Use referências espaciais
+- Conecte com função
+
+### Farmacologia
+- Pense por classe primeiro
+- Mecanismo → Indicação → Efeitos adversos
+- Elimine por toxicidade
+
+### Casos Clínicos
+1. Leia a última pergunta primeiro
+2. Identifique dados-chave
+3. Formule hipótese antes de ver alternativas
+4. Elimine distradores óbvios
+5. Compare alternativas similares
+
+## 2. TÉCNICAS DE ELIMINAÇÃO
+- Alternativas absolutas ("sempre", "nunca") = suspeitas
+- Duas alternativas opostas = uma provavelmente certa
+- Alternativa mais longa/detalhada = frequentemente correta
+
+## 3. GESTÃO DE ANSIEDADE
+- Respiração 4-7-8 entre blocos
+- Âncora de confiança em questões difíceis
+- "Uma questão de cada vez"
+
+## 4. ALOCAÇÃO DE TEMPO
+- 1ª passada: questões fáceis (marcar e seguir)
+- 2ª passada: questões médias
+- 3ª passada: questões difíceis + revisão
+
+## 5. ANÁLISE PÓS-PROVA
+- Padrões de erro
+- Temas recorrentes
+- Ajustes para próxima prova`
+  },
+  {
+    id: "guias-anotacao-med",
+    title: "Guias de Anotação por Disciplina",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Metodologias específicas para cada tipo de conteúdo médico",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["anotações", "metodologia", "organização"],
+    aiRecommended: "gemini",
+    prompt: `# PAPEL
+Você é especialista em metodologias de anotação para diferentes tipos de conteúdo.
+
+# TAREFA
+Desenvolva guias de anotação específicos para cada disciplina médica.
+
+# FORMATO DE SAÍDA
+
+## 1. CORNELL PARA AULAS TEÓRICAS
+
+### Anatomia
+- Cues: Estruturas, relações
+- Notas: Descrições, funções
+- Resumo: Integração clínica
+
+### Fisiologia
+- Cues: Mecanismos-chave
+- Notas: Fluxogramas, equações
+- Resumo: Aplicação patológica
+
+## 2. OUTLINE PARA FARMACOLOGIA
+
+### Estrutura Hierárquica
+1. Classe farmacológica
+   1.1 Mecanismo de ação
+   1.2 Fármacos representantes
+       1.2.1 Indicações
+       1.2.2 Efeitos adversos
+       1.2.3 Interações
+
+## 3. MIND MAPS PARA INTEGRAÇÃO DE SISTEMAS
+
+### Exemplo: Neuro + Endócrino + Cardiovascular
+[Nó central] → [Ramos de conexão] → [Aplicação clínica]
+
+## 4. SKETCHNOTING PARA ANATOMIA VISUAL
+- Desenhos simplificados
+- Cores por sistema
+- Legendas padronizadas
+- Notas marginais
+
+## 5. WORKFLOW DE REVISÃO ATIVA
+- Ocultar respostas
+- Testar memória
+- Marcar dúvidas
+- Revisar espaçadamente`
+  },
+  {
+    id: "planejamento-longo-prazo",
+    title: "Planejamento de Longo Prazo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Estratégia semestral e anual com OKRs para medicina",
+    estimatedTime: "15 min",
+    evidenceLevel: "Média",
+    difficulty: "Avançado",
+    tags: ["planejamento", "OKRs", "longo-prazo", "estratégia"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é consultor de carreira médica e planejamento estratégico.
+
+# TAREFA
+Planeje estratégia de estudos de longo prazo para medicina usando OKRs.
+
+# FORMATO DE SAÍDA
+
+## 1. VISÃO GERAL (6 ANOS)
+### Ciclo Básico (Anos 1-2)
+- Objetivos macro
+- Competências-chave
+
+### Ciclo Clínico (Anos 3-4)
+- Objetivos macro
+- Competências-chave
+
+### Internato (Anos 5-6)
+- Objetivos macro
+- Preparação residência
+
+## 2. OKRs SEMESTRAIS
+
+### Objetivo 1: [Dominar X]
+- KR1: Acertar 80% questões de X
+- KR2: Completar Y casos clínicos
+- KR3: Revisar Z flashcards/dia
+
+### Objetivo 2: [Desenvolver habilidade Y]
+- KR1: [Métrica mensurável]
+- KR2: [Métrica mensurável]
+
+## 3. MILESTONES SEMANAIS
+- Semana 1: [Entregável]
+- Semana 2: [Entregável]
+- [etc]
+
+## 4. RETROSPECTIVAS DE APRENDIZADO
+### Após Cada Prova
+- O que funcionou?
+- O que falhou?
+- Ajustes para próximo ciclo
+
+## 5. DASHBOARD VISUAL DE PROGRESSO
+| Área | Teórico | Prático | Habilidades |
+|------|---------|---------|-------------|
+| Cardio | 🟢 | 🟡 | 🟢 |
+| Neuro | 🟡 | 🔴 | 🟡 |
+| [etc] | | | |`
+  },
+  {
+    id: "gerenciar-tempo-estudo",
+    title: "Gerenciar Tempo de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Time-blocking para aulas, plantões e vida pessoal",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["tempo", "produtividade", "pomodoro", "priorização"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é especialista em produtividade para profissionais de alta demanda.
+
+# TAREFA
+Crie sistema de gestão de tempo para estudante de medicina.
+
+# INFORMAÇÕES NECESSÁRIAS
+- Horas de aula por dia:
+- Plantões (frequência e duração):
+- Horas de estudo desejadas:
+- Compromissos fixos:
+
+# FORMATO DE SAÍDA
+
+## 1. TIME-BLOCKING FLEXÍVEL
+### Template de Dia Típico
+| Horário | Bloco | Atividade |
+|---------|-------|-----------|
+| 06:00-07:00 | Energia Alta | Estudo denso |
+| 07:00-12:00 | Aulas | [Faculdade] |
+| [etc] | | |
+
+### Adaptação para Dias de Plantão
+[Template alternativo]
+
+## 2. TÉCNICA POMODORO ADAPTADA
+- 25 min estudo focado
+- 5 min pausa ativa
+- A cada 4 pomodoros: pausa longa (20 min)
+- Meta diária: X pomodoros
+
+## 3. MATRIZ EISENHOWER PARA DISCIPLINAS
+| | Urgente | Não Urgente |
+|---|---------|-------------|
+| Importante | Prova amanhã | Base sólida |
+| Não Importante | Otimizar | Eliminar |
+
+## 4. BUFFER PARA EMERGÊNCIAS
+- 2h/semana para imprevistos
+- Recuperação de atrasos
+- Flexibilidade sem culpa
+
+## 5. PROTEÇÃO DE SONO/BEM-ESTAR
+- Horário de dormir inegociável
+- Exercício mínimo semanal
+- Tempo social protegido`
+  },
+  {
+    id: "rotina-estudo-personalizada",
+    title: "Construir Rotina de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Rotina adaptada para cronotipo e plantões noturnos",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["rotina", "cronotipo", "plantões", "hábitos"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é especialista em cronobiologia e design de rotinas.
+
+# TAREFA
+Desenvolva rotina personalizada de estudos para medicina.
+
+# INFORMAÇÕES NECESSÁRIAS
+- Cronotipo (matutino/vespertino/intermediário):
+- Frequência de plantões noturnos:
+- Períodos de provas:
+
+# FORMATO DE SAÍDA
+
+## 1. ANÁLISE DO CRONOTIPO
+### Matutino
+- Pico cognitivo: 06:00-11:00
+- Declínio: 14:00-16:00
+- Segundo pico: 17:00-19:00
+
+### Vespertino
+[Horários adaptados]
+
+## 2. TIME-BLOCKING ADAPTATIVO
+
+### Dia Normal
+[Grade horária otimizada]
+
+### Pós-Plantão Noturno
+- Sono de recuperação: X horas
+- Estudo leve após acordar
+- Retorno gradual à rotina
+
+### Semana de Provas
+[Intensificação controlada]
+
+## 3. RITUAIS DE TRANSIÇÃO
+- Início do estudo: [ritual de 5 min]
+- Entre disciplinas: [pausa ativa]
+- Fim do estudo: [ritual de fechamento]
+
+## 4. TÉCNICAS DE RECUPERAÇÃO COGNITIVA
+- Power naps (10-20 min)
+- Caminhada entre blocos
+- Hidratação e snacks estratégicos
+
+## 5. MÉTRICAS DE ACOMPANHAMENTO
+- Horas estudadas vs. planejadas
+- Qualidade do foco (1-10)
+- Energia ao final do dia`
+  },
+  {
+    id: "estrategias-neurociencia",
+    title: "Estratégias Baseadas em Neurociência",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Técnicas de retrieval practice e interleaving para provas",
+    estimatedTime: "10 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["neurociência", "retrieval", "interleaving", "elaboração"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é neurocientista especializado em aprendizagem e memória.
+
+# TAREFA
+Desenvolva estratégias de preparação baseadas em neurociência para prova de [DISCIPLINA].
+
+# FORMATO DE SAÍDA
+
+## 1. RETRIEVAL PRACTICE (Prática de Recuperação)
+### Implementação
+- Feche o material
+- Tente lembrar ativamente
+- Verifique e corrija
+- Repita após intervalo
+
+### Formatos
+- Flashcards
+- Questões de prova
+- Explicar em voz alta
+- Mapas mentais de memória
+
+## 2. INTERLEAVING (Alternância de Tópicos)
+### Por que funciona
+[Explicação neurocientífica]
+
+### Como aplicar
+- Não estude um tópico até "dominar"
+- Alterne entre 3-4 tópicos por sessão
+- Exemplo de sequência: A → B → C → A → B → C
+
+## 3. ELABORAÇÃO
+### Técnicas
+- Conectar com conhecimento prévio
+- Gerar exemplos próprios
+- Explicar "por quê" e "como"
+- Comparar e contrastar
+
+## 4. SELF-EXPLANATION
+### Processo
+1. Leia um trecho
+2. Pause e explique em suas palavras
+3. Identifique o que não ficou claro
+4. Busque a resposta ativamente
+
+## 5. ESPAÇAMENTO
+### Cronograma Ideal
+- Revisão 1: 24 horas após
+- Revisão 2: 3 dias após
+- Revisão 3: 7 dias após
+- Revisão 4: 21 dias após`
+  },
+  {
+    id: "melhorar-habitos-estudo",
+    title: "Melhorar Hábitos de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Transformar procrastinação em consistência com micro-hábitos",
+    estimatedTime: "8 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["hábitos", "consistência", "procrastinação", "micro-hábitos"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é especialista em ciência comportamental e formação de hábitos.
+
+# TAREFA
+Analise e redesenhe meus hábitos de estudo.
+
+# INFORMAÇÕES NECESSÁRIAS
+Descreva seus hábitos atuais:
+- Quando estuda?
+- Onde estuda?
+- Quanto tempo consegue manter foco?
+- O que te distrai?
+
+# FORMATO DE SAÍDA
+
+## 1. DIAGNÓSTICO DE HÁBITOS ATUAIS
+- Gatilhos identificados
+- Comportamentos problemáticos
+- Recompensas atuais
+
+## 2. HABIT STACKING (Empilhamento)
+### Fórmula
+"Depois de [HÁBITO EXISTENTE], vou [NOVO HÁBITO]"
+
+### Exemplos para Medicina
+- Depois do café da manhã → 30 min Anki
+- Depois de chegar em casa → revisar anotações do dia
+- Depois de escovar os dentes → ler 10 páginas
+
+## 3. GATILHOS AMBIENTAIS
+- Local de estudo dedicado
+- Celular em modo avião
+- Materiais prontos na noite anterior
+- Ambiente sem distrações visuais
+
+## 4. ACCOUNTABILITY (Responsabilização)
+- Grupo de estudos com check-ins
+- App de tracking (Habitica, Streaks)
+- Parceiro de accountability
+- Metas públicas compartilhadas
+
+## 5. REFORÇO POSITIVO PROGRESSIVO
+- Micro-recompensas após blocos
+- Celebrar pequenas vitórias
+- Tracking visual de sequência
+- Recompensa semanal por meta cumprida`
+  },
+  {
+    id: "encontrar-recursos-estudo",
+    title: "Encontrar Recursos de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Curadoria de livros, vídeos, apps e artigos para medicina",
+    estimatedTime: "8 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["recursos", "curadoria", "livros", "apps"],
+    aiRecommended: "perplexity",
+    prompt: `# PAPEL
+Você é curador de recursos educacionais para medicina.
+
+# TAREFA
+Selecione os melhores recursos para [DISCIPLINA MÉDICA].
+
+# FORMATO DE SAÍDA
+
+## 1. LIVROS-TEXTO ATUALIZADOS
+### Básico
+- [Título] - [Autor] - [Por que é bom]
+
+### Avançado
+- [Título] - [Autor] - [Por que é bom]
+
+### Referência Rápida
+- [Título] - [Para que serve]
+
+## 2. VÍDEOS EDUCACIONAIS
+### Plataformas Recomendadas
+- Osmosis: [O que oferece]
+- Lecturio: [O que oferece]
+- Khan Academy Medicine: [O que oferece]
+- Canais YouTube específicos
+
+## 3. APPS INTERATIVOS
+### Anatomia
+- Complete Anatomy
+- Visible Body
+
+### Flashcards
+- Anki (decks recomendados)
+- Quizlet
+
+### Questões
+- [Apps de questões por área]
+
+## 4. ARTIGOS DE REVISÃO
+### Bases de Dados
+- PubMed
+- UpToDate
+- DynaMed
+
+### Revistas de Alto Impacto
+- NEJM
+- Lancet
+- JAMA
+
+## 5. PODCASTS MÉDICOS
+- [Nome] - [Foco] - [Frequência]
+
+# CRITÉRIOS DE SELEÇÃO
+- Qualidade acadêmica
+- Atualização recente
+- Acessibilidade
+- Custo-benefício`
+  },
+  {
+    id: "checklist-rotina-estudo",
+    title: "Checklist de Rotina de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Checklists diários para garantir consistência no estudo",
+    estimatedTime: "5 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["checklist", "rotina", "consistência", "tracking"],
+    aiRecommended: "gemini",
+    prompt: `# PAPEL
+Você é especialista em design de sistemas de produtividade.
+
+# TAREFA
+Crie checklist de rotina diária de estudos para medicina.
+
+# FORMATO DE SAÍDA
+
+## CHECKLIST DIÁRIO DE ESTUDOS
+
+### ☐ PRÉ-ESTUDO (5 min)
+- [ ] Local organizado
+- [ ] Água/café prontos
+- [ ] Celular em modo avião
+- [ ] Meta do dia definida
+- [ ] Materiais separados
+
+### ☐ REVISÃO ESPAÇADA (15-30 min)
+- [ ] Anki: X cards revisados
+- [ ] Flashcards de ontem
+- [ ] Quick review da semana
+
+### ☐ ESTUDO ATIVO (2-4h)
+- [ ] Bloco 1: [Tema] - [X] min
+- [ ] Pausa ativa (5 min)
+- [ ] Bloco 2: [Tema] - [X] min
+- [ ] Pausa ativa (5 min)
+- [ ] Bloco 3: [Tema] - [X] min
+
+### ☐ QUESTÕES/CASOS (30-60 min)
+- [ ] X questões resolvidas
+- [ ] Análise de erros feita
+- [ ] Conceitos anotados
+
+### ☐ FECHAMENTO (10 min)
+- [ ] O que aprendi hoje?
+- [ ] O que revisar amanhã?
+- [ ] Meta cumprida? (1-10)
+- [ ] Preparar amanhã
+
+## GATILHOS AMBIENTAIS
+- Alarme às [HORÁRIO] = iniciar estudo
+- [LOCAL ESPECÍFICO] = modo estudo
+- [MÚSICA/SOM] = foco ativado
+
+## RECOMPENSAS
+- Bloco completo = [micro-recompensa]
+- Dia completo = [recompensa maior]
+- Semana completa = [celebração]`
+  },
+  {
+    id: "rastrear-progresso-notas",
+    title: "Rastrear Progresso de Notas",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Dashboard visual de evolução por disciplina e gaps",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Intermediário",
+    tags: ["tracking", "progresso", "dashboard", "análise"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é analista de dados educacionais especializado em medicina.
+
+# TAREFA
+Crie sistema de tracking de notas e performance para estudante de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. DASHBOARD DE PROGRESSO
+
+### Visão Geral
+| Disciplina | Nota Atual | Meta | Tendência | Próxima Ação |
+|------------|------------|------|-----------|--------------|
+| Anatomia | 7.5 | 8.5 | ↗️ | Manter ritmo |
+| Fisiologia | 6.0 | 8.0 | ↘️ | Intensificar |
+| [etc] | | | | |
+
+### Gráfico de Evolução
+[Descrição de gráfico de linha temporal]
+
+## 2. IDENTIFICAÇÃO DE LACUNAS
+
+### Mapa de Calor por Tópico
+| Tópico | Domínio | Prioridade |
+|--------|---------|------------|
+| Cardio | 🟢 Alto | Manter |
+| Neuro | 🟡 Médio | Reforçar |
+| Endócrino | 🔴 Baixo | Urgente |
+
+## 3. ANÁLISE DE ERROS RECORRENTES
+- Padrão 1: [Tipo de erro] - [Frequência] - [Solução]
+- Padrão 2: [Tipo de erro] - [Frequência] - [Solução]
+
+## 4. INSIGHTS ACIONÁVEIS
+Baseado nos dados:
+1. [Ação específica para esta semana]
+2. [Ajuste de estratégia]
+3. [Recurso recomendado]
+
+## 5. MÉTRICAS DE ACOMPANHAMENTO
+- Tempo de estudo vs. resultado
+- Questões certas vs. erradas
+- Progressão semanal`
+  },
+  {
+    id: "templates-cronograma",
+    title: "Templates de Cronograma Semestral",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Templates reutilizáveis com visualização Gantt",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Intermediário",
+    tags: ["template", "cronograma", "semestre", "gantt"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em gestão de projetos aplicada à educação médica.
+
+# TAREFA
+Crie template de cronograma semestral para medicina.
+
+# INFORMAÇÕES NECESSÁRIAS
+- Disciplinas do semestre:
+- Datas de provas:
+- Horas semanais disponíveis:
+
+# FORMATO DE SAÍDA
+
+## 1. VISÃO GERAL SEMESTRAL (GANTT)
+
+### Mês 1
+| Semana | Disciplina A | Disciplina B | Disciplina C |
+|--------|--------------|--------------|--------------|
+| S1 | [Tópico] | [Tópico] | [Tópico] |
+| S2 | [Tópico] | [Tópico] | [Tópico] |
+
+[Continua para todos os meses]
+
+## 2. DISTRIBUIÇÃO BALANCEADA
+### Carga por Semana
+- Teoria: X horas
+- Prática: X horas
+- Questões: X horas
+- Revisão: X horas
+
+## 3. SLOTS DE REVISÃO ESPAÇADA
+- Revisão D+1: [horário fixo]
+- Revisão D+7: [dia da semana]
+- Revisão D+30: [momento do mês]
+
+## 4. BUFFER PARA IMPREVISTOS
+- 2-3 horas/semana sem programação
+- Flexibilidade para ajustes
+- Recuperação de atrasos
+
+## 5. EXPORTAÇÃO
+### Google Calendar
+- Eventos com alertas
+- Código de cores por disciplina
+- Lembretes de revisão
+
+### Notion/Excel
+- Template estruturado
+- Checkboxes de progresso
+- Fórmulas de acompanhamento`
+  },
+  {
+    id: "organizar-elearning",
+    title: "Organizar E-Learning",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Sistema de organização de materiais digitais médicos",
+    estimatedTime: "8 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["organização", "digital", "pastas", "e-learning"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em gestão de conhecimento digital.
+
+# TAREFA
+Redesenhe a organização de materiais digitais de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. ESTRUTURA DE PASTAS
+
+### Por Sistema/Disciplina
+📁 Medicina
+├── 📁 01_Ciclo_Basico
+│   ├── 📁 Anatomia
+│   │   ├── 📁 Membros
+│   │   ├── 📁 Tronco
+│   │   └── 📁 Cabeça_Pescoco
+│   ├── 📁 Fisiologia
+│   └── 📁 Bioquimica
+├── 📁 02_Ciclo_Clinico
+│   ├── 📁 Clinica_Medica
+│   ├── 📁 Cirurgia
+│   └── 📁 Pediatria
+└── 📁 03_Internato
+
+## 2. NOMENCLATURA PADRONIZADA
+Formato: [Módulo]_[Tema]_[Tipo]_[Data]
+Exemplo: CM01_ICC_Resumo_2024-03
+
+### Tipos de Arquivo
+- RES = Resumo
+- QST = Questões
+- CASO = Caso clínico
+- AULA = Material de aula
+- REF = Referência
+
+## 3. SISTEMA DE TAGS SEMÂNTICO
+### Tags de Status
+#revisar #dominado #dificil #urgente
+
+### Tags de Tipo
+#teoria #pratica #questoes #imagem
+
+## 4. BUSCA EFICIENTE
+- Ferramenta: [Recomendação]
+- Atalhos de teclado
+- Filtros salvos
+
+## 5. BACKUP E SINCRONIZAÇÃO
+- Google Drive/OneDrive
+- Versionamento automático
+- Acesso multi-dispositivo`
+  },
+  {
+    id: "criar-resumos-estudo",
+    title: "Criar Resumos de Estudo",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Sínteses executivas para revisão rápida pré-prova",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["resumos", "síntese", "revisão", "pré-prova"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em síntese de alto rendimento para medicina.
+
+# TAREFA
+Produza resumo executivo de [TÓPICO MÉDICO] otimizado para revisão rápida.
+
+# FORMATO DE SAÍDA
+
+## RESUMO EXECUTIVO: [TÓPICO]
+**Tempo de leitura:** 5 minutos
+
+### 1. CONCEITOS-CHAVE (Máx. 5)
+1. [Conceito essencial 1]
+2. [Conceito essencial 2]
+3. [Conceito essencial 3]
+
+### 2. FISIOPATOLOGIA SIMPLIFICADA
+[Mecanismo em 3 frases máximo]
+
+📌 **Mnemônico:** [Se aplicável]
+
+### 3. QUADRO CLÍNICO
+**Clássico:** [Apresentação típica em 1 linha]
+**Atípico:** [O que não esquecer]
+
+### 4. DIAGNÓSTICO DIFERENCIAL
+| Condição | Diferenciador |
+|----------|---------------|
+| [DD 1] | [Chave] |
+| [DD 2] | [Chave] |
+
+### 5. TRATAMENTO
+**1ª Linha:** [Tratamento]
+**Alternativa:** [Se 1ª linha falhar]
+
+### 6. ARMADILHAS DE PROVA ⚠️
+- [Pegadinha comum 1]
+- [Pegadinha comum 2]
+
+### 7. HIGH YIELD
+💡 [Fato de alto rendimento que CAI EM PROVA]
+
+---
+📚 **Para aprofundar:** [Referência rápida]`
+  },
+  {
+    id: "testes-digitais-questoes",
+    title: "Criar Banco de Questões Digital",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Sistema de questões com feedback e adaptive testing",
+    estimatedTime: "12 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["questões", "banco", "feedback", "adaptive"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é especialista em avaliação educacional e design instrucional.
+
+# TAREFA
+Desenvolva sistema de questões personalizado para [DISCIPLINA].
+
+# FORMATO DE SAÍDA
+
+## 1. BANCO DE QUESTÕES ESTRUTURADO
+
+### Por Nível de Dificuldade
+- 🟢 Fácil (30%): Conceitos básicos
+- 🟡 Médio (50%): Aplicação clínica
+- 🔴 Difícil (20%): Análise e síntese
+
+### Por Tipo
+- Múltipla escolha: X%
+- Casos clínicos: X%
+- Associação: X%
+- V ou F justificado: X%
+
+## 2. QUESTÕES RANDOMIZADAS
+[Sistema de embaralhamento inteligente]
+- Evitar repetição recente
+- Balancear dificuldade
+- Variar tipos
+
+## 3. FEEDBACK EXPLICATIVO
+### Para Resposta Correta
+✅ Correto! [Explicação breve do porquê]
+
+### Para Resposta Incorreta
+❌ Incorreto. 
+- Por que não é [alternativa marcada]
+- A correta é [letra] porque [explicação]
+- 📖 Revisar: [Tópico específico]
+
+## 4. ANÁLISE DE ERROS POR TÓPICO
+| Tópico | Acertos | Erros | Taxa | Ação |
+|--------|---------|-------|------|------|
+| [A] | X | Y | Z% | [Recomendação] |
+
+## 5. ADAPTIVE TESTING
+### Lógica de Progressão
+- 3 acertos consecutivos → aumenta dificuldade
+- 2 erros consecutivos → reduz dificuldade
+- Mantém zona de desafio ótimo (70-85% acerto)
+
+## 6. RELATÓRIO DE PERFORMANCE
+- Gráfico de evolução
+- Áreas fortes/fracas
+- Tempo médio por questão
+- Comparativo com meta`
+  },
+  {
+    id: "modulos-adaptativos",
+    title: "Módulos de Estudo Adaptativos",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Plataforma que ajusta dificuldade conforme desempenho",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Intermediário",
+    tags: ["adaptativo", "personalizado", "desempenho"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é especialista em aprendizagem adaptativa.
+
+# TAREFA
+Crie módulos de estudo que se adaptem ao meu desempenho em [DISCIPLINA].
+
+# FORMATO DE SAÍDA
+
+## 1. AVALIAÇÃO DIAGNÓSTICA INICIAL
+[10 questões de diferentes níveis para mapear conhecimento]
+
+### Resultado
+- Nível atual: [Iniciante/Intermediário/Avançado]
+- Gaps identificados: [Lista]
+- Pontos fortes: [Lista]
+
+## 2. TRILHA PERSONALIZADA
+
+### Se Iniciante
+- Módulo 1: Fundamentos [X horas]
+- Módulo 2: Conceitos básicos [X horas]
+- Módulo 3: Introdução à aplicação [X horas]
+
+### Se Intermediário
+- Módulo 1: Revisão rápida [X horas]
+- Módulo 2: Aplicação clínica [X horas]
+- Módulo 3: Casos complexos [X horas]
+
+### Se Avançado
+- Módulo 1: Casos atípicos [X horas]
+- Módulo 2: Integração de sistemas [X horas]
+- Módulo 3: Simulação de prova [X horas]
+
+## 3. AJUSTE DINÂMICO
+### Gatilhos de Progressão
+- >80% acerto → Avançar dificuldade
+- 60-80% acerto → Manter nível
+- <60% acerto → Revisar base
+
+## 4. CHECKPOINTS
+- Avaliação a cada módulo
+- Redirecionamento automático
+- Reforço de gaps
+
+## 5. GAMIFICAÇÃO
+- XP por módulo completo
+- Badges de proficiência
+- Ranking pessoal de evolução`
+  },
+  {
+    id: "dicas-tempo-produtividade",
+    title: "Dicas de Tempo e Produtividade",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Técnicas de produtividade para alta carga de estudos",
+    estimatedTime: "6 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["produtividade", "tempo", "técnicas", "eficiência"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é coach de produtividade para estudantes de alta performance.
+
+# TAREFA
+Compartilhe técnicas de produtividade otimizadas para estudante de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. TÉCNICAS DE FOCO
+
+### Pomodoro Adaptado para Medicina
+- 45 min estudo denso + 10 min pausa
+- Ideal para: casos clínicos, anatomia
+- Meta: 4-6 pomodoros/dia
+
+### Deep Work
+- 2-4h sem interrupções
+- Ideal para: estudo de base, revisão
+- Requisitos: ambiente controlado
+
+### Time Boxing
+- Definir tempo máximo por tarefa
+- Evita perfeccionismo
+- Força priorização
+
+## 2. ELIMINAÇÃO DE DISTRAÇÕES
+- Celular em outra sala
+- Bloqueadores de sites
+- Fones com ruído branco
+- "Não perturbe" ativo
+
+## 3. ENERGIA, NÃO SÓ TEMPO
+### Gestão de Energia
+- Tarefas difíceis = pico de energia
+- Tarefas repetitivas = baixa energia
+- Pausas ativas = recuperação
+
+## 4. BATCH PROCESSING
+- Agrupar tarefas similares
+- Ex: todas as questões juntas
+- Reduz troca de contexto
+
+## 5. REGRA DOS 2 MINUTOS
+- Se leva <2 min, faça agora
+- Evita acúmulo de pequenas tarefas
+- Mantém mente leve
+
+## 6. REVISÃO SEMANAL (30 min)
+- O que funcionou?
+- O que ajustar?
+- Prioridades da próxima semana`
+  },
+  {
+    id: "ferramentas-rastreamento-metas",
+    title: "Ferramentas de Rastreamento de Metas",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Acompanhar objetivos de longo prazo como residência",
+    estimatedTime: "10 min",
+    evidenceLevel: "Média",
+    difficulty: "Intermediário",
+    tags: ["metas", "tracking", "residência", "objetivos"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em definição e acompanhamento de metas.
+
+# TAREFA
+Crie sistema de rastreamento de metas para estudante de medicina com foco em [OBJETIVO: ex. residência].
+
+# FORMATO DE SAÍDA
+
+## 1. DEFINIÇÃO DE META SMART
+
+### Meta Principal
+- **S**pecífico: Passar em residência de [especialidade]
+- **M**ensurável: Nota mínima de X no ENARE
+- **A**tingível: Baseado em histórico e recursos
+- **R**elevante: Alinhado com carreira desejada
+- **T**emporal: Data da prova: [DATA]
+
+## 2. DECOMPOSIÇÃO EM SUBMETAS
+
+### Trimestre 1
+- [ ] Completar revisão de [área]
+- [ ] Atingir X% em simulados
+- [ ] Resolver X questões
+
+### Trimestre 2
+- [ ] [Submetas específicas]
+
+### [Continua...]
+
+## 3. KPIs DE ACOMPANHAMENTO
+| Indicador | Meta | Atual | Status |
+|-----------|------|-------|--------|
+| Questões/dia | 50 | 35 | 🟡 |
+| % acerto simulados | 75% | 68% | 🟡 |
+| Horas estudo/semana | 40h | 38h | 🟢 |
+
+## 4. REVISÕES PERIÓDICAS
+- Semanal: Check rápido (15 min)
+- Mensal: Análise detalhada (1h)
+- Trimestral: Reajuste de rota (2h)
+
+## 5. CELEBRAÇÃO DE MARCOS
+- Pequenas vitórias = pequenas recompensas
+- Grandes marcos = celebração maior
+- Manter motivação ao longo do tempo`
+  },
+  {
+    id: "alivio-estresse-academico",
+    title: "Alívio do Estresse Acadêmico",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Guia de gerenciamento de estresse para burnout acadêmico",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["estresse", "burnout", "saúde-mental", "bem-estar"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é psicólogo especializado em saúde mental de estudantes de medicina.
+
+# TAREFA
+Crie guia de gerenciamento de estresse para estudante de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. IDENTIFICAÇÃO DE ESTRESSORES
+
+### Acadêmicos
+- Volume de conteúdo
+- Provas e avaliações
+- Competição por vagas
+- Expectativas próprias e externas
+
+### Práticos
+- Plantões noturnos
+- Contato com sofrimento
+- Responsabilidade crescente
+
+### Pessoais
+- Falta de tempo para lazer
+- Relacionamentos afetados
+- Saúde física negligenciada
+
+## 2. TÉCNICAS DE MINDFULNESS
+
+### Respiração 4-7-8
+1. Inspire por 4 segundos
+2. Segure por 7 segundos
+3. Expire por 8 segundos
+4. Repita 3-4 vezes
+
+### Body Scan (5 min)
+[Guia passo a passo]
+
+### Âncora no Presente
+- 5 coisas que vê
+- 4 coisas que ouve
+- 3 coisas que sente
+- 2 coisas que cheira
+- 1 coisa que saboreia
+
+## 3. HIGIENE DO SONO
+- Horário fixo (mesmo fim de semana)
+- Sem telas 1h antes
+- Ambiente escuro e fresco
+- Ritual de descompressão
+
+## 4. ESTRATÉGIAS DE ENFRENTAMENTO
+- Reestruturação cognitiva
+- Suporte social
+- Atividade física regular
+- Hobbies protegidos
+
+## 5. SINAIS DE ALERTA
+⚠️ Buscar ajuda profissional se:
+- Dificuldade persistente de concentração
+- Alterações de sono ou apetite
+- Isolamento social
+- Pensamentos negativos recorrentes`
+  },
+  {
+    id: "metodos-alivio-estresse-evidencia",
+    title: "Métodos de Alívio de Estresse Baseados em Evidência",
+    category: "Essenciais para Medicina",
+    categorySlug: "essenciais-medicina",
+    sectionNumber: 12,
+    description: "Lista de métodos validados cientificamente para estudantes",
+    estimatedTime: "6 min",
+    evidenceLevel: "Alta",
+    difficulty: "Iniciante",
+    tags: ["estresse", "evidência", "exercício", "meditação"],
+    aiRecommended: "chatgpt",
+    prompt: `# PAPEL
+Você é pesquisador em neurociência do estresse e bem-estar.
+
+# TAREFA
+Liste métodos de alívio de estresse baseados em evidência científica para estudantes de medicina.
+
+# FORMATO DE SAÍDA
+
+## 1. EXERCÍCIO FÍSICO
+**Evidência:** Meta-análises mostram redução de 40% em sintomas de ansiedade
+
+### Recomendações
+- **Aeróbico:** 30 min, 3-5x/semana
+  - Caminhada, corrida, natação
+- **HIIT:** 15-20 min, 2-3x/semana
+  - Eficiente para quem tem pouco tempo
+- **Yoga:** 1-2x/semana
+  - Combina movimento + mindfulness
+
+## 2. MEDITAÇÃO E MINDFULNESS
+**Evidência:** Reduz cortisol em 23% após 8 semanas
+
+### Apps Recomendados
+- Headspace
+- Calm
+- Insight Timer
+
+### Prática Mínima Efetiva
+- 10 min/dia
+- Melhor que nada: 5 min
+
+## 3. RESPIRAÇÃO DIAFRAGMÁTICA
+**Evidência:** Ativa sistema parassimpático em 60-90 segundos
+
+### Técnicas
+- 4-7-8 (Weil)
+- Respiração quadrada (4-4-4-4)
+- Suspiro fisiológico (dupla inspiração + expiração longa)
+
+## 4. JOURNALING
+**Evidência:** Expressão escrita reduz rumination
+
+### Formatos
+- 3 gratidões do dia
+- Brain dump (descarregar pensamentos)
+- Reflexão pós-prova
+
+## 5. CONEXÃO SOCIAL
+**Evidência:** Suporte social é protetor de burnout
+
+### Ações
+- Grupo de estudos
+- Tempo com amigos (não de medicina)
+- Conversa com família
+
+## 6. NATUREZA
+**Evidência:** 20 min em área verde reduz cortisol
+
+### Opções
+- Caminhada em parque
+- Estudo ao ar livre
+- Plantas no ambiente`
   }
 ];
 
