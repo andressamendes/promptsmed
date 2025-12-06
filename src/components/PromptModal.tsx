@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Lightbulb } from "lucide-react";
+import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Lightbulb, Star, Info } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -17,12 +18,32 @@ const aiLinks = {
   chatgpt: "https://chat.openai.com/",
   claude: "https://claude.ai/",
   gemini: "https://gemini.google.com/",
+  notebooklm: "https://notebooklm.google.com/",
+  perplexity: "https://www.perplexity.ai/",
 };
 
 const aiNames = {
   chatgpt: "ChatGPT",
   claude: "Claude",
   gemini: "Gemini",
+  notebooklm: "NotebookLM",
+  perplexity: "Perplexity",
+};
+
+const aiColors = {
+  chatgpt: { text: "text-[#10a37f]", bg: "bg-[#10a37f]/10", border: "border-[#10a37f]/30", hover: "hover:bg-[#10a37f]/20" },
+  claude: { text: "text-[#cc785c]", bg: "bg-[#cc785c]/10", border: "border-[#cc785c]/30", hover: "hover:bg-[#cc785c]/20" },
+  gemini: { text: "text-[#8e8ea0]", bg: "bg-[#8e8ea0]/10", border: "border-[#8e8ea0]/30", hover: "hover:bg-[#8e8ea0]/20" },
+  notebooklm: { text: "text-[#4285f4]", bg: "bg-[#4285f4]/10", border: "border-[#4285f4]/30", hover: "hover:bg-[#4285f4]/20" },
+  perplexity: { text: "text-[#20b8cd]", bg: "bg-[#20b8cd]/10", border: "border-[#20b8cd]/30", hover: "hover:bg-[#20b8cd]/20" },
+};
+
+const aiReasons: Record<string, string> = {
+  chatgpt: "Melhor para: listas estruturadas, flashcards, cronogramas, saídas formatadas e tarefas rápidas com formato definido.",
+  claude: "Melhor para: raciocínio complexo, casos clínicos, análise profunda, tutoria socrática e conteúdo longo com nuances.",
+  gemini: "Melhor para: descrições visuais, conteúdo multimodal, integração com Google e pesquisa de informações.",
+  notebooklm: "Melhor para: geração de podcasts, análise de documentos, síntese de múltiplas fontes e conteúdo em áudio.",
+  perplexity: "Melhor para: busca de evidências atualizadas, pesquisa científica, informações em tempo real e referências.",
 };
 
 // Syntax highlighting component
@@ -145,6 +166,8 @@ function HighlightedPrompt({ text }: { text: string }) {
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const recommendedAI = prompt.aiRecommended;
+  const aiStyle = aiColors[recommendedAI];
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(prompt.prompt);
@@ -156,7 +179,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini") => {
+  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity") => {
     await navigator.clipboard.writeText(prompt.prompt);
     toast({
       title: "Prompt copiado!",
@@ -210,6 +233,43 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
               {prompt.description}
             </p>
           </div>
+
+          {/* IA Recomendada */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className={cn(
+                  "flex items-center gap-3 p-3 rounded-lg border cursor-help",
+                  aiStyle.bg, aiStyle.border
+                )}>
+                  <Star className={cn("w-5 h-5 flex-shrink-0", aiStyle.text)} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className={cn("font-semibold text-sm", aiStyle.text)}>
+                        Melhor IA: {aiNames[recommendedAI]}
+                      </span>
+                      <Info className="w-3.5 h-3.5 text-muted-foreground" />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Clique para abrir com o prompt copiado
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => handleOpenAI(recommendedAI)}
+                    className={cn("gap-1.5 h-8", aiStyle.bg, aiStyle.text, aiStyle.hover, "border", aiStyle.border)}
+                    variant="outline"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    Abrir {aiNames[recommendedAI]}
+                  </Button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="max-w-xs">
+                <p className="text-sm">{aiReasons[recommendedAI]}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
           {/* Metadados */}
           <div className="flex flex-wrap gap-3">
@@ -269,8 +329,8 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
 
         {/* Rodapé com ações */}
         <div className="flex-shrink-0 pt-4 border-t border-border/50">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button onClick={handleCopy} className="gap-2 flex-1 h-11">
+          <div className="flex flex-col gap-3">
+            <Button onClick={handleCopy} className="gap-2 w-full h-11">
               {copied ? (
                 <Check className="w-4 h-4" />
               ) : (
@@ -278,31 +338,35 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
               )}
               {copied ? "Copiado!" : "Copiar Prompt"}
             </Button>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => handleOpenAI("chatgpt")}
-                className="gap-1.5 flex-1 sm:flex-none h-11 text-[#10a37f] border-[#10a37f]/30 hover:bg-[#10a37f]/10 hover:border-[#10a37f]/50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                ChatGPT
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleOpenAI("claude")}
-                className="gap-1.5 flex-1 sm:flex-none h-11 text-[#cc785c] border-[#cc785c]/30 hover:bg-[#cc785c]/10 hover:border-[#cc785c]/50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Claude
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleOpenAI("gemini")}
-                className="gap-1.5 flex-1 sm:flex-none h-11 text-[#8e8ea0] border-[#8e8ea0]/30 hover:bg-[#8e8ea0]/10 hover:border-[#8e8ea0]/50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Gemini
-              </Button>
+            <div className="grid grid-cols-5 gap-2">
+              {(["chatgpt", "claude", "gemini", "notebooklm", "perplexity"] as const).map((ai) => {
+                const style = aiColors[ai];
+                const isRecommended = ai === recommendedAI;
+                return (
+                  <Button
+                    key={ai}
+                    variant="outline"
+                    onClick={() => handleOpenAI(ai)}
+                    className={cn(
+                      "gap-1 h-10 text-xs relative",
+                      style.text, style.border, style.hover,
+                      isRecommended && "ring-2 ring-offset-2 ring-offset-background",
+                      isRecommended && ai === "chatgpt" && "ring-[#10a37f]",
+                      isRecommended && ai === "claude" && "ring-[#cc785c]",
+                      isRecommended && ai === "gemini" && "ring-[#8e8ea0]",
+                      isRecommended && ai === "notebooklm" && "ring-[#4285f4]",
+                      isRecommended && ai === "perplexity" && "ring-[#20b8cd]"
+                    )}
+                  >
+                    {isRecommended && (
+                      <Star className="w-3 h-3 absolute -top-1 -right-1 fill-current" />
+                    )}
+                    <ExternalLink className="w-3 h-3" />
+                    <span className="hidden sm:inline">{aiNames[ai]}</span>
+                    <span className="sm:hidden">{aiNames[ai].slice(0, 3)}</span>
+                  </Button>
+                );
+              })}
             </div>
           </div>
         </div>

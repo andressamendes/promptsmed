@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, Heart, ExternalLink, Clock, BarChart3 } from "lucide-react";
+import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
@@ -81,7 +81,7 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
         )}
         style={{ transitionDelay: isVisible ? `${animationDelay}ms` : "0ms" }}
       >
-        {/* Header */}
+        {/* Header - Melhor IA */}
         <div
           className={cn(
             "flex items-center justify-between px-4 py-3 border-b border-border",
@@ -89,13 +89,14 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
           )}
         >
           <div className="flex items-center gap-2">
+            <Star className={cn("w-3.5 h-3.5", colors.text)} />
             <span
               className={cn(
                 "text-xs font-bold uppercase tracking-wide",
                 colors.text
               )}
             >
-              {aiNames[prompt.aiRecommended]}
+              Melhor: {aiNames[prompt.aiRecommended]}
             </span>
           </div>
           <Badge variant="outline" className="text-[10px] font-medium">
