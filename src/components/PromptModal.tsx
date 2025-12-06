@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Lightbulb, Star, Info } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState, useEffect, useCallback } from "react";
+import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Lightbulb, Star, Info, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
+import { usePromptNotes } from "@/hooks/use-prompt-notes";
 import { cn } from "@/lib/utils";
+import { ExplanationCorrector } from "./ExplanationCorrector";
+import { QuestionGenerator } from "./QuestionGenerator";
 
 interface PromptModalProps {
   prompt: Prompt;
@@ -165,9 +170,40 @@ function HighlightedPrompt({ text }: { text: string }) {
 
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState("prompt");
   const { toast } = useToast();
+  const { getNote, setNote, deleteNote, hasNote } = usePromptNotes();
+  const [noteContent, setNoteContent] = useState("");
+  const [noteSaved, setNoteSaved] = useState(false);
+  
   const recommendedAI = prompt.aiRecommended;
   const aiStyle = aiColors[recommendedAI];
+
+  // Load note when modal opens
+  useEffect(() => {
+    if (open) {
+      setNoteContent(getNote(prompt.id));
+      setActiveTab("prompt");
+    }
+  }, [open, prompt.id, getNote]);
+
+  // Debounced auto-save for notes
+  const saveNote = useCallback((content: string) => {
+    if (content.trim()) {
+      setNote(prompt.id, content);
+      setNoteSaved(true);
+      setTimeout(() => setNoteSaved(false), 2000);
+    }
+  }, [prompt.id, setNote]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (noteContent !== getNote(prompt.id)) {
+        saveNote(noteContent);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [noteContent, prompt.id, getNote, saveNote]);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(prompt.prompt);
@@ -186,6 +222,15 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
       description: `Cole no ${aiNames[ai]}.`,
     });
     window.open(aiLinks[ai], "_blank");
+  };
+
+  const handleDeleteNote = () => {
+    deleteNote(prompt.id);
+    setNoteContent("");
+    toast({
+      title: "Nota removida",
+      description: "Sua anotação foi excluída.",
+    });
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -210,13 +255,18 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
               <FileText className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge variant="outline" className="text-xs">
                   {prompt.category}
                 </Badge>
                 <Badge className={cn("text-xs border", getDifficultyColor(prompt.difficulty))}>
                   {prompt.difficulty}
                 </Badge>
+                {hasNote(prompt.id) && (
+                  <Badge variant="secondary" className="text-xs">
+                    Com notas
+                  </Badge>
+                )}
               </div>
               <DialogTitle className="text-xl font-semibold leading-tight">
                 {prompt.title}
@@ -225,111 +275,172 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
           </div>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar py-4 space-y-4">
-          {/* Descrição */}
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/30">
-            <Lightbulb className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {prompt.description}
-            </p>
-          </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 overflow-hidden flex flex-col">
+          <TabsList className="grid w-full grid-cols-4 shrink-0">
+            <TabsTrigger value="prompt">Prompt</TabsTrigger>
+            <TabsTrigger value="notes">Notas</TabsTrigger>
+            <TabsTrigger value="explain">Explicação</TabsTrigger>
+            <TabsTrigger value="quiz">Quiz</TabsTrigger>
+          </TabsList>
 
-          {/* IA Recomendada */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className={cn(
-                  "flex items-center gap-3 p-3 rounded-lg border cursor-help",
-                  aiStyle.bg, aiStyle.border
-                )}>
-                  <Star className={cn("w-5 h-5 flex-shrink-0", aiStyle.text)} />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className={cn("font-semibold text-sm", aiStyle.text)}>
-                        Melhor IA: {aiNames[recommendedAI]}
-                      </span>
-                      <Info className="w-3.5 h-3.5 text-muted-foreground" />
+          <div className="flex-1 overflow-y-auto custom-scrollbar py-4">
+            <TabsContent value="prompt" className="m-0 space-y-4">
+              {/* Descrição */}
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/30">
+                <Lightbulb className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {prompt.description}
+                </p>
+              </div>
+
+              {/* IA Recomendada */}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg border cursor-help",
+                      aiStyle.bg, aiStyle.border
+                    )}>
+                      <Star className={cn("w-5 h-5 flex-shrink-0", aiStyle.text)} />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className={cn("font-semibold text-sm", aiStyle.text)}>
+                            Melhor IA: {aiNames[recommendedAI]}
+                          </span>
+                          <Info className="w-3.5 h-3.5 text-muted-foreground" />
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Clique para abrir com o prompt copiado
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => handleOpenAI(recommendedAI)}
+                        className={cn("gap-1.5 h-8", aiStyle.bg, aiStyle.text, aiStyle.hover, "border", aiStyle.border)}
+                        variant="outline"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Abrir {aiNames[recommendedAI]}
+                      </Button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      Clique para abrir com o prompt copiado
-                    </p>
-                  </div>
-                  <Button
-                    size="sm"
-                    onClick={() => handleOpenAI(recommendedAI)}
-                    className={cn("gap-1.5 h-8", aiStyle.bg, aiStyle.text, aiStyle.hover, "border", aiStyle.border)}
-                    variant="outline"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    Abrir {aiNames[recommendedAI]}
-                  </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="max-w-xs">
+                    <p className="text-sm">{aiReasons[recommendedAI]}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              {/* Metadados */}
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
+                  <Clock className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground">{prompt.estimatedTime}</span>
                 </div>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="max-w-xs">
-                <p className="text-sm">{aiReasons[recommendedAI]}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
+                  <BarChart3 className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground">Evidência: {prompt.evidenceLevel}</span>
+                </div>
+              </div>
 
-          {/* Metadados */}
-          <div className="flex flex-wrap gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
-              <Clock className="w-4 h-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">{prompt.estimatedTime}</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
-              <BarChart3 className="w-4 h-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">Evidência: {prompt.evidenceLevel}</span>
-            </div>
-          </div>
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {prompt.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
+                    <Tag className="w-3 h-3 mr-1" />
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5">
-            {prompt.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
-                <Tag className="w-3 h-3 mr-1" />
-                {tag}
-              </Badge>
-            ))}
-          </div>
+              {/* Conteúdo do Prompt */}
+              <div className="relative">
+                <div className="absolute -inset-px bg-gradient-to-br from-primary/20 via-transparent to-accent/20 rounded-xl opacity-50" />
+                <div className="relative rounded-xl bg-card/80 backdrop-blur border border-border/50 overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border/30">
+                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      Prompt
+                    </span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleCopy}
+                      className="h-7 text-xs gap-1.5"
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          Copiado
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          Copiar
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <div className="p-4 max-h-[300px] overflow-y-auto custom-scrollbar">
+                    <HighlightedPrompt text={prompt.prompt} />
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
 
-          {/* Conteúdo do Prompt */}
-          <div className="relative">
-            <div className="absolute -inset-px bg-gradient-to-br from-primary/20 via-transparent to-accent/20 rounded-xl opacity-50" />
-            <div className="relative rounded-xl bg-card/80 backdrop-blur border border-border/50 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border/30">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                  Prompt
-                </span>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={handleCopy}
-                  className="h-7 text-xs gap-1.5"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      Copiado
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      Copiar
-                    </>
+            <TabsContent value="notes" className="m-0 space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium">
+                    Suas anotações sobre este prompt
+                  </label>
+                  {noteSaved && (
+                    <span className="text-xs text-emerald-500 flex items-center gap-1">
+                      <Check className="w-3 h-3" />
+                      Salvo automaticamente
+                    </span>
                   )}
-                </Button>
+                </div>
+                <Textarea
+                  value={noteContent}
+                  onChange={(e) => setNoteContent(e.target.value)}
+                  placeholder="Adicione suas anotações, insights e observações sobre este prompt..."
+                  className="min-h-[200px] text-sm resize-none"
+                />
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{noteContent.length} caracteres</span>
+                  {noteContent.trim() && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-destructive hover:text-destructive gap-1"
+                      onClick={handleDeleteNote}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Limpar nota
+                    </Button>
+                  )}
+                </div>
               </div>
-              <div className="p-4 max-h-[300px] overflow-y-auto custom-scrollbar">
-                <HighlightedPrompt text={prompt.prompt} />
-              </div>
-            </div>
+            </TabsContent>
+
+            <TabsContent value="explain" className="m-0">
+              <ExplanationCorrector
+                promptTitle={prompt.title}
+                promptContent={prompt.prompt}
+              />
+            </TabsContent>
+
+            <TabsContent value="quiz" className="m-0">
+              <QuestionGenerator
+                promptTitle={prompt.title}
+                promptContent={prompt.prompt}
+              />
+            </TabsContent>
           </div>
-        </div>
+        </Tabs>
 
         {/* Rodapé com ações */}
-        <div className="flex-shrink-0 pt-4 border-t border-border/50">
-          <div className="flex flex-col gap-3">
+        <DialogFooter className="flex-shrink-0 pt-4 border-t border-border/50">
+          <div className="flex flex-col gap-3 w-full">
             <Button onClick={handleCopy} className="gap-2 w-full h-11">
               {copied ? (
                 <Check className="w-4 h-4" />
@@ -369,7 +480,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
               })}
             </div>
           </div>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

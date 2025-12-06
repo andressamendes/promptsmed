@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star } from "lucide-react";
+import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
+import { usePromptNotes } from "@/hooks/use-prompt-notes";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useTilt } from "@/hooks/use-tilt";
@@ -43,8 +45,10 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { hasNote } = usePromptNotes();
   const { toast } = useToast();
   const favorite = isFavorite(prompt.id);
+  const hasNoteOnPrompt = hasNote(prompt.id);
   
   const { ref: scrollRef, isVisible } = useScrollAnimation<HTMLDivElement>();
   const { ref: tiltRef, style: tiltStyle, glareStyle, handlers } = useTilt<HTMLElement>({
@@ -94,6 +98,24 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
         >
           {/* Glare Effect */}
           <div style={glareStyle} className="z-10" />
+          
+          {/* Note Indicator */}
+          {hasNoteOnPrompt && (
+            <div className="absolute top-2 right-2 z-30">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="p-1.5 rounded-full bg-primary/20 border border-primary/30">
+                      <StickyNote className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Você tem notas neste prompt</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
           
           {/* Header - Melhor IA */}
           <div
