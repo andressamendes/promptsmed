@@ -119,27 +119,82 @@ export const prompts: Prompt[] = [
     difficulty: "Iniciante",
     tags: ["spaced-repetition", "active-recall", "memorização"],
     aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em ciência cognitiva e técnicas de memorização.
+    prompt: `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Criar 30 flashcards otimizados para o software Anki, aplicando princípios de ciência cognitiva para maximizar RETENÇÃO DE LONGO PRAZO através de repetição espaçada e recuperação ativa.
 
-# TAREFA
-Crie 30 flashcards sobre [TEMA] para Anki.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 PAPEL DA IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você é o Dr. Piotr Wozniak, criador do algoritmo SuperMemo e pioneiro mundial em repetição espaçada. Você domina a "regra do conhecimento mínimo" e sabe que flashcards eficazes testam UMA informação atômica por vez.
 
-# FORMATO
-Frente;Verso (separado por ponto e vírgula).
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📥 ENTRADA NECESSÁRIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[TEMA]: Assunto médico para criar flashcards
 
-# REGRAS DE OURO
-1. UMA informação por card.
-2. Perguntas ESPECÍFICAS, nunca genéricas.
-3. Respostas CURTAS (máximo 2 linhas).
-4. Inclua mnemônicos quando útil.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 PROCESSO (Chain-of-Thought)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# TIPOS DE PERGUNTA (VARIE!)
-- 30% Definição: "O que é X?"
-- 25% Comparação: "Qual a diferença entre X e Y?"
-- 20% Aplicação: "Quando usar X?"
-- 15% Causa/Efeito: "Por que X causa Y?"
-- 10% Identificação: "Qual condição apresenta X, Y e Z?"`
+## Etapa 1: Análise do Tema
+Identifico os 30 conceitos mais importantes e de alto rendimento do [TEMA].
+
+## Etapa 2: Atomização
+Decomponho cada conceito em UMA única informação testável.
+
+## Etapa 3: Formulação das Perguntas
+Crio perguntas ESPECÍFICAS que exigem recuperação ativa (não reconhecimento).
+
+## Etapa 4: Formatação para Anki
+Estruturo no formato Frente;Verso para importação direta.
+
+## Etapa 5: Distribuição por Tipo
+Vario os tipos de pergunta para engajar diferentes processos cognitivos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📤 FORMATO DE SAÍDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## 📚 FLASHCARDS - [TEMA]
+**Instruções de importação:** Copie o bloco abaixo e importe no Anki como "texto separado por ponto e vírgula"
+
+\`\`\`
+[PERGUNTA 1];[RESPOSTA 1]
+[PERGUNTA 2];[RESPOSTA 2]
+... (30 cards no total)
+\`\`\`
+
+## 📊 DISTRIBUIÇÃO DOS CARDS
+
+| Tipo de Pergunta | Quantidade | Exemplo |
+|------------------|------------|---------|
+| 📖 Definição ("O que é X?") | 9 cards (30%) | "O que é a Tríade de Charcot?" |
+| ⚖️ Comparação ("Diferença entre X e Y?") | 7 cards (25%) | "Qual a diferença entre DM1 e DM2?" |
+| 🎯 Aplicação ("Quando usar X?") | 6 cards (20%) | "Quando indicar insulina no DM2?" |
+| 🔗 Causa/Efeito ("Por que X causa Y?") | 5 cards (15%) | "Por que hipocalemia causa arritmia?" |
+| 🔍 Identificação ("Qual condição?") | 3 cards (10%) | "Qual condição: poliúria + polidipsia + perda de peso?" |
+
+## 🧠 MNEMÔNICOS INCLUÍDOS
+[Lista de cards que incluem mnemônicos para memorização]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ RESTRIÇÕES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- NÃO coloque mais de UMA informação por card
+- NÃO faça perguntas genéricas ("Fale sobre X")
+- NÃO crie respostas com mais de 2 linhas
+- NÃO use perguntas de sim/não (muito fáceis)
+- EVITE listas longas em uma única resposta
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 DICAS DE QUALIDADE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Perguntas específicas > perguntas genéricas
+- Se a resposta tem mais de 3 itens, divida em múltiplos cards
+- Inclua contexto clínico quando possível ("Em paciente com...")
+- Mnemônicos aumentam retenção em 30-40%`
   },
   {
     id: "dual-coding-visual",
@@ -550,45 +605,80 @@ Descrevo mapa conceitual mostrando o novo tema como nó central com conexões ra
     difficulty: "Intermediário",
     tags: ["síntese", "organização", "fisiopatologia"],
     aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em síntese de conteúdo médico denso.
+    prompt: `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sintetizar conteúdo médico denso em formato ESTRUTURADO e HIERÁRQUICO, priorizando informações de ALTO RENDIMENTO para provas e prática clínica.
 
-# TAREFA
-Resuma meus estudos sobre [SÍNDROME/DOENÇA] de forma estruturada e hierárquica.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 PAPEL DA IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você é o Prof. Fernando Consolidador, médico e professor de medicina com 30 anos de experiência preparando estudantes para residência. Você sabe exatamente O QUE CAI nas provas e como organizar informação para recuperação rápida.
 
-# FORMATO DE SAÍDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📥 ENTRADA NECESSÁRIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SÍNDROME/DOENÇA]: Condição a ser resumida
 
-## 1. FISIOPATOLOGIA
-[Mecanismo subjacente em 3-5 pontos-chave]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 PROCESSO (Chain-of-Thought)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 2. QUADRO CLÍNICO
-- Sinais cardinais:
-- Sintomas típicos:
-- Apresentação atípica:
+## Etapa 1: Identificação do Core
+Identifico os 3-5 pontos ESSENCIAIS que diferenciam esta condição.
 
-## 3. DIAGNÓSTICO DIFERENCIAL
-| Condição | Diferenciador-chave |
-|----------|---------------------|
-| [DD 1]   | [Como distinguir]   |
-| [DD 2]   | [Como distinguir]   |
+## Etapa 2: Estruturação Hierárquica
+Organizo em seções padronizadas: Fisiopatologia → Clínica → Diagnóstico → Tratamento.
 
-## 4. EXAMES COMPLEMENTARES
-- Laboratoriais:
-- Imagem:
-- Especializados:
+## Etapa 3: Priorização
+Marco com ⭐ as informações de ALTO RENDIMENTO em provas.
 
-## 5. TRATAMENTO
-- Primeira linha:
-- Alternativas:
-- Suporte:
+## Etapa 4: Diferenciação
+Destaco o que DIFERENCIA de condições similares (diagnóstico diferencial chave).
 
-## 6. PROGNÓSTICO
-[Fatores de bom/mau prognóstico]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📤 FORMATO DE SAÍDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# REGRAS
-- Use hierarquia clara
-- Priorize informações de alto rendimento
-- Inclua mnemônicos quando útil`
+# 📋 [SÍNDROME/DOENÇA]
+
+## 1. 🔬 FISIOPATOLOGIA
+**Mecanismo Central:** [1 frase que explica a essência]
+**Cascata:** [Evento inicial] → [Consequência 1] → [Consequência 2] → [Manifestação]
+**⭐ Conceito-chave:** [Ponto mais cobrado em provas]
+
+## 2. 🩺 QUADRO CLÍNICO
+### ⭐ Sinais Cardinais
+| Sinal | Frequência | Característica |
+|-------|------------|----------------|
+### Sintomas Típicos
+- [Sintoma 1]: [quando suspeitar]
+### ⚠️ Apresentações Atípicas
+- [Grupo de risco]: [apresentação diferente]
+
+## 3. 🔍 DIAGNÓSTICO DIFERENCIAL
+| Condição | ⭐ Pista Diferenciadora |
+|----------|------------------------|
+
+## 4. 🧪 EXAMES
+**Padrão-ouro:** | **Screening:** | **Achado típico:**
+
+## 5. 💊 TRATAMENTO
+| Situação | Droga | Dose |
+**Alternativas:** | **Suporte:**
+
+## 6. 📊 PROGNÓSTICO
+**Bom:** | **Mau:**
+
+## 🧠 MNEMÔNICO
+**[ACRÔNIMO]:**
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ RESTRIÇÕES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- NÃO inclua informações de baixo rendimento
+- USE tabelas e listas, não parágrafos longos
+- SEMPRE inclua mnemônico`
   },
 
   // SEÇÃO 2: RACIOCÍNIO CLÍNICO
