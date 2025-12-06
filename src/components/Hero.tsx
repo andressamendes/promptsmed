@@ -32,8 +32,8 @@ export function Hero() {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in leading-relaxed">
-            Prompts otimizados com estratégias de aprendizado baseadas em ciência
-            cognitiva para maximizar sua retenção e desempenho.
+            Prompts otimizados com estratégias de aprendizado baseadas em Ciência
+            Cognitiva para maximizar sua retenção e desempenho.
           </p>
 
           {/* CTA Buttons */}

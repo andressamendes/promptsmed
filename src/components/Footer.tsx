@@ -19,7 +19,7 @@ export function Footer() {
           <p className="text-sm text-muted-foreground text-center">
             Desenvolvido com{" "}
             <Heart className="w-3.5 h-3.5 inline text-destructive fill-destructive" />{" "}
-            para estudantes de medicina
+            para estudantes de Medicina
           </p>
 
           {/* Copyright */}
