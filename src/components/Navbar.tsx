@@ -25,10 +25,8 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
   }, []);
 
   const navLinks = [
-    { href: "#hero", label: "Início" },
     { href: "#prompts", label: "Prompts" },
-    { href: "#mentor", label: "Mentor" },
-    { href: "#etica", label: "Ética" },
+    { href: "#ferramentas", label: "Ferramentas" },
   ];
 
   return (
