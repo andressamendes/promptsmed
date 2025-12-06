@@ -1,0 +1,16 @@
+{
+  "name": "PromptLab MED",
+  "short_name": "PromptLab",
+  "description": "Biblioteca de prompts de IA para estudantes de medicina",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1a",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

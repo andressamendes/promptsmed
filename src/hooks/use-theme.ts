@@ -9,11 +9,8 @@ export function useTheme() {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem(THEME_KEY) as Theme;
       if (stored) return stored;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
     }
-    return "dark";
+    return "dark"; // Dark mode como padrão
   });
 
   useEffect(() => {

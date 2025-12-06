@@ -9,28 +9,36 @@ import { PomodoroTimer } from "@/components/PomodoroTimer";
 import { TaskList } from "@/components/TaskList";
 import { MentorSection } from "@/components/MentorSection";
 import { EthicsSection } from "@/components/EthicsSection";
+import { AITutor } from "@/components/AITutor";
+import { FocusModeOverlay } from "@/components/FocusModeOverlay";
+import { useFocusMode } from "@/contexts/FocusModeContext";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const { isFocusMode } = useFocusMode();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar onFavoritesClick={() => setFavoritesOpen(true)} />
-      <Hero />
+      <FocusModeOverlay />
+      
+      <div className={cn(isFocusMode && "hidden")}>
+        <Navbar onFavoritesClick={() => setFavoritesOpen(true)} />
+      </div>
+      
+      <div className={cn(isFocusMode && "hidden")}>
+        <Hero />
+      </div>
       
       <div className="container">
         <div className="flex gap-8">
-          {/* Main Content */}
           <div className="flex-1 min-w-0">
             <PromptsSection />
           </div>
-          
-          {/* Sidebar with Tools */}
           <ToolsSidebar />
         </div>
         
-        {/* Mobile Tools */}
-        <section id="ferramentas" className="xl:hidden py-8 border-t border-border">
+        <section id="ferramentas" className={cn("xl:hidden py-8 border-t border-border", isFocusMode && "hidden")}>
           <h2 className="text-lg font-semibold mb-4">Ferramentas</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <PomodoroTimer />
@@ -38,15 +46,22 @@ const Index = () => {
           </div>
         </section>
         
-        <MentorSection />
-        <EthicsSection />
+        <div className={cn(isFocusMode && "hidden")}>
+          <MentorSection />
+          <EthicsSection />
+        </div>
       </div>
       
-      <Footer />
+      <div className={cn(isFocusMode && "hidden")}>
+        <Footer />
+      </div>
+      
       <FavoritesDrawer 
         open={favoritesOpen} 
         onClose={() => setFavoritesOpen(false)} 
       />
+      
+      <AITutor />
     </div>
   );
 };
