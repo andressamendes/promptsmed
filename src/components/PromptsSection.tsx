@@ -104,8 +104,8 @@ export function PromptsSection() {
 
                   {/* Section Prompts */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {sectionPrompts.map((prompt) => (
-                      <PromptCard key={prompt.id} prompt={prompt} />
+                    {sectionPrompts.map((prompt, index) => (
+                      <PromptCard key={prompt.id} prompt={prompt} index={index} />
                     ))}
                   </div>
                 </div>
@@ -117,8 +117,8 @@ export function PromptsSection() {
           <div>
             {filteredPrompts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredPrompts.map((prompt) => (
-                  <PromptCard key={prompt.id} prompt={prompt} />
+                {filteredPrompts.map((prompt, index) => (
+                  <PromptCard key={prompt.id} prompt={prompt} index={index} />
                 ))}
               </div>
             ) : (
