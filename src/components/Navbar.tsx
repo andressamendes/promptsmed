@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useFavorites } from "@/hooks/use-favorites";
+import { FocusModeToggle } from "@/components/FocusModeToggle";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -39,7 +40,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
       )}
     >
       <div className="container flex items-center justify-between">
-        {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <div className="p-1.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
             <Stethoscope className="w-5 h-5" />
@@ -47,7 +47,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
           <span className="text-lg font-bold gradient-text">PromptLab MED</span>
         </a>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex items-center gap-6">
             {navLinks.map((link) => (
@@ -72,6 +71,7 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
           </ul>
 
           <div className="flex items-center gap-2 ml-4 pl-4 border-l border-border">
+            <FocusModeToggle />
             <Button
               variant="ghost"
               size="icon"
@@ -95,8 +95,8 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
           </div>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center gap-2">
+          <FocusModeToggle />
           <Button variant="ghost" size="icon" onClick={toggleTheme}>
             {theme === "dark" ? (
               <Sun className="w-4 h-4" />
@@ -118,7 +118,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 glass border-b border-border animate-fade-in">
           <div className="container py-4">
