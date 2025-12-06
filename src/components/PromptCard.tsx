@@ -81,10 +81,15 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
       <div
         ref={scrollRef}
         className={cn(
-          "transition-all duration-500 ease-out",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          "transition-all duration-700 ease-out will-change-transform",
+          isVisible 
+            ? "opacity-100 translate-y-0 scale-100 blur-0" 
+            : "opacity-0 translate-y-12 scale-95 blur-sm"
         )}
-        style={{ transitionDelay: isVisible ? `${animationDelay}ms` : "0ms" }}
+        style={{ 
+          transitionDelay: isVisible ? `${animationDelay}ms` : "0ms",
+          transitionProperty: "opacity, transform, filter",
+        }}
       >
         <article 
           ref={tiltRef}
