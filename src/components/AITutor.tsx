@@ -153,9 +153,12 @@ export function AITutor() {
             {messages.length === 0 ? (
               <div className="text-center text-muted-foreground text-sm py-8">
                 <Sparkles className="w-8 h-8 mx-auto mb-3 opacity-50" />
-                <p>Olá! Sou seu tutor IA.</p>
+                <p>Olá, futuro(a) médico(a)!</p>
                 <p className="mt-1">
-                  Posso ajudar com dúvidas médicas usando o método socrático.
+                  Sou seu tutor IA. Posso te ajudar a entender conceitos usando o método socrático.
+                </p>
+                <p className="text-xs mt-3 text-primary">
+                  Pergunte sobre qualquer tema médico!
                 </p>
               </div>
             ) : (

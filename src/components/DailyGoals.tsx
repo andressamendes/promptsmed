@@ -1,4 +1,4 @@
-import { Target, Clock, Check, Settings } from "lucide-react";
+import { Target, Clock, Check, Settings, Stethoscope } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,13 @@ export function DailyGoals() {
 
   const isPromptsComplete = goals.promptsCompleted >= goals.promptsTarget;
   const isStudyComplete = goals.studyMinutesCompleted >= goals.studyMinutesTarget;
+  const allComplete = isPromptsComplete && isStudyComplete;
+
+  const getMotivationalMessage = () => {
+    if (allComplete) return "Metas concluídas! Orgulho de você, futuro(a) médico(a)!";
+    if (isPromptsComplete || isStudyComplete) return "Quase lá! Continue firme!";
+    return "Bora conquistar o dia, estudante!";
+  };
 
   return (
     <div className="bg-card border border-border rounded-lg p-4">
@@ -41,7 +48,7 @@ export function DailyGoals() {
         <div className="space-y-3">
           <div>
             <label className="text-xs text-muted-foreground mb-1 block">
-              Meta de prompts
+              Meta de prompts por dia
             </label>
             <Input
               type="number"
@@ -54,7 +61,7 @@ export function DailyGoals() {
           </div>
           <div>
             <label className="text-xs text-muted-foreground mb-1 block">
-              Meta de estudo (min)
+              Meta de estudo (minutos)
             </label>
             <Input
               type="number"
@@ -71,7 +78,7 @@ export function DailyGoals() {
             className="w-full h-8 text-xs"
             onClick={() => setShowSettings(false)}
           >
-            Salvar
+            Salvar Metas
           </Button>
         </div>
       ) : (
@@ -79,7 +86,7 @@ export function DailyGoals() {
           {/* Prompts Goal */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs text-muted-foreground">Prompts</span>
+              <span className="text-xs text-muted-foreground">Prompts estudados</span>
               <span
                 className={cn(
                   "text-xs font-medium",
@@ -101,7 +108,7 @@ export function DailyGoals() {
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-xs text-muted-foreground flex items-center gap-1">
                 <Clock className="w-3 h-3" />
-                Estudo
+                Tempo de estudo
               </span>
               <span
                 className={cn(
@@ -120,11 +127,15 @@ export function DailyGoals() {
           </div>
 
           {/* Status Message */}
-          <p className="text-xs text-muted-foreground text-center">
-            {isPromptsComplete && isStudyComplete
-              ? "Parabéns! Metas concluídas!"
-              : "Continue assim!"}
-          </p>
+          <div className={cn(
+            "flex items-center gap-2 p-2 rounded-lg text-center",
+            allComplete ? "bg-accent/10" : "bg-muted/30"
+          )}>
+            <Stethoscope className={cn("w-4 h-4", allComplete ? "text-accent" : "text-muted-foreground")} />
+            <p className="text-xs text-muted-foreground flex-1">
+              {getMotivationalMessage()}
+            </p>
+          </div>
         </div>
       )}
     </div>

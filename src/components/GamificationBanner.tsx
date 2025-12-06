@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Flame, Trophy, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Flame, Trophy, X, ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGamification, Badge } from "@/hooks/use-gamification";
+import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -15,13 +15,21 @@ export function GamificationBanner() {
     useGamification();
   const [showBadges, setShowBadges] = useState(false);
 
+  const getStreakMessage = () => {
+    if (streak === 0) return "Comece sua sequência de estudos!";
+    if (streak === 1) return "Primeiro dia, futuro(a) médico(a)!";
+    if (streak < 7) return "Continue firme nos estudos!";
+    if (streak < 30) return "Excelente dedicação, futuro(a) médico(a)!";
+    return "Você é um exemplo de disciplina!";
+  };
+
   return (
     <>
       <div className="bg-card border border-border rounded-lg p-4">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold text-sm flex items-center gap-2">
             <Trophy className="w-4 h-4 text-primary" />
-            Progresso
+            Seu Progresso
           </h3>
           <Button
             variant="ghost"
@@ -29,7 +37,7 @@ export function GamificationBanner() {
             className="h-7 text-xs gap-1"
             onClick={() => setShowBadges(!showBadges)}
           >
-            Ver badges
+            Ver conquistas
             {showBadges ? (
               <ChevronUp className="w-3 h-3" />
             ) : (
@@ -43,13 +51,17 @@ export function GamificationBanner() {
           <div className="p-2 rounded-full bg-orange-500/20">
             <Flame className="w-5 h-5 text-orange-500" />
           </div>
-          <div>
+          <div className="flex-1">
             <p className="text-2xl font-bold text-foreground">{streak}</p>
             <p className="text-xs text-muted-foreground">
-              {streak === 1 ? "dia de streak" : "dias de streak"}
+              {streak === 1 ? "dia de estudo" : "dias consecutivos"}
             </p>
           </div>
         </div>
+
+        <p className="text-xs text-muted-foreground text-center mt-2">
+          {getStreakMessage()}
+        </p>
 
         {/* Badges Grid */}
         {showBadges && (
@@ -79,7 +91,7 @@ export function GamificationBanner() {
         {/* Stats */}
         <div className="mt-3 flex items-center justify-center gap-4 text-xs text-muted-foreground">
           <span>
-            {badges.length}/{allBadges.length} badges
+            {badges.length}/{allBadges.length} conquistas
           </span>
         </div>
       </div>
@@ -88,7 +100,10 @@ export function GamificationBanner() {
       <Dialog open={!!newBadge} onOpenChange={dismissBadgeNotification}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-center">Nova Conquista!</DialogTitle>
+            <DialogTitle className="text-center flex items-center justify-center gap-2">
+              <GraduationCap className="w-5 h-5 text-primary" />
+              Nova Conquista Desbloqueada!
+            </DialogTitle>
           </DialogHeader>
           {newBadge && (
             <div className="flex flex-col items-center py-6">
@@ -99,8 +114,11 @@ export function GamificationBanner() {
               <p className="text-sm text-muted-foreground text-center">
                 {newBadge.description}
               </p>
+              <p className="text-xs text-primary mt-3">
+                Continue assim, futuro(a) médico(a)!
+              </p>
               <Button className="mt-6" onClick={dismissBadgeNotification}>
-                Continuar
+                Continuar Estudando
               </Button>
             </div>
           )}

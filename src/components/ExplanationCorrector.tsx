@@ -78,7 +78,8 @@ export function ExplanationCorrector({ promptTitle, promptContent }: Explanation
         <div>
           <p className="text-sm font-medium">Técnica Feynman</p>
           <p className="text-xs text-muted-foreground mt-1">
-            Explique o conceito com suas palavras como se estivesse ensinando a alguém. A IA analisará sua compreensão.
+            Explique o conceito com suas palavras, futuro(a) médico(a). 
+            A IA vai analisar sua compreensão e te dar feedback construtivo.
           </p>
         </div>
       </div>

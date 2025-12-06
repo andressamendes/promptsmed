@@ -126,7 +126,8 @@ export function QuestionGenerator({ promptTitle, promptContent }: QuestionGenera
             <div>
               <p className="text-sm font-medium">Quiz Interativo</p>
               <p className="text-xs text-muted-foreground mt-1">
-                Gere questões de múltipla escolha baseadas no conteúdo deste prompt para testar e reforçar seu conhecimento.
+                Teste seu conhecimento, futuro(a) médico(a)! 
+                Questões geradas por IA baseadas no conteúdo deste prompt.
               </p>
             </div>
           </div>
@@ -226,9 +227,9 @@ export function QuestionGenerator({ promptTitle, promptContent }: QuestionGenera
                     {score.correct}/{score.total}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {score.correct === score.total ? "Perfeito! Excelente domínio!" : 
-                     score.correct >= score.total * 0.7 ? "Ótimo trabalho!" : 
-                     "Continue praticando!"}
+                    {score.correct === score.total ? "Perfeito! Excelente domínio, futuro(a) médico(a)!" : 
+                     score.correct >= score.total * 0.7 ? "Ótimo trabalho! Continue assim!" : 
+                     "Continue praticando, você vai dominar isso!"}
                   </p>
                 </div>
                 <Button onClick={generateQuestions} className="w-full gap-2">
