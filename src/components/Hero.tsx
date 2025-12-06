@@ -1,39 +1,39 @@
-import { Brain, Sparkles, Target, BookOpen } from "lucide-react";
+import { Brain, Sparkles, Target, BookOpen, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { prompts, sections } from "@/data/prompts-data";
 
 export function Hero() {
   const stats = [
     { value: prompts.length, label: "Prompts", icon: Sparkles },
-    { value: sections.length, label: "Seções", icon: Target },
+    { value: sections.length, label: "Categorias", icon: Target },
     { value: "100%", label: "Gratuito", icon: BookOpen },
   ];
 
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center pt-20 pb-16 bg-pattern"
+      className="min-h-[90vh] flex items-center justify-center pt-20 pb-16 bg-pattern"
     >
       <div className="container">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
-            <Brain className="w-4 h-4 text-primary" />
+            <GraduationCap className="w-4 h-4 text-primary" />
             <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-              Baseado em Evidências Científicas
+              Baseado em Ciência Cognitiva
             </span>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up text-balance">
-            Arsenal de Prompts para{" "}
+            Prompts Inteligentes para{" "}
             <span className="gradient-text">Estudantes de Medicina</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in leading-relaxed">
-            Prompts otimizados com estratégias de aprendizado baseadas em Ciência
-            Cognitiva para maximizar sua retenção e desempenho.
+            Biblioteca de prompts otimizados com técnicas de aprendizado 
+            baseadas em evidências para maximizar sua retenção e desempenho acadêmico.
           </p>
 
           {/* CTA Buttons */}
@@ -60,8 +60,8 @@ export function Hero() {
                   ?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              <Target className="w-4 h-4" />
-              Consultar Mentor
+              <Brain className="w-4 h-4" />
+              Recomendação Personalizada
             </Button>
           </div>
 
