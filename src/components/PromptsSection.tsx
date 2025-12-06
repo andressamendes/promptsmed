@@ -50,13 +50,13 @@ export function PromptsSection() {
       <div className="container">
         {/* Header */}
         <div className="text-center mb-10">
-          <span className="medical-badge medical-badge-cyan mb-4">Arsenal de Prompts</span>
+          <span className="medical-badge medical-badge-cyan mb-4">Biblioteca de Prompts</span>
           <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            37 Prompts Médicos
+            {totalCount} Prompts para Medicina
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Prompts otimizados com estratégias de aprendizado baseadas em
-            evidência científica para maximizar sua retenção.
+            evidências científicas para maximizar sua retenção e desempenho.
           </p>
         </div>
 
