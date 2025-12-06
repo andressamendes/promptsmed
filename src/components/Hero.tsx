@@ -1,8 +1,12 @@
 import { Brain, Sparkles, Target, BookOpen, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { prompts, sections } from "@/data/prompts-data";
+import { useParallax, useParallaxElement } from "@/hooks/use-parallax";
 
 export function Hero() {
+  const parallaxBg = useParallax(0.3);
+  const parallaxContent = useParallaxElement(0.15);
+  
   const stats = [
     { value: prompts.length, label: "Prompts", icon: Sparkles },
     { value: sections.length, label: "Categorias", icon: Target },
@@ -12,10 +16,26 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-[90vh] flex items-center justify-center pt-20 pb-16 bg-pattern"
+      className="min-h-[90vh] flex items-center justify-center pt-20 pb-16 bg-pattern relative overflow-hidden"
     >
-      <div className="container">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Parallax Background Elements */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{ transform: `translateY(${parallaxBg}px)` }}
+      >
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container relative z-10">
+        <div 
+          className="max-w-4xl mx-auto text-center transition-all duration-100 ease-out"
+          style={{ 
+            transform: `translateY(${parallaxContent.y}px)`,
+            opacity: parallaxContent.opacity 
+          }}
+        >
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
             <GraduationCap className="w-4 h-4 text-primary" />
