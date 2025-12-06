@@ -15,33 +15,33 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    text: "Qual é o seu principal objetivo de estudo?",
+    text: "O que você precisa agora?",
     icon: Target,
     options: [
-      { value: "prova", label: "Preparação para provas", description: "Foco em questões e revisão rápida" },
-      { value: "retencao", label: "Melhorar retenção", description: "Memorização de longo prazo" },
-      { value: "raciocinio", label: "Raciocínio clínico", description: "Desenvolver pensamento diagnóstico" },
-      { value: "produtividade", label: "Produtividade", description: "Otimizar rotina de estudos" },
+      { value: "prova", label: "Me preparar para prova", description: "Questões, revisão rápida, simulados" },
+      { value: "retencao", label: "Fixar conteúdo de vez", description: "Técnicas de memorização que duram" },
+      { value: "raciocinio", label: "Pensar como médico", description: "Casos clínicos e diagnóstico diferencial" },
+      { value: "produtividade", label: "Render mais no estudo", description: "Foco, rotina e menos procrastinação" },
     ],
   },
   {
     id: 2,
-    text: "Quanto tempo você tem disponível agora?",
+    text: "Quanto tempo você tem agora?",
     icon: Clock,
     options: [
-      { value: "curto", label: "5 a 15 minutos", description: "Sessão rápida e objetiva" },
-      { value: "medio", label: "15 a 30 minutos", description: "Sessão moderada" },
-      { value: "longo", label: "Mais de 30 minutos", description: "Sessão aprofundada" },
+      { value: "curto", label: "Só uns 15 minutos", description: "Algo rápido e direto ao ponto" },
+      { value: "medio", label: "Meia hora", description: "Dá pra aprofundar um pouco" },
+      { value: "longo", label: "Mais de 30 minutos", description: "Sessão de estudo completa" },
     ],
   },
   {
     id: 3,
-    text: "Qual é o seu nível de experiência com IA?",
+    text: "Já usou IA pra estudar antes?",
     icon: Sparkles,
     options: [
-      { value: "iniciante", label: "Iniciante", description: "Primeiros passos com prompts" },
-      { value: "intermediario", label: "Intermediário", description: "Uso ocasional de IA" },
-      { value: "avancado", label: "Avançado", description: "Uso frequente e estratégico" },
+      { value: "iniciante", label: "Nunca ou quase nunca", description: "Ainda estou descobrindo" },
+      { value: "intermediario", label: "De vez em quando", description: "Uso ChatGPT às vezes" },
+      { value: "avancado", label: "Uso bastante", description: "Já faz parte da minha rotina" },
     ],
   },
 ];
@@ -158,13 +158,13 @@ export function MentorSection() {
           <div className="text-center mb-8">
             <span className="medical-badge medical-badge-purple mb-4">
               <BookOpen className="w-3.5 h-3.5" />
-              Mentor Inteligente
+              Recomendação
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              Encontre o Prompt Ideal
+              Não sabe por onde começar?
             </h2>
             <p className="text-muted-foreground">
-              Responda 3 perguntas e receba recomendações personalizadas para seu momento de estudo.
+              Responde 3 perguntas rápidas e descobre qual prompt usar agora.
             </p>
           </div>
 
@@ -232,7 +232,7 @@ export function MentorSection() {
                   <div className="flex items-center justify-center gap-2 mb-6">
                     <CheckCircle className="w-5 h-5 text-accent" />
                     <h3 className="text-lg font-semibold">
-                      Prompts Recomendados
+                      Esses combinam com você
                     </h3>
                   </div>
 
@@ -257,7 +257,7 @@ export function MentorSection() {
                             <div className="flex items-center gap-2">
                               {index === 0 && (
                                 <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded">
-                                  Melhor opção
+                                  Top pick
                                 </span>
                               )}
                             </div>
@@ -272,13 +272,13 @@ export function MentorSection() {
                     </div>
                   ) : (
                     <p className="text-center text-muted-foreground mb-6">
-                      Nenhum prompt encontrado para essa combinação.
+                      Hmm, não achei nenhum prompt para essa combinação. Tenta de novo?
                     </p>
                   )}
 
                   <Button onClick={reset} variant="outline" className="w-full gap-2">
                     <RotateCcw className="w-4 h-4" />
-                    Recomeçar
+                    Tentar de novo
                   </Button>
                 </div>
               )}

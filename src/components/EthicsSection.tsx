@@ -4,18 +4,18 @@ import { Card, CardContent } from "@/components/ui/card";
 const guidelines = [
   {
     icon: Brain,
-    title: "Ferramenta complementar",
-    text: "A IA auxilia o aprendizado, mas não substitui o estudo ativo e o raciocínio clínico próprio.",
+    title: "IA é ferramenta, não muleta",
+    text: "Use para acelerar, não para substituir seu raciocínio. O aprendizado real acontece na sua cabeça.",
   },
   {
     icon: BookOpen,
-    title: "Validação obrigatória",
-    text: "Sempre verifique informações com fontes científicas confiáveis antes de aplicar.",
+    title: "Sempre confira as fontes",
+    text: "IA erra. Antes de confiar, valide com livros-texto, artigos e fontes que você conhece.",
   },
   {
     icon: Lock,
-    title: "Privacidade de dados",
-    text: "Nunca insira dados reais de pacientes em ferramentas de IA.",
+    title: "Nada de dados de pacientes",
+    text: "Nunca cole informações reais de pacientes em nenhuma IA. Privacidade não é opcional.",
   },
 ];
 
@@ -32,10 +32,10 @@ export function EthicsSection() {
                 </div>
                 <div>
                   <h2 className="text-xl font-bold">
-                    Uso Responsável de IA na Medicina
+                    Use com Responsabilidade
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Diretrizes éticas para estudantes
+                    Algumas coisas importantes antes de usar
                   </p>
                 </div>
               </div>
@@ -63,12 +63,11 @@ export function EthicsSection() {
                 <AlertTriangle className="w-5 h-5 text-medical-amber flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-sm text-foreground mb-1">
-                    Atenção
+                    Importante
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    A IA pode gerar informações incorretas ou desatualizadas. 
-                    Sempre confirme com literatura primária e respeite as políticas 
-                    acadêmicas da sua instituição.
+                    IA pode gerar informações erradas ou desatualizadas. 
+                    Sempre confira com a literatura e respeite as regras da sua faculdade sobre uso de IA.
                   </p>
                 </div>
               </div>

@@ -26,197 +26,195 @@ const aiData: AIData[] = [
   {
     id: "chatgpt",
     name: "ChatGPT",
-    tagline: "O versátil e rápido",
+    tagline: "Rápido e organizado",
     color: "text-[#10a37f]",
     bgColor: "bg-[#10a37f]/10",
     borderColor: "border-[#10a37f]/30",
     link: "https://chat.openai.com/",
     icon: <Sparkles className="w-6 h-6" />,
     strengths: [
-      "Excelente para saídas estruturadas e formatadas",
-      "Muito rápido em gerar listas e cronogramas",
-      "Bom em seguir formatos específicos (CSV, tabelas)",
-      "Interface familiar e fácil de usar",
-      "Ótimo para tarefas repetitivas e padronizadas",
+      "Ótimo para gerar listas, tabelas e cronogramas",
+      "Responde rápido e segue formatos bem",
+      "Flashcards saem prontos para importar no Anki",
+      "Interface simples e familiar",
+      "Bom para tarefas repetitivas e padronizadas",
     ],
     weaknesses: [
-      "Pode ser superficial em análises complexas",
-      "Às vezes sacrifica profundidade por velocidade",
-      "Menos nuançado em raciocínio clínico sutil",
+      "Às vezes fica superficial em análises complexas",
+      "Pode trocar profundidade por velocidade",
+      "Raciocínio clínico não é seu forte",
     ],
     bestFor: [
       "Flashcards para Anki",
-      "Cronogramas de estudo",
+      "Cronogramas de revisão",
       "Listas e checklists",
       "Conversão de formatos",
-      "Tarefas rápidas e objetivas",
+      "Tarefas rápidas e diretas",
     ],
     useCases: [
-      { title: "Flashcards Otimizados", description: "Gera 30 flashcards formatados para importação direta no Anki" },
-      { title: "Plano de Revisão Espaçada", description: "Cria cronogramas detalhados com intervalos de revisão" },
-      { title: "Protocolo Pomodoro", description: "Estrutura sessões de estudo com tempos e pausas" },
+      { title: "Flashcards prontos", description: "Gera 30 cards formatados para importar direto no Anki" },
+      { title: "Plano de revisão", description: "Monta cronograma com intervalos de repetição espaçada" },
+      { title: "Pomodoro personalizado", description: "Estrutura suas sessões de estudo com pausas" },
     ],
     tips: [
-      "Use para tarefas que precisam de formato específico",
-      "Ideal quando você precisa de velocidade",
-      "Bom para primeira versão de materiais estruturados",
+      "Use quando precisar de algo estruturado e rápido",
+      "Ideal para primeira versão de materiais",
+      "Bom para formatar conteúdo que você já estudou",
     ],
   },
   {
     id: "claude",
     name: "Claude",
-    tagline: "O professor socrático",
+    tagline: "Professor particular",
     color: "text-[#cc785c]",
     bgColor: "bg-[#cc785c]/10",
     borderColor: "border-[#cc785c]/30",
     link: "https://claude.ai/",
     icon: <Brain className="w-6 h-6" />,
     strengths: [
-      "Raciocínio clínico excepcional e nuançado",
-      "Excelente para casos clínicos complexos",
-      "Tutoria socrática de alta qualidade",
+      "Raciocínio clínico de outro nível",
+      "Casos clínicos complexos são a especialidade",
+      "Ensina no estilo socrático (te faz pensar)",
       "Análise profunda e contextualizada",
-      "Melhor em conteúdo longo e detalhado",
-      "Identificação sutil de misconceptions",
+      "Identifica seus erros de raciocínio com precisão",
     ],
     weaknesses: [
-      "Pode ser mais lento que outros modelos",
-      "Às vezes prolixo demais",
-      "Menos eficiente para tarefas simples e diretas",
+      "Pode ser mais lento que outros",
+      "Às vezes escreve demais",
+      "Para coisas simples, é overkill",
     ],
     bestFor: [
-      "Casos clínicos progressivos",
-      "Método socrático",
-      "Análise de erros",
-      "Raciocínio diagnóstico",
-      "Conteúdo acadêmico profundo",
+      "Casos clínicos interativos",
+      "Discussão diagnóstica",
+      "Análise de erros em provas",
+      "Entender mecanismos complexos",
       "Tutoria personalizada",
     ],
     useCases: [
-      { title: "Casos Clínicos Progressivos", description: "Simula casos interativos com feedback a cada etapa" },
-      { title: "Método Socrático", description: "Guia o aprendizado através de perguntas estratégicas" },
-      { title: "Análise de Padrões de Erro", description: "Identifica misconceptions e cria correções personalizadas" },
+      { title: "Caso clínico passo a passo", description: "Simula atendimento com feedback a cada decisão sua" },
+      { title: "Método socrático", description: "Te guia com perguntas até você chegar na resposta" },
+      { title: "Análise de erros", description: "Identifica padrões nas questões que você erra" },
     ],
     tips: [
-      "Use para temas que exigem profundidade",
-      "Ideal para prática de raciocínio clínico",
-      "Melhor escolha quando precisa de feedback nuançado",
+      "Use para temas que precisa entender de verdade",
+      "Ideal quando quer treinar raciocínio",
+      "Melhor escolha para feedback aprofundado",
     ],
   },
   {
     id: "gemini",
     name: "Gemini",
-    tagline: "O visual e multimodal",
+    tagline: "Visual e conectado",
     color: "text-[#8e8ea0]",
     bgColor: "bg-[#8e8ea0]/10",
     borderColor: "border-[#8e8ea0]/30",
     link: "https://gemini.google.com/",
     icon: <Sparkles className="w-6 h-6" />,
     strengths: [
-      "Excelente para descrições visuais detalhadas",
-      "Integração nativa com Google (Docs, Drive)",
-      "Bom em criar mapas conceituais estruturados",
-      "Capacidade multimodal (imagens + texto)",
-      "Forte em síntese de informações visuais",
+      "Descrições visuais detalhadas para criar diagramas",
+      "Integra com Google Docs e Drive",
+      "Bom para mapas conceituais estruturados",
+      "Entende imagens (multimodal)",
+      "Sintetiza informações visuais bem",
     ],
     weaknesses: [
-      "Menos consistente em tarefas puramente textuais",
-      "Pode ser menos preciso em detalhes médicos específicos",
-      "Interface ainda em evolução",
+      "Menos consistente em textos puros",
+      "Pode errar detalhes médicos específicos",
+      "Interface ainda melhorando",
     ],
     bestFor: [
-      "Mapas conceituais visuais",
-      "Dual coding (visual + verbal)",
-      "Descrição de diagramas",
-      "Integração com Google Workspace",
-      "Conteúdo multimodal",
+      "Mapas conceituais",
+      "Dual coding (visual + texto)",
+      "Descrever diagramas para criar",
+      "Integrar com Google Workspace",
+      "Análise de imagens",
     ],
     useCases: [
-      { title: "Mapas Conceituais Estruturados", description: "Cria hierarquias visuais com conexões claras" },
-      { title: "Dual Coding Visual", description: "Gera descrições para criar diagramas e ilustrações" },
-      { title: "Análise de Imagens Médicas", description: "Descreve e explica imagens quando fornecidas" },
+      { title: "Mapa conceitual", description: "Cria hierarquias visuais com conexões claras" },
+      { title: "Dual coding", description: "Gera descrições para você criar diagramas" },
+      { title: "Análise de imagem", description: "Explica imagens médicas quando você envia" },
     ],
     tips: [
       "Use quando precisar de representações visuais",
-      "Ideal para materiais que serão transformados em diagramas",
-      "Bom para integrar com seu Google Drive",
+      "Ideal para materiais que viram diagramas",
+      "Bom se você já usa Google Drive",
     ],
   },
   {
     id: "notebooklm",
     name: "NotebookLM",
-    tagline: "O criador de podcasts",
+    tagline: "Transforma em podcast",
     color: "text-[#4285f4]",
     bgColor: "bg-[#4285f4]/10",
     borderColor: "border-[#4285f4]/30",
     link: "https://notebooklm.google.com/",
     icon: <Mic className="w-6 h-6" />,
     strengths: [
-      "Gera podcasts de áudio automaticamente",
-      "Excelente para síntese de múltiplos documentos",
-      "Cria conversas naturais entre apresentadores",
-      "Ideal para aprendizado passivo (caminhadas, transporte)",
-      "Transforma PDFs e artigos em áudio explicativo",
+      "Cria podcasts de áudio automaticamente",
+      "Sintetiza vários documentos de uma vez",
+      "Conversa natural entre dois apresentadores",
+      "Perfeito para ouvir enquanto faz outras coisas",
+      "Transforma PDFs em áudio explicativo",
     ],
     weaknesses: [
-      "Limitado a formatos de áudio/podcast",
-      "Menos interativo que chatbots tradicionais",
-      "Requer upload de documentos fonte",
+      "Só faz áudio/podcast",
+      "Menos interativo que chatbots",
+      "Precisa fazer upload dos documentos",
     ],
     bestFor: [
-      "Podcasts educativos",
-      "Síntese de artigos científicos",
-      "Aprendizado durante deslocamento",
-      "Revisão de múltiplas fontes",
-      "Conteúdo em áudio",
+      "Podcasts de revisão",
+      "Resumir artigos científicos",
+      "Estudar no ônibus ou academia",
+      "Consolidar várias fontes",
+      "Aprendizado passivo",
     ],
     useCases: [
-      { title: "Podcast Educativo AI", description: "Transforma tema médico em episódio de podcast com dois apresentadores" },
-      { title: "Síntese de Literatura", description: "Resume múltiplos artigos em uma discussão coerente" },
-      { title: "Revisão Auditiva", description: "Cria resumos em áudio para ouvir durante atividades físicas" },
+      { title: "Podcast do tema", description: "Transforma qualquer assunto em episódio com dois hosts" },
+      { title: "Resumo de artigos", description: "Junta vários papers numa discussão coerente" },
+      { title: "Revisão no treino", description: "Cria áudio para ouvir enquanto malha" },
     ],
     tips: [
       "Use para transformar leituras em áudio",
-      "Ideal para revisar durante exercícios ou transporte",
-      "Upload seus PDFs e artigos para síntese",
+      "Ideal para revisar durante exercício ou transporte",
+      "Sobe seus PDFs e artigos para sintetizar",
     ],
   },
   {
     id: "perplexity",
     name: "Perplexity",
-    tagline: "O pesquisador científico",
+    tagline: "Pesquisador com fontes",
     color: "text-[#20b8cd]",
     bgColor: "bg-[#20b8cd]/10",
     borderColor: "border-[#20b8cd]/30",
     link: "https://www.perplexity.ai/",
     icon: <Search className="w-6 h-6" />,
     strengths: [
-      "Busca em tempo real de informações atualizadas",
-      "Cita fontes automaticamente",
-      "Excelente para evidências científicas",
-      "Acesso a literatura médica recente",
-      "Ideal para pesquisa PICO estruturada",
+      "Busca informações atualizadas em tempo real",
+      "Cita as fontes automaticamente",
+      "Perfeito para encontrar evidências",
+      "Acessa literatura médica recente",
+      "Ideal para pesquisa PICO",
     ],
     weaknesses: [
-      "Menos criativo que outros modelos",
-      "Focado em busca, menos em criação",
-      "Pode ser superficial sem direcionamento adequado",
+      "Menos criativo que outros",
+      "Focado em buscar, não em criar",
+      "Pode ser superficial sem bom direcionamento",
     ],
     bestFor: [
-      "Busca de evidências científicas",
+      "Buscar evidências científicas",
       "Pesquisa PICO/PubMed",
       "Informações atualizadas",
-      "Verificação de fatos",
-      "Referências bibliográficas",
+      "Checar se algo é verdade",
+      "Achar referências",
     ],
     useCases: [
-      { title: "Busca de Evidências", description: "Estrutura pesquisa PICO e encontra artigos relevantes" },
-      { title: "Atualização Científica", description: "Busca guidelines e consensos mais recentes" },
-      { title: "Fact-Checking Médico", description: "Verifica informações com fontes confiáveis" },
+      { title: "Busca PICO", description: "Estrutura sua pergunta e acha artigos relevantes" },
+      { title: "Guidelines atuais", description: "Busca consensos e protocolos mais recentes" },
+      { title: "Checagem de fatos", description: "Verifica informações com fontes confiáveis" },
     ],
     tips: [
-      "Use para pesquisas que precisam de fontes",
-      "Ideal para verificar informações clínicas",
+      "Use quando precisar de fontes",
+      "Ideal para checar informações clínicas",
       "Melhor escolha para literatura atualizada",
     ],
   },
@@ -266,15 +264,14 @@ export default function GuiaIAs() {
             <div className="max-w-3xl mx-auto text-center">
               <Badge className="mb-4 gap-1">
                 <Sparkles className="w-3 h-3" />
-                Guia Completo
+                Guia Prático
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                Qual IA Usar para{" "}
-                <span className="gradient-text">Cada Tipo de Estudo?</span>
+                Qual IA usar{" "}
+                <span className="gradient-text">em cada situação?</span>
               </h1>
               <p className="text-lg text-muted-foreground">
-                Comparativo detalhado das 5 principais IAs para estudantes de medicina.
-                Descubra os pontos fortes de cada uma e quando utilizá-las.
+                Cada IA tem seu ponto forte. Aqui você descobre quando usar cada uma para estudar melhor.
               </p>
             </div>
           </div>
@@ -283,7 +280,7 @@ export default function GuiaIAs() {
         {/* Quick Comparison Table */}
         <section className="py-12 border-b border-border">
           <div className="container">
-            <h2 className="text-2xl font-bold mb-6 text-center">Comparativo Rápido</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">Resumo: qual usar para quê</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -356,7 +353,7 @@ export default function GuiaIAs() {
         {/* Detailed Cards */}
         <section className="py-16">
           <div className="container">
-            <h2 className="text-2xl font-bold mb-8 text-center">Análise Detalhada de Cada IA</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">Conheça cada uma em detalhe</h2>
             <div className="grid gap-8">
               {aiData.map((ai) => (
                 <Card key={ai.id} className={cn("overflow-hidden border-l-4", ai.borderColor)}>
@@ -390,7 +387,7 @@ export default function GuiaIAs() {
                       <div>
                         <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm text-emerald-600">
                           <CheckCircle className="w-4 h-4" />
-                          Pontos Fortes
+                          Onde brilha
                         </h4>
                         <ul className="space-y-2">
                           {ai.strengths.map((strength, i) => (
@@ -406,7 +403,7 @@ export default function GuiaIAs() {
                       <div>
                         <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm text-rose-600">
                           <XCircle className="w-4 h-4" />
-                          Limitações
+                          Onde peca
                         </h4>
                         <ul className="space-y-2">
                           {ai.weaknesses.map((weakness, i) => (
@@ -421,7 +418,7 @@ export default function GuiaIAs() {
 
                     {/* Melhor Para */}
                     <div>
-                      <h4 className="font-semibold mb-3 text-sm">Melhor Para:</h4>
+                      <h4 className="font-semibold mb-3 text-sm">Usa quando precisar de:</h4>
                       <div className="flex flex-wrap gap-2">
                         {ai.bestFor.map((item, i) => (
                           <Badge key={i} variant="secondary" className={cn("text-xs", ai.bgColor, ai.color)}>
@@ -433,7 +430,7 @@ export default function GuiaIAs() {
 
                     {/* Casos de Uso */}
                     <div>
-                      <h4 className="font-semibold mb-3 text-sm">Prompts Recomendados:</h4>
+                      <h4 className="font-semibold mb-3 text-sm">Exemplos de uso:</h4>
                       <div className="grid sm:grid-cols-3 gap-3">
                         {ai.useCases.map((useCase, i) => (
                           <div key={i} className="p-3 rounded-lg bg-muted/30 border border-border/50">
@@ -446,7 +443,7 @@ export default function GuiaIAs() {
 
                     {/* Dicas */}
                     <div className="p-4 rounded-lg bg-muted/30 border border-border/50">
-                      <h4 className="font-semibold mb-2 text-sm">Dicas de Uso:</h4>
+                      <h4 className="font-semibold mb-2 text-sm">Na prática:</h4>
                       <ul className="grid sm:grid-cols-3 gap-2">
                         {ai.tips.map((tip, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -467,14 +464,14 @@ export default function GuiaIAs() {
         <section className="py-16 bg-muted/30 border-t border-border">
           <div className="container">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-2xl font-bold mb-4">Pronto para Começar?</h2>
+              <h2 className="text-2xl font-bold mb-4">Bora estudar?</h2>
               <p className="text-muted-foreground mb-6">
-                Explore nossa biblioteca de prompts otimizados e comece a estudar de forma mais inteligente.
+                Agora que você sabe qual IA usar, escolhe um prompt e começa.
               </p>
               <Button asChild size="lg" className="gap-2">
                 <Link to="/#prompts">
                   <Sparkles className="w-4 h-4" />
-                  Ver Todos os Prompts
+                  Ver os Prompts
                 </Link>
               </Button>
             </div>
