@@ -37,7 +37,7 @@ export const sections: Section[] = [
     title: "Raciocínio Clínico",
     slug: "raciocinio-clinico",
     description: "Casos clínicos e pensamento diagnóstico",
-    color: "hsl(var(--medical-green))"
+    color: "hsl(var(--medical-teal))"
   },
   {
     id: "retention",
@@ -77,7 +77,7 @@ export const sections: Section[] = [
     title: "Hábitos e Consistência",
     slug: "habitos-consistencia",
     description: "Empilhamento de hábitos e rituais",
-    color: "hsl(var(--medical-green))"
+    color: "hsl(var(--medical-teal))"
   },
   {
     id: "academic",
@@ -100,24 +100,8 @@ export const sections: Section[] = [
     number: 10,
     title: "Otimização e Tracking",
     slug: "otimizacao-tracking",
-    description: "Revisões semanais e eliminação de distrações",
+    description: "Revisões semanais e gestão de produtividade",
     color: "hsl(var(--medical-red))"
-  },
-  {
-    id: "cognitive-science",
-    number: 11,
-    title: "Ciência Cognitiva Avançada",
-    slug: "ciencia-cognitiva",
-    description: "Técnicas baseadas em evidências científicas de alto impacto",
-    color: "hsl(var(--primary))"
-  },
-  {
-    id: "essential-medicine",
-    number: 12,
-    title: "Essenciais para Medicina",
-    slug: "essenciais-medicina",
-    description: "Top 25 prompts selecionados especialmente para estudantes de medicina",
-    color: "hsl(var(--medical-cyan))"
   }
 ];
 
@@ -343,11 +327,63 @@ Descreva um mapa conceitual mostrando as conexões.
 - Destaque conexões contra-intuitivas
 - Identifique possíveis misconceptions`
   },
+  {
+    id: "resumir-notas-estudo",
+    title: "Resumir Notas de Estudo",
+    category: "Aprendizado Profundo",
+    categorySlug: "aprendizado-profundo",
+    sectionNumber: 1,
+    description: "Sintetiza informações complexas de anatomia, fisiologia e patologia",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
+    difficulty: "Intermediário",
+    tags: ["síntese", "organização", "fisiopatologia"],
+    aiRecommended: "claude",
+    prompt: `# PAPEL
+Você é especialista em síntese de conteúdo médico denso.
+
+# TAREFA
+Resuma meus estudos sobre [SÍNDROME/DOENÇA] de forma estruturada e hierárquica.
+
+# FORMATO DE SAÍDA
+
+## 1. FISIOPATOLOGIA
+[Mecanismo subjacente em 3-5 pontos-chave]
+
+## 2. QUADRO CLÍNICO
+- Sinais cardinais:
+- Sintomas típicos:
+- Apresentação atípica:
+
+## 3. DIAGNÓSTICO DIFERENCIAL
+| Condição | Diferenciador-chave |
+|----------|---------------------|
+| [DD 1]   | [Como distinguir]   |
+| [DD 2]   | [Como distinguir]   |
+
+## 4. EXAMES COMPLEMENTARES
+- Laboratoriais:
+- Imagem:
+- Especializados:
+
+## 5. TRATAMENTO
+- Primeira linha:
+- Alternativas:
+- Suporte:
+
+## 6. PROGNÓSTICO
+[Fatores de bom/mau prognóstico]
+
+# REGRAS
+- Use hierarquia clara
+- Priorize informações de alto rendimento
+- Inclua mnemônicos quando útil`
+  },
 
   // SEÇÃO 2: RACIOCÍNIO CLÍNICO
   {
     id: "questoes-usmle",
-    title: "Banco de Questões USMLE/ENARE",
+    title: "Banco de Questões Estilo Residência",
     category: "Raciocínio Clínico",
     categorySlug: "raciocinio-clinico",
     sectionNumber: 2,
@@ -666,55 +702,63 @@ Para cada problema, inclua:
 - Exija justificativa para cada resposta`
   },
   {
-    id: "priming-pretest",
-    title: "Priming Pre-Test",
+    id: "mnemonic-generator",
+    title: "Gerador de Mnemônicos Médicos",
     category: "Retenção e Memória",
     categorySlug: "retencao-memoria",
     sectionNumber: 3,
-    description: "Prepara o cérebro com pré-teste antes do estudo para atenção seletiva",
-    estimatedTime: "7 min",
-    evidenceLevel: "Média",
+    description: "Cria técnicas de memorização para anatomia, farmacologia e protocolos",
+    estimatedTime: "8 min",
+    evidenceLevel: "Alta",
     difficulty: "Iniciante",
-    tags: ["priming", "pré-teste", "atenção"],
-    aiRecommended: "chatgpt",
+    tags: ["mnemônicos", "memorização", "anatomia", "farmacologia"],
+    aiRecommended: "claude",
     prompt: `# PAPEL
-Você é especialista em priming cognitivo e efeito de pré-teste.
+Você é especialista em técnicas de memorização baseadas em neurociência.
 
 # TAREFA
-Crie um pré-teste de priming para [TEMA] que vou estudar em seguida.
+Crie técnicas de memorização para [ANATOMIA/FARMACOLOGIA/TEMA].
 
-# FORMATO
+# FORMATO DE SAÍDA
 
-## INSTRUÇÕES PARA O ESTUDANTE
-"Responda estas perguntas ANTES de estudar. Não se preocupe em errar - o objetivo é ativar sua curiosidade e direcionar sua atenção."
+## 1. MNEMÔNICOS VISUAIS
+### Acrônimos
+[Crie acrônimo onde cada letra representa um item da lista]
+Exemplo para nervos cranianos: "On Old Olympus..."
 
-## PRÉ-TESTE (5 perguntas)
-1. [Pergunta sobre conceito fundamental]
-   Sua resposta: ___________
-   Confiança: [ ] Chute [ ] Acho que sei [ ] Tenho certeza
+### Imagens Mentais
+[Descreva imagem vívida que conecta os conceitos]
+- Cena principal:
+- Elementos visuais:
+- Ação/movimento:
 
-2. [Pergunta sobre mecanismo]
-   ...
+## 2. METHOD OF LOCI (Palácio da Memória)
+### Percurso
+[Defina 5-7 pontos em um local familiar]
+1. Porta de entrada → [Conceito 1]
+2. Sofá da sala → [Conceito 2]
+3. Cozinha → [Conceito 3]
+...
 
-3. [Pergunta sobre aplicação clínica]
-   ...
+### Associações
+Para cada ponto, crie cena absurda/engraçada conectando local + conceito
 
-4. [Pergunta de diferenciação]
-   ...
+## 3. SISTEMA LEITNER ADAPTADO
+### Cards por nível
+- Nível 1 (diário): Conceitos novos
+- Nível 2 (2-3 dias): Acertou 1x
+- Nível 3 (semanal): Acertou 2x
+- Nível 4 (quinzenal): Acertou 3x
 
-5. [Pergunta sobre consequência/complicação]
-   ...
+## 4. ELABORATIVE INTERROGATION
+Para cada item, responda:
+- POR QUE isso é verdade?
+- COMO isso se conecta com X?
 
-## APÓS O ESTUDO
-Retorne e:
-1. Corrija suas respostas
-2. Note onde sua intuição estava certa/errada
-3. Identifique os "aha moments"
-
-## BENEFÍCIOS DO PRÉ-TESTE
-- Ativa conhecimento prévio relevante
-- Direciona atenção para gaps
-- Aumenta curiosidade (efeito de hipercorreção)`
+# REGRAS
+- Mnemônicos devem ser memoráveis (engraçados, absurdos)
+- Inclua componente visual sempre que possível
+- Teste imediatamente após criar`
   },
 
   // SEÇÃO 4: ANÁLISE E CORREÇÃO
@@ -867,7 +911,7 @@ Este registro ajuda a identificar o que funciona PARA VOCÊ especificamente.`
   // SEÇÃO 5: DESAFIO COGNITIVO
   {
     id: "desirable-difficulties",
-    title: "Gerador de Desirable Difficulties",
+    title: "Gerador de Dificuldades Desejáveis",
     category: "Desafio Cognitivo",
     categorySlug: "desafio-cognitivo",
     sectionNumber: 5,
@@ -965,7 +1009,7 @@ Se sentir: confusão, frustração, brancos → PARE e revise chunks anteriores`
   },
   {
     id: "pressure-simulator",
-    title: "Desempenho Sob Pressão Simulator",
+    title: "Simulador de Pressão de Prova",
     category: "Desafio Cognitivo",
     categorySlug: "desafio-cognitivo",
     sectionNumber: 5,
@@ -1020,7 +1064,7 @@ Após terminar:
   // SEÇÃO 6: ROTINA DE ALTA PERFORMANCE
   {
     id: "ultradian-architect",
-    title: "Ultradian Performance Architect",
+    title: "Arquiteto de Ciclos Ultradianos",
     category: "Rotina de Alta Performance",
     categorySlug: "rotina-performance",
     sectionNumber: 6,
@@ -1054,455 +1098,345 @@ Crie uma rotina de estudo baseada em ciclos ultradianos de 90 minutos para [MEU 
 - Este é seu momento de resolver problemas difíceis
 
 ## FASE 3: CONSOLIDAÇÃO (13 min)
-- Minutos 77-90: Revisão ativa do que estudou
-- Anotações de dúvidas para próxima sessão
+- Minutos 77-90: Revisão do que estudou
+- Anote dúvidas e insights
+- Prepare o próximo ciclo
 
-## INTERVALO OBRIGATÓRIO (20 min)
-- Movimente-se fisicamente
-- Evite telas
-- Hidrate-se
+## INTERVALO ENTRE CICLOS (20 min)
+Atividades de recuperação (NÃO telas):
+- Caminhar
+- Alongar
+- Hidratar
+- Snack leve
 
-# CRONOGRAMA DO DIA
-| Horário | Ciclo | Foco | Estado Energético |
-|---------|-------|------|-------------------|
-| [X] | 1 | [mais difícil] | Pico |
-| [X+2h] | 2 | [difícil] | Alto |
-| [X+4h] | 3 | [moderado] | Médio |
-
-# SINAIS DE QUEBRA DO CICLO
-Se sentir: bocejo, dispersão, fome → respeite o intervalo`
+# CRONOGRAMA DIÁRIO
+[Distribua 2-4 ciclos conforme horários fornecidos]`
   },
   {
-    id: "chronotype-optimizer",
-    title: "Chronotype-Based Schedule",
+    id: "cronotype-optimizer",
+    title: "Otimizador de Cronotipo",
     category: "Rotina de Alta Performance",
     categorySlug: "rotina-performance",
     sectionNumber: 6,
-    description: "Alinha estudos com seu cronotipo para máxima eficiência cognitiva",
+    description: "Identifica seu cronotipo e alinha tarefas aos picos naturais de energia",
     estimatedTime: "8 min",
     evidenceLevel: "Alta",
     difficulty: "Iniciante",
-    tags: ["cronotipo", "ritmo-circadiano", "produtividade"],
+    tags: ["cronotipo", "energia", "otimização"],
     aiRecommended: "chatgpt",
     prompt: `# PAPEL
-Você é especialista em cronobiologia e otimização circadiana.
+Você é especialista em cronobiologia e otimização de performance.
 
 # TAREFA
-Crie um cronograma de estudos otimizado para meu cronotipo.
+Identifique meu cronotipo e otimize minha rotina de estudos.
 
-# IDENTIFICAÇÃO DO CRONOTIPO
+# QUESTIONÁRIO DE CRONOTIPO
 Responda:
-1. Horário natural de acordar (sem despertador): [X]
-2. Horário de maior disposição: [manhã/tarde/noite]
-3. Horário de sono natural: [X]
-4. Como se sente às 10h? [muito alerta/ok/sonolento]
+1. A que horas você naturalmente acordaria sem despertador?
+2. A que horas você naturalmente sentiria sono?
+3. Quando você se sente mais alerta? Manhã/Tarde/Noite?
+4. Quando você prefere fazer exercício físico?
+5. Você se considera mais produtivo de manhã ou à noite?
 
-# CRONOGRAMAS POR CRONOTIPO
+# FORMATO DE SAÍDA
 
-## MATUTINO (Leão)
-- Pico cognitivo: 8h-12h
-- Estudo pesado: manhã
-- Revisões leves: tarde
-- Evitar: estudo após 20h
+## SEU CRONOTIPO
+[Leão/Urso/Lobo/Golfinho] - [Descrição breve]
 
-## INTERMEDIÁRIO (Urso)
-- Pico cognitivo: 10h-14h
-- Estudo pesado: meio da manhã até início da tarde
-- Revisões: final da tarde
-- Evitar: madrugada
+## JANELAS DE OURO
+- Pico de energia 1: [horário] → [tipo de tarefa ideal]
+- Pico de energia 2: [horário] → [tipo de tarefa ideal]
+- Vale de energia: [horário] → [tarefas leves/pausas]
 
-## VESPERTINO (Lobo)
-- Pico cognitivo: 16h-22h
-- Estudo pesado: tarde e noite
-- Revisões: manhã (se acordado)
-- Evitar: início da manhã
+## ROTINA IDEAL
+| Horário | Energia | Atividade Recomendada |
+|---------|---------|----------------------|
+| [X-Y] | Alta | Deep work / Raciocínio |
+| [Y-Z] | Média | Revisão / Leitura |
+| [Z-W] | Baixa | Pausa / Exercício |
 
-# SEU CRONOGRAMA PERSONALIZADO
-[Baseado nas respostas, criar horário específico]
-
-| Atividade | Melhor Horário | Tipo de Tarefa |
-|-----------|----------------|----------------|
-| Deep work | [X] | Conteúdo novo difícil |
-| Revisão ativa | [X] | Flashcards, questões |
-| Leitura leve | [X] | Material de apoio |`
+## AJUSTES PARA MEDICINA
+- Melhor horário para: Anatomia, Questões, Casos clínicos
+- Quando evitar: Estudar temas novos/complexos`
   },
   {
-    id: "pomodoro-protocol",
-    title: "Systematic Pomodoro Protocol",
+    id: "estrategia-exame-medico",
+    title: "Estratégia de Exame Completa",
     category: "Rotina de Alta Performance",
     categorySlug: "rotina-performance",
     sectionNumber: 6,
-    description: "Implementa técnica Pomodoro adaptada para estudo médico intensivo",
-    estimatedTime: "5 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["pomodoro", "foco", "intervalos"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em produtividade e técnica Pomodoro adaptada para estudos médicos.
-
-# TAREFA
-Configure um sistema Pomodoro otimizado para [MEU OBJETIVO DE ESTUDO].
-
-# PROTOCOLO POMODORO MÉDICO
-
-## CONFIGURAÇÃO BASE
-- Pomodoro: 25 minutos
-- Pausa curta: 5 minutos
-- Pausa longa: 15-30 minutos (após 4 pomodoros)
-
-## ADAPTAÇÃO POR TIPO DE ATIVIDADE
-
-### LEITURA DE CONTEÚDO NOVO
-- Pomodoro: 25 min (com anotações ativas)
-- Pausa: 5 min (sem telas)
-- Meta: 2-3 páginas produtivas por pomodoro
-
-### RESOLUÇÃO DE QUESTÕES
-- Pomodoro: 30 min (batch de questões)
-- Pausa: 5 min (correção rápida)
-- Meta: 5-8 questões por pomodoro
-
-### REVISÃO DE FLASHCARDS
-- Pomodoro: 20 min (mais intenso)
-- Pausa: 5 min
-- Meta: 50-70 cards por pomodoro
-
-## REGISTRO DIÁRIO
-| Pomodoro | Horário | Atividade | Completado? | Observação |
-|----------|---------|-----------|-------------|------------|
-| 1 | [X] | [atividade] | [ ] | |
-| 2 | [X] | [atividade] | [ ] | |
-
-## REGRAS DE OURO
-1. Se interrompido, o pomodoro não conta
-2. Registre todas as distrações que surgirem
-3. Não estenda pomodoros - a pausa é sagrada
-4. Revise e ajuste durações semanalmente`
-  },
-  {
-    id: "energy-audit",
-    title: "Energy Audit & Peak Mapper",
-    category: "Rotina de Alta Performance",
-    categorySlug: "rotina-performance",
-    sectionNumber: 6,
-    description: "Mapeia flutuações de energia para alocação estratégica de tarefas",
+    description: "Plano estratégico de 8 semanas para provas de medicina e residência",
     estimatedTime: "15 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["energia", "mapeamento", "produtividade"],
-    aiRecommended: "chatgpt",
+    evidenceLevel: "Alta",
+    difficulty: "Avançado",
+    tags: ["estratégia", "provas", "residência", "planejamento"],
+    aiRecommended: "claude",
     prompt: `# PAPEL
-Você é especialista em gestão de energia pessoal e produtividade sustentável.
+Você é coach especializado em preparação para exames médicos de alto impacto.
 
 # TAREFA
-Conduza uma auditoria de energia para otimizar minha rotina de estudos.
+Crie plano estratégico de 8 semanas para prova de [DISCIPLINA MÉDICA/RESIDÊNCIA].
 
-# COLETA DE DADOS (7 dias)
-Registre a cada 2 horas:
-- Horário
-- Nível de energia (1-10)
-- Nível de foco (1-10)
-- Humor
-- O que estava fazendo
-- O que comeu/bebeu antes
+# FORMATO DE SAÍDA
 
-# TEMPLATE DE REGISTRO
-| Horário | Energia | Foco | Humor | Atividade | Alimentação |
-|---------|---------|------|-------|-----------|-------------|
-| 08:00 | 7 | 6 | Neutro | Aula | Café |
-| 10:00 | 8 | 8 | Bom | Estudo | - |
-| 12:00 | 5 | 4 | Cansado | Almoço | Refeição |
+## 1. DIAGNÓSTICO INICIAL
+- Avaliação de conhecimento base
+- Identificação de lacunas prioritárias
+- Tempo disponível vs. conteúdo
 
-# ANÁLISE (após 7 dias)
+## 2. CRONOGRAMA SEMANAL
 
-## PADRÕES IDENTIFICADOS
-- Horários de pico: [X, Y, Z]
-- Horários de vale: [A, B, C]
-- Gatilhos de energia: [lista]
-- Drenos de energia: [lista]
+### Semanas 1-2: Fundamentos
+[Distribuição de tópicos prioritários]
 
-## MAPA DE ALOCAÇÃO
-| Nível de Energia | Tipo de Tarefa Ideal |
-|------------------|---------------------|
-| 8-10 (Pico) | Aprendizado novo, problemas difíceis |
-| 5-7 (Médio) | Revisão, questões moderadas |
-| 1-4 (Baixo) | Tarefas administrativas, descanso |
+### Semanas 3-4: Aprofundamento
+[Integração de sistemas e casos clínicos]
 
-## INTERVENÇÕES SUGERIDAS
-1. [Mudança específica baseada nos dados]
-2. [Mudança específica baseada nos dados]`
+### Semanas 5-6: Consolidação
+[Revisão espaçada e simulados]
+
+### Semanas 7-8: Sprint Final
+[Revisão de alto rendimento e gestão de ansiedade]
+
+## 3. SIMULADOS PROGRESSIVOS
+- Frequência:
+- Análise de erros:
+- Métricas de acompanhamento:
+
+## 4. PROTOCOLO DE REVISÃO FINAL
+[Últimos 3 dias antes da prova]
+
+## 5. GESTÃO DE ANSIEDADE
+- Técnicas pré-prova:
+- No dia da prova:`
   },
 
   // SEÇÃO 7: HÁBITOS E CONSISTÊNCIA
   {
     id: "habit-stacking",
-    title: "Habit Stacking Chain Builder",
+    title: "Habit Stacking Designer",
     category: "Hábitos e Consistência",
     categorySlug: "habitos-consistencia",
     sectionNumber: 7,
-    description: "Conecta novos hábitos de estudo a rotinas existentes para automação",
-    estimatedTime: "8 min",
+    description: "Cria pilhas de hábitos conectando novos comportamentos a rotinas existentes",
+    estimatedTime: "7 min",
     evidenceLevel: "Alta",
     difficulty: "Iniciante",
-    tags: ["habit-stacking", "rotina", "automação"],
+    tags: ["habit-stacking", "rotina", "comportamento"],
     aiRecommended: "chatgpt",
     prompt: `# PAPEL
-Você é especialista em formação de hábitos e habit stacking (James Clear).
+Você é especialista em design comportamental e formação de hábitos (James Clear).
 
 # TAREFA
-Crie uma cadeia de habit stacking para incorporar [HÁBITO DE ESTUDO DESEJADO].
+Crie uma estratégia de empilhamento de hábitos para minha rotina de estudos.
 
-# MAPEAMENTO DA ROTINA ATUAL
-Liste seus hábitos atuais sólidos:
-- Manhã: [ex: acordar, café, banho]
-- Tarde: [ex: almoço, trabalho]
-- Noite: [ex: jantar, série, dormir]
+# INPUT NECESSÁRIO
+- Hábitos que já tenho (automáticos): [lista]
+- Comportamentos de estudo que quero adquirir: [lista]
+- Momento do dia mais disponível: [manhã/tarde/noite]
 
-# FÓRMULA DO HABIT STACKING
-"Depois de [HÁBITO ATUAL], eu vou [NOVO HÁBITO]."
+# FORMATO DE SAÍDA
 
-# CADEIA PROPOSTA
+## PILHAS DE HÁBITOS
 
-## MANHÃ
-1. Depois de [servir o café], vou [revisar 10 flashcards]
-2. Depois de [escovar os dentes], vou [ler 1 página do tema do dia]
+### Pilha Matinal
+DEPOIS DE [hábito existente],
+VOU [novo hábito de estudo - 2 min].
 
-## TARDE
-3. Depois de [almoçar], vou [fazer 5 questões]
-4. Depois de [chegar em casa], vou [30 min de deep work]
+### Pilha de Transição (entre atividades)
+DEPOIS DE [hábito existente],
+VOU [novo hábito de estudo - 2 min].
 
-## NOITE
-5. Depois de [jantar], vou [revisar anotações do dia]
-6. Depois de [deitar], vou [ouvir 1 podcast médico]
+### Pilha Noturna
+DEPOIS DE [hábito existente],
+VOU [novo hábito de estudo - 2 min].
 
-# IMPLEMENTAÇÃO GRADUAL
-- Semana 1: Implementar apenas 1-2 stacks
-- Semana 2: Adicionar mais 1-2
-- Semana 3: Cadeia completa
+## REGRAS DE OURO
+1. Comece RIDICULAMENTE pequeno (2 min)
+2. Vincule ao hábito existente (não ao horário)
+3. Celebre IMEDIATAMENTE após fazer
+4. Nunca perca 2 dias seguidos
 
-# TROUBLESHOOTING
-Se o hábito não pegar:
-- O âncora é forte o suficiente?
-- O novo hábito é pequeno demais?
-- Há recompensa imediata?`
+## PROGRESSÃO
+- Semana 1-2: Apenas estabelecer o gatilho
+- Semana 3-4: Aumentar duração gradualmente
+- Semana 5+: Adicionar nova pilha
+
+## TROUBLESHOOTING
+Se falhar: volte para versão menor
+Se esquecer: adicione lembrete visual no local do gatilho`
   },
   {
-    id: "daily-non-negotiables",
-    title: "Daily Non-Negotiables Tracker",
+    id: "consistency-tracker",
+    title: "Tracker de Consistência",
     category: "Hábitos e Consistência",
     categorySlug: "habitos-consistencia",
     sectionNumber: 7,
-    description: "Define e rastreia ações mínimas diárias inegociáveis para progresso",
+    description: "Sistema visual de acompanhamento de hábitos de estudo",
     estimatedTime: "5 min",
     evidenceLevel: "Média",
     difficulty: "Iniciante",
-    tags: ["não-negociáveis", "mínimo-viável", "consistência"],
+    tags: ["tracking", "consistência", "visual"],
     aiRecommended: "chatgpt",
     prompt: `# PAPEL
-Você é especialista em sistemas de consistência e mínimo viável para progresso.
+Você é especialista em gamificação de hábitos e sistemas de tracking.
 
 # TAREFA
-Defina meus non-negotiables diários para [OBJETIVO].
+Crie um sistema de acompanhamento de consistência para meus estudos.
 
-# CONCEITO
-Non-negotiables são ações MÍNIMAS que você faz TODOS os dias, não importa o que aconteça. São tão pequenas que não há desculpa para não fazer.
+# INPUT NECESSÁRIO
+- Hábitos de estudo a rastrear: [lista]
+- Período de tracking: [semanal/mensal]
+- Metas mínimas por hábito: [quantidade]
 
-# CRITÉRIOS PARA DEFINIÇÃO
-1. Leva menos de 10 minutos
-2. Pode ser feito em qualquer condição
-3. Tem impacto composto ao longo do tempo
-4. É específico e mensurável
+# FORMATO DE SAÍDA
 
-# SEUS NON-NEGOTIABLES (máximo 5)
+## HABIT TRACKER VISUAL
 
-## ESTUDO
-1. [ ] Revisar [X] flashcards (10 min)
-2. [ ] Resolver [Y] questões (15 min)
-3. [ ] Ler [Z] páginas (10 min)
+### Semana ___
+| Hábito | Seg | Ter | Qua | Qui | Sex | Sáb | Dom | Meta | Real |
+|--------|-----|-----|-----|-----|-----|-----|-----|------|------|
+| Anki | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | 7/7 | |
+| Questões | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | 5/7 | |
+| Resumo | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | 3/7 | |
 
-## SAÚDE
-4. [ ] [Atividade física mínima] (10 min)
-5. [ ] [Hábito de sono] (5 min)
+## SISTEMA DE STREAKS
+- Atual: ___ dias consecutivos
+- Recorde: ___ dias
+- Meta: ___ dias
 
-# TRACKER SEMANAL
-| Non-Neg | Seg | Ter | Qua | Qui | Sex | Sab | Dom |
-|---------|-----|-----|-----|-----|-----|-----|-----|
-| Flashcards | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| Questões | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| Leitura | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+## MÉTRICAS SEMANAIS
+- Taxa de conclusão: ___% 
+- Tendência: ↗️ / ➡️ / ↘️
+- Hábito mais consistente: ___
+- Hábito que precisa atenção: ___
 
-# REGRA DE OURO
-Nos dias ruins, faça APENAS os non-negotiables. Nos dias bons, faça mais. A consistência vence a intensidade.`
+## REGRAS DE RECUPERAÇÃO
+- Se quebrar streak: volte no dia seguinte (não no "próxima segunda")
+- Regra dos 2 dias: nunca pular 2 dias seguidos
+- Versão mínima: se não conseguir fazer completo, faça 2 minutos`
   },
   {
-    id: "cornerstone-behavior",
-    title: "Cornerstone Behavior Identifier",
+    id: "melhorar-habitos-estudo",
+    title: "Redesenhar Hábitos de Estudo",
     category: "Hábitos e Consistência",
     categorySlug: "habitos-consistencia",
     sectionNumber: 7,
-    description: "Identifica o hábito-chave que desencadeia outros comportamentos positivos",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["keystone-habit", "efeito-cascata", "mudança"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em keystone habits e mudança comportamental sistêmica.
-
-# TAREFA
-Identifique meu comportamento cornerstone para [OBJETIVO DE TRANSFORMAÇÃO].
-
-# O QUE É CORNERSTONE BEHAVIOR
-É o hábito que, quando executado, naturalmente desencadeia uma cascata de outros comportamentos positivos. Mudar este único hábito pode transformar múltiplas áreas.
-
-# ANÁLISE
-
-## MAPEAMENTO DE CONEXÕES
-Liste seus hábitos atuais e como se conectam:
-- Quando faço [X], fico mais propenso a [Y]
-- Quando não faço [X], acabo fazendo [Z]
-
-## IDENTIFICAÇÃO DO CORNERSTONE
-Perguntas-guia:
-1. Que hábito, quando você faz, o resto do dia flui melhor?
-2. Que hábito, quando você pula, o dia tende a desandar?
-3. Que pequena vitória no início do dia te dá momentum?
-
-## CANDIDATOS A CORNERSTONE
-Para estudantes de medicina, frequentemente são:
-- Acordar no horário planejado
-- Primeira sessão de estudo da manhã
-- Exercício físico
-- Sono de qualidade
-
-# SEU CORNERSTONE IDENTIFICADO
-[Baseado na análise]
-
-## PROTOCOLO DE PROTEÇÃO
-Este hábito deve ser:
-1. Protegido de interrupções
-2. Feito primeiro (antes de decisões)
-3. Nunca negociável
-4. Celebrado quando cumprido
-
-## EFEITO CASCATA ESPERADO
-[Cornerstone] → [Consequência 1] → [Consequência 2] → [Resultado final]`
-  },
-  {
-    id: "pre-study-ritual",
-    title: "Pre-Study Activation Ritual",
-    category: "Hábitos e Consistência",
-    categorySlug: "habitos-consistencia",
-    sectionNumber: 7,
-    description: "Cria ritual de transição para entrar rapidamente em estado de foco",
-    estimatedTime: "5 min",
+    description: "Transforma procrastinação em consistência com micro-hábitos",
+    estimatedTime: "8 min",
     evidenceLevel: "Média",
     difficulty: "Iniciante",
-    tags: ["ritual", "transição", "foco"],
+    tags: ["hábitos", "consistência", "procrastinação", "micro-hábitos"],
     aiRecommended: "chatgpt",
     prompt: `# PAPEL
-Você é especialista em psicologia do desempenho e rituais de transição.
+Você é especialista em ciência comportamental e formação de hábitos.
 
 # TAREFA
-Crie um ritual pré-estudo personalizado para [MEU CONTEXTO].
+Analise e redesenhe meus hábitos de estudo.
 
-# CONCEITO
-Um ritual pré-estudo é uma sequência fixa de ações que sinaliza ao seu cérebro: "hora de focar". Com repetição, você entra em estado de fluxo mais rapidamente.
+# INFORMAÇÕES NECESSÁRIAS
+Descreva seus hábitos atuais:
+- Quando estuda?
+- Onde estuda?
+- Quanto tempo consegue manter foco?
+- O que te distrai?
 
-# ESTRUTURA DO RITUAL (5 min total)
+# FORMATO DE SAÍDA
 
-## MINUTO 1: AMBIENTE
-- [ ] Organizar mesa (apenas material necessário)
-- [ ] Silenciar celular (ou colocar em outra sala)
-- [ ] Ajustar iluminação
+## 1. DIAGNÓSTICO DE HÁBITOS ATUAIS
+- Gatilhos identificados
+- Comportamentos problemáticos
+- Recompensas atuais
 
-## MINUTO 2: CORPO
-- [ ] 5 respirações profundas (4-7-8)
-- [ ] Quick stretch (pescoço, ombros)
-- [ ] Postura de prontidão
+## 2. HABIT STACKING (Empilhamento)
+### Fórmula
+"Depois de [HÁBITO EXISTENTE], vou [NOVO HÁBITO]"
 
-## MINUTO 3: MENTE
-- [ ] Definir intenção: "Nos próximos [X] minutos, vou [tarefa específica]"
-- [ ] Visualizar conclusão bem-sucedida
-- [ ] Abandonar preocupações (anotar para depois)
+### Exemplos para Medicina
+- Depois do café da manhã → 30 min Anki
+- Depois de chegar em casa → revisar anotações do dia
+- Depois de escovar os dentes → ler 10 páginas
 
-## MINUTO 4-5: AQUECIMENTO
-- [ ] Revisão rápida do dia anterior (2 min)
-- [ ] Primeira tarefa minúscula já iniciada
+## 3. GATILHOS AMBIENTAIS
+- Local de estudo dedicado
+- Celular em modo avião
+- Materiais prontos na noite anterior
+- Ambiente sem distrações visuais
 
-# PERSONALIZAÇÃO
-Adicione elementos que funcionam para VOCÊ:
-- Música específica?
-- Bebida ritual (chá, café)?
-- Frase motivacional?
-- Playlist específica?
+## 4. ACCOUNTABILITY (Responsabilização)
+- Grupo de estudos com check-ins
+- App de tracking (Habitica, Streaks)
+- Parceiro de accountability
+- Metas públicas compartilhadas
 
-# GATILHO
-Escolha um gatilho sensorial consistente:
-- Mesma música de início
-- Mesmo chá/café
-- Mesmo lugar
-
-Após 21 dias, o ritual se torna automático.`
+## 5. REFORÇO POSITIVO PROGRESSIVO
+- Micro-recompensas após blocos
+- Celebrar pequenas vitórias
+- Tracking visual de sequência
+- Recompensa semanal por meta cumprida`
   },
 
   // SEÇÃO 8: PRODUÇÃO ACADÊMICA
   {
-    id: "assistente-tcc",
-    title: "Assistente de TCC",
+    id: "estrutura-tcc",
+    title: "Estrutura de TCC em Medicina",
     category: "Produção Acadêmica",
     categorySlug: "producao-academica",
     sectionNumber: 8,
-    description: "Estrutura metodologia, objetivos e cronograma do trabalho acadêmico",
+    description: "Monta estrutura completa de trabalho científico com seções IMRD",
     estimatedTime: "15 min",
-    evidenceLevel: "Média",
+    evidenceLevel: "Alta",
     difficulty: "Avançado",
-    tags: ["TCC", "metodologia", "pesquisa"],
+    tags: ["TCC", "estrutura", "IMRD"],
     aiRecommended: "claude",
     prompt: `# PAPEL
-Você é orientador de TCC em medicina com experiência em metodologia científica.
+Você é orientador de TCC em medicina com 20 anos de experiência.
 
 # TAREFA
-Me ajude a estruturar meu TCC sobre [TEMA].
+Ajude-me a estruturar meu TCC sobre [TEMA].
 
-# ETAPAS DE CONSTRUÇÃO
+# FORMATO DE SAÍDA
 
-## 1. DELIMITAÇÃO DO TEMA
-- Refine meu tema para algo específico e viável
-- Sugira 3 recortes possíveis
-- Avalie a viabilidade de cada um
+## 1. TÍTULO (3 opções)
+- Opção 1: [descritivo]
+- Opção 2: [com pergunta]
+- Opção 3: [com resultados]
 
-## 2. PROBLEMA DE PESQUISA
-- Formule a pergunta norteadora
-- Justifique a relevância científica e social
+## 2. INTRODUÇÃO
+### Contextualização (1 parágrafo)
+[Cenário geral do problema]
 
-## 3. OBJETIVOS
-- Objetivo geral (1)
-- Objetivos específicos (3-4)
-- Verifique se são mensuráveis
+### Problema de pesquisa (1 parágrafo)
+[Lacuna no conhecimento]
 
-## 4. METODOLOGIA
-- Tipo de estudo mais adequado
-- População e amostra
-- Critérios de inclusão/exclusão
-- Instrumentos de coleta de dados
-- Análise de dados proposta
-- Considerações éticas
+### Justificativa (1 parágrafo)
+[Por que é relevante]
 
-## 5. ESTRUTURA DO DOCUMENTO
-- Sumário preliminar
-- Estimativa de páginas por seção
-- Cronograma de execução
+### Objetivos
+- Geral:
+- Específicos (3-4):
 
-# NORMAS
-- Siga ABNT
-- Linguagem acadêmica impessoal
-- Evite primeira pessoa`
+## 3. METODOLOGIA
+- Tipo de estudo:
+- População/amostra:
+- Critérios de inclusão/exclusão:
+- Instrumentos de coleta:
+- Análise de dados:
+- Aspectos éticos:
+
+## 4. RESULTADOS ESPERADOS
+[Baseado na literatura, o que se espera encontrar]
+
+## 5. CRONOGRAMA
+| Etapa | Mês 1 | Mês 2 | Mês 3 | Mês 4 | Mês 5 | Mês 6 |
+|-------|-------|-------|-------|-------|-------|-------|
+
+## 6. REFERÊNCIAS SUGERIDAS
+[5-10 artigos-chave para começar]`
   },
   {
     id: "busca-evidencias",
-    title: "Busca de Evidências em Medicina",
+    title: "Busca de Evidências PICO",
     category: "Produção Acadêmica",
     categorySlug: "producao-academica",
     sectionNumber: 8,
@@ -1611,7 +1545,7 @@ Classifique os problemas em:
   // SEÇÃO 9: FORMATOS ALTERNATIVOS
   {
     id: "podcast-educativo",
-    title: "Podcast Educativo AI",
+    title: "Podcast Educativo",
     category: "Formatos Alternativos",
     categorySlug: "formatos-alternativos",
     sectionNumber: 9,
@@ -1686,6 +1620,62 @@ CONCEITO CENTRAL: [TEMA]
 # SEÇÃO FINAL
 Liste os 5 conceitos-chave para memorização.`
   },
+  {
+    id: "encontrar-recursos",
+    title: "Curadoria de Recursos de Estudo",
+    category: "Formatos Alternativos",
+    categorySlug: "formatos-alternativos",
+    sectionNumber: 9,
+    description: "Curadoria de livros, vídeos, apps e artigos para medicina",
+    estimatedTime: "8 min",
+    evidenceLevel: "Média",
+    difficulty: "Iniciante",
+    tags: ["recursos", "curadoria", "livros", "apps"],
+    aiRecommended: "perplexity",
+    prompt: `# PAPEL
+Você é curador de recursos educacionais para medicina.
+
+# TAREFA
+Selecione os melhores recursos para [DISCIPLINA MÉDICA].
+
+# FORMATO DE SAÍDA
+
+## 1. LIVROS-TEXTO
+### Básico
+- [Título] - [Autor] - [Por que é bom]
+
+### Avançado
+- [Título] - [Autor] - [Por que é bom]
+
+## 2. VÍDEOS EDUCACIONAIS
+### Plataformas Recomendadas
+- Osmosis: [O que oferece]
+- Lecturio: [O que oferece]
+- Khan Academy Medicine: [O que oferece]
+
+## 3. APPS INTERATIVOS
+### Anatomia
+- Complete Anatomy
+- Visible Body
+
+### Flashcards
+- Anki (decks recomendados)
+- Quizlet
+
+## 4. ARTIGOS DE REVISÃO
+### Bases de Dados
+- PubMed
+- UpToDate
+- DynaMed
+
+## 5. PODCASTS MÉDICOS
+- [Nome] - [Foco] - [Frequência]
+
+# CRITÉRIOS
+- Qualidade acadêmica
+- Atualização recente
+- Acessibilidade`
+  },
 
   // SEÇÃO 10: OTIMIZAÇÃO E TRACKING
   {
@@ -1741,7 +1731,7 @@ Baseado nas respostas:
   },
   {
     id: "weekly-review",
-    title: "Weekly High-Performance Review",
+    title: "Revisão Semanal de Performance",
     category: "Otimização e Tracking",
     categorySlug: "otimizacao-tracking",
     sectionNumber: 10,
@@ -1796,127 +1786,7 @@ Uma coisa que, se eu fizer bem, a semana será um sucesso: _____
 3. [Meta mensurável]
 
 ### Ajustes Planejados
-Baseado nos aprendizados, vou mudar: _____
-
-### Possíveis Obstáculos
-- Obstáculo: _____ | Plano B: _____`
-  },
-  {
-    id: "strategic-breaks",
-    title: "Strategic Break Activity Designer",
-    category: "Otimização e Tracking",
-    categorySlug: "otimizacao-tracking",
-    sectionNumber: 10,
-    description: "Projeta pausas que recuperam energia e consolidam aprendizado",
-    estimatedTime: "5 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["pausas", "recuperação", "energia"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em recuperação cognitiva e pausas estratégicas.
-
-# TAREFA
-Projete pausas otimizadas para minha rotina de estudos.
-
-# PRINCÍPIOS DAS PAUSAS EFETIVAS
-1. Devem contrastar com a atividade de estudo
-2. Não devem exigir decisões
-3. Devem ser definidas previamente
-4. Devem ter duração fixa
-
-# MENU DE PAUSAS
-
-## PAUSAS CURTAS (5 min)
-Escolha 1:
-- [ ] Micro-alongamento (pescoço, ombros, pulsos)
-- [ ] Olhar pela janela (visão distante)
-- [ ] Respiração box (4-4-4-4)
-- [ ] Caminhar até a cozinha e beber água
-- [ ] 10 agachamentos ou polichinelos
-
-## PAUSAS MÉDIAS (15 min)
-Escolha 1:
-- [ ] Caminhada curta ao ar livre
-- [ ] Alongamento completo
-- [ ] Lanche nutritivo com atenção plena
-- [ ] Música instrumental + olhos fechados
-- [ ] Conversa leve com alguém da casa
-
-## PAUSAS LONGAS (30+ min)
-Escolha 1:
-- [ ] Exercício físico
-- [ ] Banho relaxante
-- [ ] Refeição completa
-- [ ] Socialização presencial
-- [ ] Hobby não relacionado a telas
-
-# O QUE NÃO FAZER NAS PAUSAS
-- Redes sociais (não recuperam)
-- Notícias (drenam energia)
-- Decisões complexas (gastam willpower)
-- "Só mais uma questão" (sabota o descanso)`
-  },
-  {
-    id: "context-switching-eliminator",
-    title: "Context-Switching Eliminator",
-    category: "Otimização e Tracking",
-    categorySlug: "otimizacao-tracking",
-    sectionNumber: 10,
-    description: "Identifica e elimina trocas de contexto que drenam produtividade",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["foco", "distrações", "monotasking"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em produtividade profunda e eliminação de distrações.
-
-# TAREFA
-Ajude-me a identificar e eliminar context-switching na minha rotina de estudos.
-
-# CONCEITO
-Context-switching é trocar frequentemente entre tarefas diferentes. Cada troca custa 15-25 minutos para recuperar foco profundo.
-
-# AUDITORIA DE INTERRUPÇÕES
-
-## REGISTRO (faça por 1 dia)
-A cada interrupção, anote:
-| Horário | Interrupção | Fonte | Necessária? | Duração perdida |
-|---------|-------------|-------|-------------|-----------------|
-| [X] | [descrição] | [interna/externa] | [S/N] | [X min] |
-
-## CLASSIFICAÇÃO
-
-### INTERRUPÇÕES EXTERNAS (outras pessoas, notificações)
-- Quais são evitáveis?
-- Quais podem ser agrupadas?
-- Quais precisam de novo sistema?
-
-### INTERRUPÇÕES INTERNAS (pensamentos, impulsos)
-- Que pensamentos recorrentes interrompem?
-- Que impulsos (checar celular, comer)?
-- Que preocupações não resolvidas?
-
-# PROTOCOLO DE ELIMINAÇÃO
-
-## BLINDE O AMBIENTE
-1. [ ] Modo avião no celular
-2. [ ] Bloqueador de sites (Cold Turkey, Freedom)
-3. [ ] Comunicar indisponibilidade
-4. [ ] Fones de ouvido (mesmo sem música = sinal social)
-
-## CAPTURE PARA DEPOIS
-Quando surgir pensamento:
-1. Anote em papel ao lado (5 segundos)
-2. Volte imediatamente ao estudo
-3. Processe a lista na pausa
-
-## BATCHING
-Agrupe atividades similares:
-- Checar mensagens: 3x ao dia apenas
-- E-mails: horário fixo
-- Redes sociais: após estudos`
+Baseado nos aprendizados, vou mudar: _____`
   },
   {
     id: "anti-procrastination",
@@ -1978,2278 +1848,17 @@ Ex: "Estudar farmacologia" → "Abrir o livro na página certa"
 Sua micro-tarefa para AGORA (menos de 2 min):
 → [Defina e faça IMEDIATAMENTE]`
   },
-
-  // SEÇÃO 11: CIÊNCIA COGNITIVA AVANÇADA (NOVOS PROMPTS)
   {
-    id: "gerador-dificuldades-desejaveis",
-    title: "Gerador de Dificuldades Desejáveis",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Cria desafios calibrados que otimizam consolidação de longo prazo",
-    estimatedTime: "12 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["dificuldades-desejáveis", "bjork", "consolidação"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Técnica baseada na teoria de Dificuldades Desejáveis (Bjork & Bjork, 2011) - obstáculos estratégicos que parecem dificultar o aprendizado imediato, mas fortalecem a memória de longo prazo.
-
-# PAPEL
-Você é neurocientista especializado em otimização de aprendizado médico através de esforço cognitivo calibrado.
-
-# TAREFA
-Para o tema [TEMA MÉDICO], construa uma sequência de exercícios com dificuldade progressiva que maximize a consolidação neural.
-
-# ESTRUTURA DE SAÍDA
-
-## FASE 1: GERAÇÃO ATIVA (vs. leitura passiva)
-Em vez de apresentar a informação, crie lacunas estratégicas:
-"O mecanismo fisiopatológico da _____ envolve [processo A] → [?] → [processo C], resultando em _____."
-
-## FASE 2: VARIAÇÃO CONTEXTUAL
-Apresente o MESMO conceito em 3 cenários completamente diferentes:
-- Cenário ambulatorial
-- Cenário de emergência
-- Cenário de pesquisa/artigo
-
-## FASE 3: ESPAÇAMENTO FORÇADO
-Divida o conteúdo em 3 micro-sessões com instruções para intervalos:
-- Sessão 1: Agora
-- Sessão 2: Em 4-6 horas
-- Sessão 3: Amanhã
-
-## FASE 4: INTERCALAÇÃO IMPREVISÍVEL
-Misture [TEMA] com 2 temas relacionados sem aviso prévio.
-
-## FASE 5: TESTE ANTES DE REVISAR
-Crie 5 perguntas para responder SEM consultar material.
-
-# CALIBRAÇÃO DE DIFICULDADE
-- Alvo: 60-80% de acerto (zona de aprendizado ótimo)
-- Se muito fácil: aumentar complexidade
-- Se muito difícil: adicionar scaffolding
-
-# AVISO IMPORTANTE
-"A sensação de dificuldade é o sinal de que seu cérebro está criando conexões duradouras. Confie no processo."`
-  },
-  {
-    id: "codificacao-dupla-visual",
-    title: "Codificação Dupla Visual-Verbal",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Integra representações visuais e verbais para múltiplas vias de memória",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["dual-coding", "paivio", "visualização"],
-    aiRecommended: "gemini",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado na Teoria da Codificação Dupla (Paivio, 1986) - informações codificadas tanto verbal quanto visualmente criam múltiplas rotas de recuperação na memória.
-
-# PAPEL
-Você é especialista em design instrucional multimodal para educação médica.
-
-# TAREFA
-Para [CONCEITO MÉDICO], crie material que ative simultaneamente os sistemas verbal e imagético do cérebro.
-
-# ESTRUTURA DE SAÍDA
-
-## 1. REPRESENTAÇÃO VERBAL ESTRUTURADA
-[Explicação textual clara e hierárquica - máximo 150 palavras]
-- Conceito central
-- Subcomponentes
-- Relações causais
-
-## 2. BLUEPRINT VISUAL DETALHADO
-Descreva precisamente um diagrama para criar ou imaginar:
-
-### Elementos Visuais Principais
-- Forma central: [descrição]
-- Elementos secundários: [lista]
-- Posicionamento espacial: [instruções]
-
-### Código de Cores (com significado)
-- Cor 1: [hsl/nome] = [representa]
-- Cor 2: [hsl/nome] = [representa]
-
-### Setas e Conexões
-- [Origem] → [Destino]: [tipo de relação]
-
-### Legendas e Rótulos
-- [Posição]: [texto]
-
-## 3. PONTE VERBAL-VISUAL
-3 afirmações que conectam explicitamente texto e imagem:
-"Quando você lê [conceito X], visualize [elemento Y do diagrama]..."
-
-## 4. EXERCÍCIO DE RECUPERAÇÃO DUAL
-2 perguntas que exigem lembrar AMBAS as representações:
-- "Descreva verbalmente E desenhe..."
-- "Localize no diagrama mental E explique o mecanismo..."
-
-# REGRAS
-- Priorize conceitos com alta carga visual natural
-- Use metáforas visuais do cotidiano
-- Mantenha consistência entre verbal e visual`
-  },
-  {
-    id: "priming-cognitivo-preteste",
-    title: "Priming Cognitivo Pré-Teste",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Ativa atenção seletiva e conhecimento prévio antes do estudo",
+    id: "alivio-estresse",
+    title: "Gerenciamento de Estresse Acadêmico",
+    category: "Otimização e Tracking",
+    categorySlug: "otimizacao-tracking",
+    sectionNumber: 10,
+    description: "Técnicas baseadas em evidência para gerenciar estresse e burnout",
     estimatedTime: "8 min",
     evidenceLevel: "Alta",
     difficulty: "Iniciante",
-    tags: ["priming", "pré-teste", "atenção-seletiva"],
-    aiRecommended: "chatgpt",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Priming Cognitivo (Tulving, 1983) e Efeito de Pré-Teste (Richland et al., 2009) - tentar responder antes de estudar aumenta atenção seletiva e retenção subsequente.
-
-# PAPEL
-Você é especialista em preparação cognitiva e ativação de esquemas mentais para aprendizado.
-
-# TAREFA
-Crie uma sessão de priming pré-estudo para [TEMA MÉDICO].
-
-# ESTRUTURA DE SAÍDA
-
-## INSTRUÇÕES PARA O ESTUDANTE
-"Responda estas perguntas ANTES de estudar o material. O objetivo NÃO é acertar, mas ativar sua curiosidade e preparar seu cérebro para absorver informações relevantes."
-
-## ATIVAÇÃO DE CONHECIMENTO PRÉVIO (2 min)
-"O que você JÁ SABE sobre [TEMA]? Liste 3-5 fatos, mesmo incertos:"
-1. _____
-2. _____
-3. _____
-
-## PRÉ-TESTE PRIMING (5 perguntas)
-
-### Pergunta 1: Conceito Fundamental
-[Pergunta sobre definição/conceito básico]
-- Minha resposta agora: _____
-- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
-
-### Pergunta 2: Mecanismo
-[Pergunta sobre processo/fisiopatologia]
-- Minha resposta agora: _____
-- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
-
-### Pergunta 3: Aplicação Clínica
-[Pergunta sobre caso prático]
-- Minha resposta agora: _____
-- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
-
-### Pergunta 4: Diferenciação
-[Pergunta comparativa com conceito similar]
-- Minha resposta agora: _____
-- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
-
-### Pergunta 5: Consequência/Complicação
-[Pergunta sobre desfechos]
-- Minha resposta agora: _____
-- Nível de certeza: [ ] Chutando [ ] Acho que sei [ ] Certeza
-
-## APÓS ESTUDAR - RETORNE AQUI
-1. Corrija suas respostas com cor diferente
-2. Marque os "aha moments" (onde sua intuição estava errada)
-3. Identifique onde tinha conhecimento parcial
-
-## BENEFÍCIO NEUROLÓGICO
-- Perguntas não respondidas criam "curiosity gaps"
-- Seu cérebro priorizará informações que preenchem esses gaps
-- Erros no pré-teste potencializam correção (hipercorreção)`
-  },
-  {
-    id: "intercalacao-inteligente",
-    title: "Intercalação Inteligente de Temas",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Mistura temas relacionados forçando discriminação e conexões profundas",
-    estimatedTime: "15 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["interleaving", "discriminação", "transferência"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Interleaving Practice (Rohrer & Taylor, 2007) - alternar entre tópicos durante o estudo força o cérebro a discriminar entre conceitos similares, fortalecendo aprendizado profundo.
-
-# PAPEL
-Você é especialista em design de prática intercalada para maximizar discriminação e transferência em medicina.
-
-# TAREFA
-Crie uma sessão de estudo intercalado misturando [TÓPICO A], [TÓPICO B] e [TÓPICO C] de forma estratégica.
-
-# ESTRUTURA DE SAÍDA
-
-## AQUECIMENTO CONCEITUAL (5 min)
-Revisão ultrarápida - 1 frase definidora de cada:
-- [Tópico A]: _____
-- [Tópico B]: _____
-- [Tópico C]: _____
-
-## BLOCO INTERCALADO IMPREVISÍVEL (25 min)
-Apresente 12 problemas/casos em ordem ALEATÓRIA (não agrupe por tema):
-
-### Problema 1: [TÓPICO ?]
-[Caso clínico ou pergunta conceitual]
-→ Qual tópico? _____ 
-→ Sua resposta: _____
-→ Por que NÃO é [outro tópico]? _____
-
-### Problema 2: [TÓPICO ?]
-[Continue com ordem imprevisível...]
-
-[Repita para 12 problemas, variando dificuldade]
-
-## FOCO EM DISCRIMINAÇÃO
-Para CADA problema, inclua:
-1. "Qual característica-chave identificou o tópico correto?"
-2. "Que pista poderia ter enganado você para outro tópico?"
-
-## CASOS AMBÍGUOS INTENCIONAIS
-Inclua 2-3 casos onde múltiplos tópicos poderiam se aplicar:
-"Este caso poderia ser A ou B. Que informação adicional diferenciaria?"
-
-## REFLEXÃO METACOGNITIVA
-Após completar:
-1. Onde você confundiu os tópicos? Por quê?
-2. Que regra discriminativa você pode criar?
-3. Quais conexões inesperadas descobriu entre os tópicos?
-
-# AVISO
-"A dificuldade de alternar temas É o aprendizado acontecendo. Se parecesse fácil, você estaria apenas reconhecendo, não aprendendo."`
-  },
-  {
-    id: "diario-metacognitivo",
-    title: "Diário Metacognitivo Estruturado",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Desenvolve consciência sobre o próprio processo de aprendizagem",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["metacognição", "autorregulação", "reflexão"],
-    aiRecommended: "chatgpt",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Metacognição e Aprendizagem Autorregulada (Flavell, 1979; Zimmerman, 2002) - refletir sobre o próprio pensamento melhora estratégias de estudo e identifica blind spots.
-
-# PAPEL
-Você é especialista em desenvolvimento metacognitivo e coaching de aprendizagem autorregulada.
-
-# TAREFA
-Guie uma sessão de reflexão metacognitiva sobre meu estudo de [TEMA] hoje.
-
-# ESTRUTURA DO DIÁRIO METACOGNITIVO
-
-## FASE 1: PRÉ-ESTUDO (Planejamento) - 2 min
-Responda antes de começar:
-
-### Consciência do Conhecimento
-"Meu nível atual neste tema (1-10): _____"
-"O que JÁ SEI sobre isso: _____"
-"Minhas lacunas conhecidas: _____"
-
-### Planejamento Estratégico
-"Meu objetivo específico para esta sessão: _____"
-"Estratégias que vou usar: _____"
-"Tempo planejado: _____ min"
-"Possíveis obstáculos: _____"
-
-## FASE 2: DURANTE O ESTUDO (Monitoramento) - Check a cada 20 min
-
-### Checkpoint de Compreensão
-"Estou entendendo? [ ] Sim [ ] Parcialmente [ ] Não"
-"Preciso reler algo? [ ] Sim - o quê? _____ [ ] Não"
-"Minha estratégia está funcionando? [ ] Sim [ ] Preciso mudar"
-
-### Detecção de Confusão
-"Momento de confusão: _____"
-"O que fiz quando confundi: _____"
-"Funcionou? _____"
-
-## FASE 3: PÓS-ESTUDO (Avaliação) - 5 min
-
-### Avaliação de Aprendizado
-"Meu nível AGORA (1-10): _____"
-"O que aprendi DE FATO (sem olhar anotações): _____"
-"O que ainda está confuso: _____"
-
-### Avaliação de Estratégia
-"Estratégia mais eficaz: _____"
-"Estratégia que não funcionou: _____"
-"O que farei diferente amanhã: _____"
-
-### Calibração de Confiança
-"Minha confiança neste tema: [ ] Subestimo [ ] Calibrada [ ] Superestimo"
-"Evidência para isso: _____"
-
-## INSIGHT METACOGNITIVO DO DIA
-"A descoberta mais importante sobre COMO eu aprendo foi: _____"
-
-# PADRÕES A LONGO PRAZO
-Após 7 dias de diário, analise:
-- Em que horários você aprende melhor?
-- Quais estratégias aparecem como mais eficazes?
-- Onde você consistentemente superestima/subestima?`
-  },
-  {
-    id: "gerador-exemplos-concretos",
-    title: "Gerador de Exemplos Concretos",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Transforma abstrações em casos específicos e memoráveis",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Iniciante",
-    tags: ["exemplificação", "concretude", "ancoragem"],
-    aiRecommended: "chatgpt",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado na Hipótese de Concretude (Paivio, 1991) e Efeito de Exemplificação (Rawson & Dunlosky, 2016) - conceitos abstratos ancorados em exemplos concretos são significativamente mais memoráveis.
-
-# PAPEL
-Você é especialista em tornar conceitos médicos abstratos em exemplos vívidos, específicos e memoráveis.
-
-# TAREFA
-Para [CONCEITO MÉDICO ABSTRATO], gere uma cascata de exemplos em múltiplos níveis de concretude.
-
-# ESTRUTURA DE SAÍDA
-
-## CONCEITO ABSTRATO ORIGINAL
-"[Definição técnica em linguagem acadêmica - 1-2 linhas]"
-
-## CASCATA DE EXEMPLIFICAÇÃO
-
-### NÍVEL 1: Analogia do Cotidiano
-[Metáfora usando algo familiar: cozinha, trânsito, esportes, tecnologia]
-- Analogia: "[Conceito] é como [situação cotidiana] porque..."
-- Correspondência ponto-a-ponto:
-  - [Elemento abstrato A] = [Elemento concreto A']
-  - [Elemento abstrato B] = [Elemento concreto B']
-- Limitações da analogia: "Onde a comparação quebra..."
-
-### NÍVEL 2: Caso Clínico Típico Vívido
-Paciente: [Nome fictício], [idade], [ocupação]
-- Queixa: "[Palavras exatas do paciente]"
-- História: [Detalhes sensoriais - o que você vê, ouve, sente]
-- Como [CONCEITO] se manifesta: [Conexão explícita]
-- Desfecho: [O que aconteceu]
-
-### NÍVEL 3: Caso Atípico Memorável
-[Apresentação incomum do mesmo conceito]
-- Por que é importante conhecer: "Se você só conhecer o típico, vai perder..."
-- Pista diferenciadora: [O que deveria ter chamado atenção]
-
-### NÍVEL 4: Contraexemplo Esclarecedor
-"[CONCEITO] NÃO é [conceito frequentemente confundido]"
-- Diferença crucial: [Em uma frase]
-- Teste discriminativo: "Se você vir [X], é [A]. Se vir [Y], é [B]."
-
-### NÍVEL 5: Exemplo Extremo/Limite
-[Caso no limite do conceito - onde a definição é testada]
-- Por que é interessante: [Revela nuances da definição]
-
-## MNEMÔNICO ANCORADO
-"Para lembrar [CONCEITO], pense em [imagem/frase baseada nos exemplos]"
-
-# EXERCÍCIO DE TRANSFERÊNCIA
-"Agora você: crie um exemplo próprio de [CONCEITO] diferente dos apresentados."`
-  },
-  {
-    id: "autoexplicacao-guiada",
-    title: "Autoexplicação Guiada",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Força articulação do raciocínio revelando lacunas lógicas",
-    estimatedTime: "12 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["self-explanation", "elaboração", "compreensão"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado na Técnica de Autoexplicação (Chi et al., 1994) - explicar cada etapa do raciocínio em voz alta ou por escrito identifica lacunas e fortalece compreensão profunda.
-
-# PAPEL
-Você é tutor socrático especializado em guiar autoexplicação elaborativa para maximizar compreensão em medicina.
-
-# TAREFA
-Conduza uma sessão de autoexplicação sobre [TEMA/MECANISMO MÉDICO].
-
-# ESTRUTURA DA SESSÃO
-
-## FASE 1: APRESENTAÇÃO SEGMENTADA
-Apresente o conteúdo em 4-5 segmentos curtos (3-4 frases cada).
-
-### Segmento 1:
-"[Primeira parte do conceito/mecanismo]"
-
-→ PAUSA PARA AUTOEXPLICAÇÃO
-Pergunte:
-1. "O que este trecho está dizendo COM SUAS PALAVRAS?"
-2. "POR QUE isso faz sentido? Qual o mecanismo subjacente?"
-3. "COMO isso se conecta com algo que você já sabe?"
-4. "QUE INFERÊNCIAS você pode fazer a partir disso?"
-5. "O que AINDA NÃO ESTÁ CLARO para você?"
-
-[Aguarde minha resposta antes de continuar]
-
-### Segmento 2:
-"[Segunda parte...]"
-
-→ PAUSA PARA AUTOEXPLICAÇÃO
-[Repita as 5 perguntas]
-
-[Continue para todos os segmentos]
-
-## FASE 2: DETECÇÃO DE LACUNAS
-Após cada explicação minha:
-- Se correta: "Exatamente! Você capturou [ponto-chave]. Agora, o que isso implica para [situação clínica]?"
-- Se parcial: "Você está no caminho. O que acontece entre [A] e [B]?"
-- Se incorreta: "Interessante raciocínio. O que te levou a essa conclusão? Vamos examinar..."
-
-## FASE 3: SÍNTESE INTEGRADA
-"Agora, explique TODO o [TEMA] como se estivesse ensinando a um colega de turma. Comece do zero."
-
-[Avalie a síntese e aponte:]
-- Pontos de força
-- Lacunas remanescentes
-- Conexões que poderiam ser feitas
-
-## FASE 4: APLICAÇÃO
-"Dado um paciente com [cenário], como você aplicaria este conhecimento? Explique seu raciocínio passo a passo."
-
-# REGRAS ABSOLUTAS
-- NUNCA pule para a resposta
-- Use silêncio produtivo (espere eu elaborar)
-- Elogie o PROCESSO de raciocínio, não apenas respostas corretas
-- Se eu travar, ofereça scaffolding: "E se você pensasse sobre [aspecto X]..."`
-  },
-  {
-    id: "otimizador-carga-cognitiva",
-    title: "Otimizador de Carga Cognitiva",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Gerencia sobrecarga mental fragmentando e sequenciando conteúdo",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["carga-cognitiva", "sweller", "scaffolding"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado na Teoria da Carga Cognitiva (Sweller, 1988) - a memória de trabalho tem capacidade limitada; otimizar a apresentação do conteúdo maximiza aprendizado.
-
-# PAPEL
-Você é especialista em design instrucional baseado na Teoria da Carga Cognitiva para educação médica.
-
-# TAREFA
-Otimize o material sobre [TEMA COMPLEXO] para gerenciar carga cognitiva e maximizar aprendizado.
-
-# ANÁLISE DE CARGA
-
-## DIAGNÓSTICO DE COMPLEXIDADE
-
-### Carga Intrínseca (inerente ao conteúdo)
-- Nível estimado: [ ] Baixa [ ] Média [ ] Alta
-- Número de elementos interativos: _____
-- Pré-requisitos necessários: [lista]
-- Interatividade entre elementos: [descrição]
-
-### Carga Extrínseca (má apresentação) - ELIMINAR
-Identifique e remova:
-- [ ] Informação redundante (texto + imagem dizendo o mesmo)
-- [ ] Split attention (texto longe de imagem relacionada)
-- [ ] Detalhes irrelevantes
-- [ ] Excesso de cores/formatação
-- [ ] Linguagem desnecessariamente complexa
-
-### Carga Relevante (esforço produtivo) - MAXIMIZAR
-- [ ] Conexões com conhecimento prévio
-- [ ] Exemplos e contra-exemplos
-- [ ] Prática de recuperação
-- [ ] Elaboração ativa
-
-## REESTRUTURAÇÃO DO CONTEÚDO
-
-### 1. CHUNKING ESTRATÉGICO
-Divida em chunks de 3-4 elementos (limite da memória de trabalho):
-
-**Chunk 1: [Nome descritivo]**
-- Elemento A
-- Elemento B
-- Elemento C
-→ Conexão unificadora: _____
-
-**Chunk 2: [Nome descritivo]**
-- Elemento D
-- Elemento E
-- Elemento F
-→ Conexão unificadora: _____
-
-[Continue conforme necessário]
-
-### 2. SCAFFOLDING PROGRESSIVO
-Construa em camadas:
-
-**Camada 1 - Esqueleto:** [Conceito central apenas, máxima simplificação]
-
-**Camada 2 - Estrutura:** [Adiciona detalhes essenciais]
-
-**Camada 3 - Nuances:** [Exceções, casos especiais, profundidade]
-
-### 3. INTEGRAÇÃO GRADUAL
-Exercício que conecta chunks progressivamente:
-- "Depois de dominar Chunk 1, como ele se relaciona com Chunk 2?"
-- "Agora integre Chunks 1+2+3 em uma explicação unificada."
-
-## SINAIS DE ALERTA DE SOBRECARGA
-Se sentir:
-- [ ] Confusão crescente
-- [ ] Frustração
-- [ ] "Brancos" frequentes
-- [ ] Releitura sem compreensão
-
-→ AÇÃO: Volte ao chunk anterior. Domine antes de avançar.
-
-## CHECKLIST DE OTIMIZAÇÃO
-- [ ] Removi redundâncias?
-- [ ] Integrei texto e imagem?
-- [ ] Eliminei detalhes não essenciais?
-- [ ] Sequenciei do simples ao complexo?
-- [ ] Criei conexões explícitas entre partes?`
-  },
-  {
-    id: "programador-recuperacao-espacada",
-    title: "Programador de Recuperação Espaçada",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Cria cronograma de testes de memória em intervalos expandidos ótimos",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["recuperação-espaçada", "testing-effect", "distribuição"],
-    aiRecommended: "chatgpt",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado no Efeito de Testagem (Roediger & Karpicke, 2006) e Espaçamento Ótimo (Cepeda et al., 2008) - testar-se em intervalos expandidos fortalece memória mais que reler.
-
-# PAPEL
-Você é especialista em programação de prática de recuperação distribuída para retenção médica de longo prazo.
-
-# TAREFA
-Crie um programa de retrieval practice para [TEMA] ao longo de [PERÍODO até prova/uso].
-
-# ESTRUTURA DO PROGRAMA
-
-## PARÂMETROS INICIAIS
-- Tema: [TEMA]
-- Data de início: [hoje]
-- Data alvo: [prova/uso clínico]
-- Dias disponíveis: [calcular]
-- Volume de conteúdo: [ ] Pequeno [ ] Médio [ ] Grande
-
-## CRONOGRAMA DE INTERVALOS EXPANDIDOS
-Baseado em curva de esquecimento otimizada:
-
-| Sessão | Intervalo | Data | Tipo de Teste | Status |
-|--------|-----------|------|---------------|--------|
-| 1 | D+0 | [data] | Estudo inicial + teste imediato | [ ] |
-| 2 | D+1 | [data] | Free recall (sem pistas) | [ ] |
-| 3 | D+3 | [data] | Cued recall (com pistas) | [ ] |
-| 4 | D+7 | [data] | Questões aplicadas | [ ] |
-| 5 | D+14 | [data] | Casos clínicos | [ ] |
-| 6 | D+30 | [data] | Integração com outros temas | [ ] |
-
-## PROTOCOLOS POR TIPO DE SESSÃO
-
-### SESSÃO TIPO A: FREE RECALL (mais difícil, mais eficaz)
-1. Feche TODO o material
-2. Configure timer: 5 minutos
-3. Escreva TUDO que lembra sobre [subtópico]
-4. Não pare de escrever até o timer
-5. Compare com material original
-6. Marque gaps com cor diferente
-
-### SESSÃO TIPO B: CUED RECALL
-Use estas pistas para recuperar informações:
-- Pista 1: "[Primeira palavra]" → Complete: _____
-- Pista 2: "[Sintoma X]" → Diagnósticos: _____
-- Pista 3: "[Mecanismo]" → Consequências: _____
-
-### SESSÃO TIPO C: APLICAÇÃO
-[3-5 questões de múltipla escolha ou casos curtos]
-
-## REGRA CRÍTICA
-"Recupere da memória ANTES de revisar. O esforço de lembrar é o que fortalece a memória, não a releitura."
-
-## AJUSTES DINÂMICOS
-- Se taxa de acerto >85%: Aumente intervalo em 50%
-- Se taxa de acerto <60%: Diminua intervalo em 50%
-- Se taxa de acerto 60-85%: Mantenha intervalo
-
-## MÉTRICAS DE ACOMPANHAMENTO
-| Data | Sessão | Itens testados | Acertos | Taxa | Tempo |
-|------|--------|----------------|---------|------|-------|
-| | | | | % | min |`
-  },
-  {
-    id: "analisador-padroes-erro",
-    title: "Analisador de Padrões de Erro",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Identifica misconceptions e gera ensino corretivo personalizado",
-    estimatedTime: "15 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["análise-erros", "misconceptions", "correção-direcionada"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Feedback Formativo (Hattie & Timperley, 2007) e Análise de Misconceptions (Chi, 2005) - identificar PADRÕES de erro revela concepções errôneas subjacentes que uma correção pontual não resolve.
-
-# PAPEL
-Você é especialista em diagnóstico de dificuldades de aprendizagem e ensino corretivo direcionado em medicina.
-
-# TAREFA
-Faça uma análise profunda dos meus padrões de erro em [ÁREA/DISCIPLINA] e crie intervenções corretivas específicas.
-
-# INPUT NECESSÁRIO
-Forneça seus últimos 10-20 erros no formato:
-- Questão: [tema]
-- Sua resposta: [X] | Correta: [Y]
-- Seu raciocínio na hora: [o que você pensou]
-
-## ANÁLISE MULTINÍVEL
-
-### NÍVEL 1: CATEGORIZAÇÃO DE ERROS
-
-| Questão | Tipo de Erro | Frequência |
-|---------|--------------|------------|
-| | Conhecimento (não sabia) | |
-| | Aplicação (sabia, aplicou errado) | |
-| | Interpretação (entendeu errado o enunciado) | |
-| | Atenção (descuido/pressa) | |
-| | Raciocínio (pulou etapa lógica) | |
-
-### NÍVEL 2: PADRÕES COGNITIVOS (vieses identificados)
-Avalie presença de:
-- [ ] Viés de confirmação: "Busquei informação que confirmava minha hipótese inicial"
-- [ ] Ancoragem: "Fiquei preso na primeira ideia"
-- [ ] Fechamento prematuro: "Parei de considerar alternativas muito cedo"
-- [ ] Disponibilidade: "Lembrei do caso mais recente/marcante, não do mais provável"
-- [ ] Representatividade: "Busquei o diagnóstico 'clássico' ignorando variações"
-
-### NÍVEL 3: MAPA DE GAPS DE CONHECIMENTO
-[Conceito com erro] → [Pré-requisito possivelmente faltante]
-[Conceito com erro] → [Pré-requisito possivelmente faltante]
-
-## ENSINO CORRETIVO PERSONALIZADO
-
-### Para cada padrão identificado:
-
-**Padrão 1: [Nome do padrão]**
-- Por que isso acontece: [Explicação cognitiva]
-- Estratégia de prevenção: [O que fazer diferente]
-- Exercício de prática deliberada: [Atividade específica]
-- Gatilho mental para prova: "Quando perceber [sinal], faça [ação]"
-
-**Padrão 2: [Nome do padrão]**
-[Repita estrutura]
-
-## QUESTÕES CORRETIVAS
-[3-5 novas questões especificamente desenhadas para treinar os pontos fracos identificados]
-
-## CHECKLIST DE MONITORAMENTO
-Para próximas questões sobre estes temas:
-- [ ] Antes de responder, considerei diagnósticos alternativos?
-- [ ] Li o enunciado completamente, incluindo negativas?
-- [ ] Verifiquei se minha resposta responde O QUE foi perguntado?
-- [ ] Busquei ativamente evidências CONTRA minha hipótese?`
-  },
-  {
-    id: "mapeador-integracao-conhecimento",
-    title: "Mapeador de Integração de Conhecimento",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Conecta novo conhecimento à base existente via interrogação elaborativa",
-    estimatedTime: "12 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["integração", "elaboração", "rede-semântica"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Interrogação Elaborativa (Pressley et al., 1987) e Construção de Esquemas (Bartlett, 1932) - perguntas "por quê?" e "como?" forçam conexão do novo com o existente, criando redes semânticas robustas.
-
-# PAPEL
-Você é especialista em integração de conhecimento médico e construção de esquemas mentais interconectados.
-
-# TAREFA
-Ajude-me a integrar profundamente [NOVO TEMA] com minha base de conhecimento existente.
-
-# ESTRUTURA DA SESSÃO
-
-## FASE 1: MAPEAMENTO DO CONHECIMENTO PRÉVIO
-"Antes de explorarmos [NOVO TEMA], me conte:"
-1. O que você JÁ SABE sobre temas relacionados?
-2. Que disciplinas/sistemas você já estudou que podem se conectar?
-3. Que casos clínicos você já viu que podem ser relevantes?
-
-[Aguarde minha resposta]
-
-## FASE 2: APRESENTAÇÃO + INTERROGAÇÃO ELABORATIVA
-Para cada conceito novo, faça:
-
-### Conceito: [X]
-Apresentação: "[Informação nova]"
-
-→ Interrogação imediata:
-1. "POR QUE isso faz sentido fisiologicamente?"
-2. "COMO isso se relaciona com [conceito prévio que você mencionou]?"
-3. "O QUE aconteceria se [variação do mecanismo]?"
-4. "QUANDO clinicamente você veria isso?"
-
-[Aguarde minhas respostas e aprofunde]
-
-## FASE 3: MAPA DE CONEXÕES
-Baseado em nossas discussões, construa:
-
-### Conexões Diretas (mesmo sistema)
-- [Conceito Prévio A] ↔ [Novo tema]: [tipo: causa/efeito/complementar/oposto]
-- [Conceito Prévio B] ↔ [Novo tema]: [tipo]
-
-### Conexões Transversais (outros sistemas)
-- [Conceito de outra área] ↔ [Novo tema]: [relação inesperada mas válida]
-
-### Conexões Clínicas
-- [Situação clínica 1] onde ambos os conhecimentos se aplicam
-- [Situação clínica 2] onde a conexão muda a conduta
-
-## FASE 4: PERGUNTAS INTEGRATIVAS
-Crie 3 perguntas que EXIGEM usar múltiplos conceitos conectados:
-1. [Pergunta integrando 2 conceitos]
-2. [Pergunta integrando 3 conceitos]
-3. [Caso clínico exigindo integração completa]
-
-## FASE 5: MAPA CONCEITUAL INTEGRADO
-Descreva visualmente as conexões:
-\`\`\`
-[Novo Tema]
-    ├── conecta-se a → [Conceito Prévio A]
-    │       └── que por sua vez → [Consequência Clínica 1]
-    ├── contrasta com → [Conceito Prévio B]
-    └── aplica-se em → [Situação Clínica]
-            └── junto com → [Outro Conhecimento]
-\`\`\`
-
-## SÍNTESE FINAL
-"Em uma frase, como [NOVO TEMA] se encaixa no seu modelo mental de [área maior]?"`
-  },
-  {
-    id: "simulador-pressao-contextual",
-    title: "Simulador de Pressão Contextual",
-    category: "Ciência Cognitiva Avançada",
-    categorySlug: "ciencia-cognitiva",
-    sectionNumber: 11,
-    description: "Treina recuperação em condições similares à prova real",
-    estimatedTime: "20 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["memória-dependente-contexto", "pressão", "performance"],
-    aiRecommended: "claude",
-    prompt: `# CONTEXTO CIENTÍFICO
-Baseado em Memória Dependente de Contexto (Godden & Baddeley, 1975) e Inoculação de Estresse (Meichenbaum, 1985) - treinar em condições similares às da prova melhora recuperação sob pressão.
-
-# PAPEL
-Você é especialista em psicologia do desempenho e preparação para provas de alta pressão em medicina.
-
-# TAREFA
-Crie uma simulação de pressão progressiva para [TEMA/TIPO DE PROVA].
-
-# CONFIGURAÇÃO DO AMBIENTE
-Instruções obrigatórias para o estudante:
-1. [ ] Timer VISÍVEL configurado
-2. [ ] Material de consulta FECHADO/fora de alcance
-3. [ ] Celular em modo avião em OUTRO cômodo
-4. [ ] Sentado como estará na prova
-5. [ ] Água disponível (como na prova)
-
-## SIMULAÇÃO EM 4 FASES
-
-### FASE 1: AQUECIMENTO SOB TEMPO (5 min)
-5 questões de recall direto - 1 minuto cada
-"Responda SEM PENSAR MUITO. Primeira resposta que vier."
-
-Q1: [Questão direta de conhecimento]
-Tempo: 60s | Sua resposta: _____ | Confiança: [1-5]
-
-[Q2-Q5 similar]
-
-→ CHECKPOINT: Como está sua ansiedade? [1-10]
-
-### FASE 2: PRESSÃO MODERADA (10 min)
-3 questões complexas com tempo apertado
-
-Q6: [Caso clínico curto exigindo raciocínio]
-Tempo: 3 minutos
-[ADICIONE DISTRATOR: "Enquanto responde, imagine que alguém está observando você"]
-
-Q7: [Questão de múltiplas etapas]
-Tempo: 3 minutos
-[DISTRATOR: "Você tem mais 2 questões difíceis depois desta"]
-
-Q8: [Questão com alternativas muito similares]
-Tempo: 2 minutos
-[DISTRATOR: "Lembre-se: errar aqui pode custar a aprovação"]
-
-→ CHECKPOINT: Como está sua ansiedade? [1-10]
-→ Se >7: Faça 3 respirações 4-7-8 antes de continuar
-
-### FASE 3: PRESSÃO ALTA (15 min)
-2 casos clínicos completos com tempo 30% menor que o confortável
-
-CASO 1: [Caso complexo com múltiplas perguntas]
-Tempo total: 6 minutos para 4 perguntas
-
-CASO 2: [Caso com informações ambíguas/incompletas]
-Tempo total: 5 minutos para 3 perguntas
-[INSTRUÇÃO: "Se não souber, marque sua melhor estimativa e siga"]
-
-→ CHECKPOINT: Como está sua ansiedade? [1-10]
-
-### FASE 4: DEBRIEFING REFLEXIVO (10 min)
-
-#### Análise de Performance
-1. Em que momento a ansiedade mais atrapalhou?
-2. Que pensamentos negativos surgiram?
-3. Onde você "travou"? O que fez para destravar?
-4. A pressão fez você errar algo que saberia normalmente?
-
-#### Estratégias Utilizadas
-- O que funcionou para manejar a pressão?
-- O que você faria diferente?
-
-#### Técnicas de Regulação (pratique agora)
-1. **Respiração 4-7-8:** Inspire 4s, segure 7s, expire 8s (3x)
-2. **Âncora de confiança:** Lembre de uma prova que foi bem
-3. **Self-talk:** "Eu me preparei. Eu sei isso. Uma questão de cada vez."
-4. **Grounding:** 5 coisas que você vê, 4 que ouve, 3 que sente
-
-## PROTOCOLO DE EXPOSIÇÃO GRADUAL
-Repita esta simulação 1x por semana, aumentando:
-- Semana 1: Tempo 50% maior que real
-- Semana 2: Tempo 20% maior que real
-- Semana 3: Tempo real
-- Semana 4: Tempo 10% menor que real`
-  },
-
-  // SEÇÃO 12: ESSENCIAIS PARA MEDICINA - TOP 25
-  {
-    id: "resumir-notas-estudo",
-    title: "Resumir Notas de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Sintetiza informações complexas de anatomia, fisiologia e patologia",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["síntese", "organização", "fisiopatologia"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em síntese de conteúdo médico denso.
-
-# TAREFA
-Resuma meus estudos sobre [SÍNDROME/DOENÇA] de forma estruturada e hierárquica.
-
-# FORMATO DE SAÍDA
-
-## 1. FISIOPATOLOGIA
-[Mecanismo subjacente em 3-5 pontos-chave]
-
-## 2. QUADRO CLÍNICO
-- Sinais cardinais:
-- Sintomas típicos:
-- Apresentação atípica:
-
-## 3. DIAGNÓSTICO DIFERENCIAL
-| Condição | Diferenciador-chave |
-|----------|---------------------|
-| [DD 1]   | [Como distinguir]   |
-| [DD 2]   | [Como distinguir]   |
-
-## 4. EXAMES COMPLEMENTARES
-- Laboratoriais:
-- Imagem:
-- Especializados:
-
-## 5. TRATAMENTO
-- Primeira linha:
-- Alternativas:
-- Suporte:
-
-## 6. PROGNÓSTICO
-[Fatores de bom/mau prognóstico]
-
-# REGRAS
-- Use hierarquia clara
-- Priorize informações de alto rendimento
-- Inclua mnemônicos quando útil`
-  },
-  {
-    id: "estrategia-exame-medico",
-    title: "Criar Estratégia de Exame",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Plano estratégico 360° para provas de medicina e residência",
-    estimatedTime: "15 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["estratégia", "provas", "residência", "planejamento"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é coach especializado em preparação para exames médicos de alto impacto.
-
-# TAREFA
-Crie plano estratégico de 8 semanas para prova de [DISCIPLINA MÉDICA/RESIDÊNCIA].
-
-# FORMATO DE SAÍDA
-
-## 1. DIAGNÓSTICO INICIAL
-- Avaliação de conhecimento base
-- Identificação de lacunas prioritárias
-- Tempo disponível vs. conteúdo
-
-## 2. CRONOGRAMA SEMANAL
-
-### Semanas 1-2: Fundamentos
-[Distribuição de tópicos prioritários]
-
-### Semanas 3-4: Aprofundamento
-[Integração de sistemas e casos clínicos]
-
-### Semanas 5-6: Consolidação
-[Revisão espaçada e simulados]
-
-### Semanas 7-8: Sprint Final
-[Revisão de alto rendimento e gestão de ansiedade]
-
-## 3. SIMULADOS PROGRESSIVOS
-- Frequência:
-- Análise de erros:
-- Métricas de acompanhamento:
-
-## 4. PROTOCOLO DE REVISÃO FINAL
-[Últimos 3 dias antes da prova]
-
-## 5. GESTÃO DE ANSIEDADE
-- Técnicas pré-prova:
-- No dia da prova:
-
-# APLICAÇÕES
-- Provas de ciclo básico (Anatomia, Fisiologia, Bioquímica)
-- OSCE (Objective Structured Clinical Examination)
-- Preparação para residência médica
-- Provas práticas`
-  },
-  {
-    id: "melhorar-anotacoes-med",
-    title: "Melhorar Anotações Médicas",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Sistema híbrido de notas para volume massivo de informações",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["anotações", "cornell", "mind-map", "organização"],
-    aiRecommended: "gemini",
-    prompt: `# PAPEL
-Você é especialista em sistemas de anotação para alta carga informacional.
-
-# TAREFA
-Crie sistema híbrido de anotações para medicina combinando Cornell + Mind Map digital.
-
-# FORMATO DE SAÍDA
-
-## 1. TEMPLATE CORNELL ADAPTADO PARA CASOS CLÍNICOS
-
-### Coluna Esquerda (Cues)
-- Diagnósticos diferenciais
-- Perguntas-chave
-
-### Área Principal
-- Dados do caso
-- Raciocínio clínico
-- Exames e resultados
-
-### Rodapé
-- Síntese do caso
-- Pontos de aprendizado
-
-## 2. CODIFICAÇÃO POR GRAVIDADE
-🔴 Vermelho: Urgência/Emergência
-🟡 Amarelo: Diagnóstico diferencial importante
-🟢 Verde: Conduta padrão
-🔵 Azul: Conceito-base
-
-## 3. MIND MAP PARA INTEGRAÇÃO DE SISTEMAS
-[Estrutura para conectar sistemas corporais]
-- Nó central: [Sistema principal]
-- Ramos: [Conexões com outros sistemas]
-- Links bidirecionais
-
-## 4. WORKFLOW DE REVISÃO
-- Diário: 5 min scanning
-- Semanal: Conexões entre notas
-- Mensal: Reorganização e gaps
-
-## 5. FERRAMENTAS RECOMENDADAS
-- Notion/Obsidian para digital
-- Codificação de cores consistente
-- Sistema de tags semântico`
-  },
-  {
-    id: "truques-memoria-med",
-    title: "Truques de Retenção de Memória",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Técnicas de memorização baseadas em neurociência para medicina",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Iniciante",
-    tags: ["memorização", "mnemônicos", "anki", "neurociência"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é neurocientista especializado em técnicas de memorização aplicadas à medicina.
-
-# TAREFA
-Crie técnicas de memorização baseadas em neurociência para [ANATOMIA/FARMACOLOGIA/TEMA].
-
-# FORMATO DE SAÍDA
-
-## 1. MNEMÔNICOS VISUAIS
-[Criar 5 mnemônicos vívidos e memoráveis]
-
-Exemplo para nervos cranianos:
-"On Old Olympus Towering Tops A Finn And German Viewed Some Hops"
-
-## 2. SISTEMA LEITNER DIGITALIZADO
-### Configuração Anki
-- Deck principal: [TEMA]
-- Subdecks por dificuldade
-- Intervalos customizados para medicina
-
-### Regras de Progressão
-- Acertou fácil: +3 dias
-- Acertou com esforço: +1 dia
-- Errou: Volta ao início
-
-## 3. METHOD OF LOCI PARA ANATOMIA
-[Palácio da memória adaptado para estruturas anatômicas]
-
-### Seu Palácio
-- Sala 1: [Sistema/Região]
-- Objetos: [Estruturas anatômicas]
-- Cenas memoráveis
-
-## 4. ELABORATIVE INTERROGATION
-Para cada conceito, responda:
-- POR QUE isso funciona assim?
-- COMO isso se conecta com X?
-- O QUE acontece SE...?
-
-## 5. GERAÇÃO ATIVA DE PERGUNTAS
-Transforme cada tópico em 3 perguntas:
-1. Conceitual (O que é?)
-2. Mecanística (Como funciona?)
-3. Clínica (Quando é relevante?)`
-  },
-  {
-    id: "preparacao-exames-med",
-    title: "Preparação Completa para Exames",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Técnicas específicas para provas médicas tipo USMLE/REVALIDA",
-    estimatedTime: "12 min",
-    evidenceLevel: "Alta",
-    difficulty: "Avançado",
-    tags: ["provas", "usmle", "revalida", "técnicas"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em preparação para concursos médicos de alto nível.
-
-# TAREFA
-Desenvolva plano de preparação para [PROVA MÉDICA ESPECÍFICA].
-
-# FORMATO DE SAÍDA
-
-## 1. ANÁLISE DE PADRÕES DE QUESTÕES
-### Distribuição por Área
-| Área | % Histórico | Prioridade |
-|------|-------------|------------|
-| Clínica Médica | X% | Alta |
-| Cirurgia | X% | Média |
-| [etc] | X% | [nível] |
-
-### Tipos de Questão
-- Múltipla escolha direta: X%
-- Casos clínicos: X%
-- Imagens/exames: X%
-
-## 2. ESTRATÉGIAS POR TIPO
-
-### Questões de Anatomia
-[Técnicas específicas]
-
-### Questões de Farmacologia
-[Abordagem por classe de fármacos]
-
-### Casos Clínicos
-[Framework de resolução em 5 passos]
-
-## 3. GERENCIAMENTO DE ANSIEDADE
-- Técnicas de respiração pré-prova
-- Ancoragem de confiança
-- Self-talk positivo
-
-## 4. ALOCAÇÃO DE TEMPO
-- Questões fáceis: X segundos
-- Questões médias: X minutos
-- Casos complexos: X minutos
-- Revisão final: X minutos
-
-## 5. PROTOCOLO DE REVISÃO
-- O que revisar no último dia
-- O que NÃO fazer antes da prova
-- Checklist do dia da prova`
-  },
-  {
-    id: "cronograma-estudo-med",
-    title: "Cronograma de Estudo Otimizado",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Distribuição algorítmica de 8+ disciplinas simultâneas",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["cronograma", "planejamento", "organização", "tempo"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em otimização de cronogramas de estudo para medicina.
-
-# TAREFA
-Gere cronograma otimizado para estudante de medicina com [X] disciplinas.
-
-# INFORMAÇÕES NECESSÁRIAS
-- Número de disciplinas:
-- Horas disponíveis por dia:
-- Dias até a próxima prova:
-- Dificuldades específicas:
-
-# FORMATO DE SAÍDA
-
-## 1. ALGORITMO DE DISTRIBUIÇÃO DE CARGA COGNITIVA
-
-### Manhã (alta energia)
-- Disciplinas que exigem raciocínio: [lista]
-
-### Tarde (energia média)
-- Revisão ativa e questões: [lista]
-
-### Noite (baixa energia)
-- Revisão passiva e Anki: [lista]
-
-## 2. BLOCOS TEMÁTICOS INTERCALADOS
-Exemplo para Cardiologia:
-- Bloco 1: Anatomia cardíaca
-- Bloco 2: Fisiologia cardiovascular
-- Bloco 3: Patologia cardíaca
-- Bloco 4: Integração clínica
-
-## 3. REVISÃO ESPAÇADA INTEGRADA
-| Dia | Novo Conteúdo | Revisão D+1 | Revisão D+7 |
-|-----|---------------|-------------|-------------|
-| Seg | [Tema A] | - | - |
-| Ter | [Tema B] | Tema A | - |
-| [etc] | | | |
-
-## 4. FLEXIBILIDADE PARA PLANTÕES
-- Blocos de contingência
-- Recuperação de atrasos
-- Ajustes semanais
-
-## 5. SINCRONIZAÇÃO COM CALENDÁRIO
-- Formato exportável para Google Calendar
-- Alertas e lembretes
-- Checkpoints semanais`
-  },
-  {
-    id: "estrategias-fazer-provas",
-    title: "Estratégias para Fazer Provas",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Técnicas de eliminação e raciocínio clínico em provas",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["provas", "técnicas", "eliminação", "raciocínio"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é coach de performance em provas médicas.
-
-# TAREFA
-Otimize minha performance em provas de medicina.
-
-# FORMATO DE SAÍDA
-
-## 1. ESTRATÉGIAS POR TIPO DE QUESTÃO
-
-### Anatomia
-- Visualize a estrutura
-- Use referências espaciais
-- Conecte com função
-
-### Farmacologia
-- Pense por classe primeiro
-- Mecanismo → Indicação → Efeitos adversos
-- Elimine por toxicidade
-
-### Casos Clínicos
-1. Leia a última pergunta primeiro
-2. Identifique dados-chave
-3. Formule hipótese antes de ver alternativas
-4. Elimine distradores óbvios
-5. Compare alternativas similares
-
-## 2. TÉCNICAS DE ELIMINAÇÃO
-- Alternativas absolutas ("sempre", "nunca") = suspeitas
-- Duas alternativas opostas = uma provavelmente certa
-- Alternativa mais longa/detalhada = frequentemente correta
-
-## 3. GESTÃO DE ANSIEDADE
-- Respiração 4-7-8 entre blocos
-- Âncora de confiança em questões difíceis
-- "Uma questão de cada vez"
-
-## 4. ALOCAÇÃO DE TEMPO
-- 1ª passada: questões fáceis (marcar e seguir)
-- 2ª passada: questões médias
-- 3ª passada: questões difíceis + revisão
-
-## 5. ANÁLISE PÓS-PROVA
-- Padrões de erro
-- Temas recorrentes
-- Ajustes para próxima prova`
-  },
-  {
-    id: "guias-anotacao-med",
-    title: "Guias de Anotação por Disciplina",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Metodologias específicas para cada tipo de conteúdo médico",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["anotações", "metodologia", "organização"],
-    aiRecommended: "gemini",
-    prompt: `# PAPEL
-Você é especialista em metodologias de anotação para diferentes tipos de conteúdo.
-
-# TAREFA
-Desenvolva guias de anotação específicos para cada disciplina médica.
-
-# FORMATO DE SAÍDA
-
-## 1. CORNELL PARA AULAS TEÓRICAS
-
-### Anatomia
-- Cues: Estruturas, relações
-- Notas: Descrições, funções
-- Resumo: Integração clínica
-
-### Fisiologia
-- Cues: Mecanismos-chave
-- Notas: Fluxogramas, equações
-- Resumo: Aplicação patológica
-
-## 2. OUTLINE PARA FARMACOLOGIA
-
-### Estrutura Hierárquica
-1. Classe farmacológica
-   1.1 Mecanismo de ação
-   1.2 Fármacos representantes
-       1.2.1 Indicações
-       1.2.2 Efeitos adversos
-       1.2.3 Interações
-
-## 3. MIND MAPS PARA INTEGRAÇÃO DE SISTEMAS
-
-### Exemplo: Neuro + Endócrino + Cardiovascular
-[Nó central] → [Ramos de conexão] → [Aplicação clínica]
-
-## 4. SKETCHNOTING PARA ANATOMIA VISUAL
-- Desenhos simplificados
-- Cores por sistema
-- Legendas padronizadas
-- Notas marginais
-
-## 5. WORKFLOW DE REVISÃO ATIVA
-- Ocultar respostas
-- Testar memória
-- Marcar dúvidas
-- Revisar espaçadamente`
-  },
-  {
-    id: "planejamento-longo-prazo",
-    title: "Planejamento de Longo Prazo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Estratégia semestral e anual com OKRs para medicina",
-    estimatedTime: "15 min",
-    evidenceLevel: "Média",
-    difficulty: "Avançado",
-    tags: ["planejamento", "OKRs", "longo-prazo", "estratégia"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é consultor de carreira médica e planejamento estratégico.
-
-# TAREFA
-Planeje estratégia de estudos de longo prazo para medicina usando OKRs.
-
-# FORMATO DE SAÍDA
-
-## 1. VISÃO GERAL (6 ANOS)
-### Ciclo Básico (Anos 1-2)
-- Objetivos macro
-- Competências-chave
-
-### Ciclo Clínico (Anos 3-4)
-- Objetivos macro
-- Competências-chave
-
-### Internato (Anos 5-6)
-- Objetivos macro
-- Preparação residência
-
-## 2. OKRs SEMESTRAIS
-
-### Objetivo 1: [Dominar X]
-- KR1: Acertar 80% questões de X
-- KR2: Completar Y casos clínicos
-- KR3: Revisar Z flashcards/dia
-
-### Objetivo 2: [Desenvolver habilidade Y]
-- KR1: [Métrica mensurável]
-- KR2: [Métrica mensurável]
-
-## 3. MILESTONES SEMANAIS
-- Semana 1: [Entregável]
-- Semana 2: [Entregável]
-- [etc]
-
-## 4. RETROSPECTIVAS DE APRENDIZADO
-### Após Cada Prova
-- O que funcionou?
-- O que falhou?
-- Ajustes para próximo ciclo
-
-## 5. DASHBOARD VISUAL DE PROGRESSO
-| Área | Teórico | Prático | Habilidades |
-|------|---------|---------|-------------|
-| Cardio | 🟢 | 🟡 | 🟢 |
-| Neuro | 🟡 | 🔴 | 🟡 |
-| [etc] | | | |`
-  },
-  {
-    id: "gerenciar-tempo-estudo",
-    title: "Gerenciar Tempo de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Time-blocking para aulas, plantões e vida pessoal",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["tempo", "produtividade", "pomodoro", "priorização"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em produtividade para profissionais de alta demanda.
-
-# TAREFA
-Crie sistema de gestão de tempo para estudante de medicina.
-
-# INFORMAÇÕES NECESSÁRIAS
-- Horas de aula por dia:
-- Plantões (frequência e duração):
-- Horas de estudo desejadas:
-- Compromissos fixos:
-
-# FORMATO DE SAÍDA
-
-## 1. TIME-BLOCKING FLEXÍVEL
-### Template de Dia Típico
-| Horário | Bloco | Atividade |
-|---------|-------|-----------|
-| 06:00-07:00 | Energia Alta | Estudo denso |
-| 07:00-12:00 | Aulas | [Faculdade] |
-| [etc] | | |
-
-### Adaptação para Dias de Plantão
-[Template alternativo]
-
-## 2. TÉCNICA POMODORO ADAPTADA
-- 25 min estudo focado
-- 5 min pausa ativa
-- A cada 4 pomodoros: pausa longa (20 min)
-- Meta diária: X pomodoros
-
-## 3. MATRIZ EISENHOWER PARA DISCIPLINAS
-| | Urgente | Não Urgente |
-|---|---------|-------------|
-| Importante | Prova amanhã | Base sólida |
-| Não Importante | Otimizar | Eliminar |
-
-## 4. BUFFER PARA EMERGÊNCIAS
-- 2h/semana para imprevistos
-- Recuperação de atrasos
-- Flexibilidade sem culpa
-
-## 5. PROTEÇÃO DE SONO/BEM-ESTAR
-- Horário de dormir inegociável
-- Exercício mínimo semanal
-- Tempo social protegido`
-  },
-  {
-    id: "rotina-estudo-personalizada",
-    title: "Construir Rotina de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Rotina adaptada para cronotipo e plantões noturnos",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["rotina", "cronotipo", "plantões", "hábitos"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em cronobiologia e design de rotinas.
-
-# TAREFA
-Desenvolva rotina personalizada de estudos para medicina.
-
-# INFORMAÇÕES NECESSÁRIAS
-- Cronotipo (matutino/vespertino/intermediário):
-- Frequência de plantões noturnos:
-- Períodos de provas:
-
-# FORMATO DE SAÍDA
-
-## 1. ANÁLISE DO CRONOTIPO
-### Matutino
-- Pico cognitivo: 06:00-11:00
-- Declínio: 14:00-16:00
-- Segundo pico: 17:00-19:00
-
-### Vespertino
-[Horários adaptados]
-
-## 2. TIME-BLOCKING ADAPTATIVO
-
-### Dia Normal
-[Grade horária otimizada]
-
-### Pós-Plantão Noturno
-- Sono de recuperação: X horas
-- Estudo leve após acordar
-- Retorno gradual à rotina
-
-### Semana de Provas
-[Intensificação controlada]
-
-## 3. RITUAIS DE TRANSIÇÃO
-- Início do estudo: [ritual de 5 min]
-- Entre disciplinas: [pausa ativa]
-- Fim do estudo: [ritual de fechamento]
-
-## 4. TÉCNICAS DE RECUPERAÇÃO COGNITIVA
-- Power naps (10-20 min)
-- Caminhada entre blocos
-- Hidratação e snacks estratégicos
-
-## 5. MÉTRICAS DE ACOMPANHAMENTO
-- Horas estudadas vs. planejadas
-- Qualidade do foco (1-10)
-- Energia ao final do dia`
-  },
-  {
-    id: "estrategias-neurociencia",
-    title: "Estratégias Baseadas em Neurociência",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Técnicas de retrieval practice e interleaving para provas",
-    estimatedTime: "10 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["neurociência", "retrieval", "interleaving", "elaboração"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é neurocientista especializado em aprendizagem e memória.
-
-# TAREFA
-Desenvolva estratégias de preparação baseadas em neurociência para prova de [DISCIPLINA].
-
-# FORMATO DE SAÍDA
-
-## 1. RETRIEVAL PRACTICE (Prática de Recuperação)
-### Implementação
-- Feche o material
-- Tente lembrar ativamente
-- Verifique e corrija
-- Repita após intervalo
-
-### Formatos
-- Flashcards
-- Questões de prova
-- Explicar em voz alta
-- Mapas mentais de memória
-
-## 2. INTERLEAVING (Alternância de Tópicos)
-### Por que funciona
-[Explicação neurocientífica]
-
-### Como aplicar
-- Não estude um tópico até "dominar"
-- Alterne entre 3-4 tópicos por sessão
-- Exemplo de sequência: A → B → C → A → B → C
-
-## 3. ELABORAÇÃO
-### Técnicas
-- Conectar com conhecimento prévio
-- Gerar exemplos próprios
-- Explicar "por quê" e "como"
-- Comparar e contrastar
-
-## 4. SELF-EXPLANATION
-### Processo
-1. Leia um trecho
-2. Pause e explique em suas palavras
-3. Identifique o que não ficou claro
-4. Busque a resposta ativamente
-
-## 5. ESPAÇAMENTO
-### Cronograma Ideal
-- Revisão 1: 24 horas após
-- Revisão 2: 3 dias após
-- Revisão 3: 7 dias após
-- Revisão 4: 21 dias após`
-  },
-  {
-    id: "melhorar-habitos-estudo",
-    title: "Melhorar Hábitos de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Transformar procrastinação em consistência com micro-hábitos",
-    estimatedTime: "8 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["hábitos", "consistência", "procrastinação", "micro-hábitos"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em ciência comportamental e formação de hábitos.
-
-# TAREFA
-Analise e redesenhe meus hábitos de estudo.
-
-# INFORMAÇÕES NECESSÁRIAS
-Descreva seus hábitos atuais:
-- Quando estuda?
-- Onde estuda?
-- Quanto tempo consegue manter foco?
-- O que te distrai?
-
-# FORMATO DE SAÍDA
-
-## 1. DIAGNÓSTICO DE HÁBITOS ATUAIS
-- Gatilhos identificados
-- Comportamentos problemáticos
-- Recompensas atuais
-
-## 2. HABIT STACKING (Empilhamento)
-### Fórmula
-"Depois de [HÁBITO EXISTENTE], vou [NOVO HÁBITO]"
-
-### Exemplos para Medicina
-- Depois do café da manhã → 30 min Anki
-- Depois de chegar em casa → revisar anotações do dia
-- Depois de escovar os dentes → ler 10 páginas
-
-## 3. GATILHOS AMBIENTAIS
-- Local de estudo dedicado
-- Celular em modo avião
-- Materiais prontos na noite anterior
-- Ambiente sem distrações visuais
-
-## 4. ACCOUNTABILITY (Responsabilização)
-- Grupo de estudos com check-ins
-- App de tracking (Habitica, Streaks)
-- Parceiro de accountability
-- Metas públicas compartilhadas
-
-## 5. REFORÇO POSITIVO PROGRESSIVO
-- Micro-recompensas após blocos
-- Celebrar pequenas vitórias
-- Tracking visual de sequência
-- Recompensa semanal por meta cumprida`
-  },
-  {
-    id: "encontrar-recursos-estudo",
-    title: "Encontrar Recursos de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Curadoria de livros, vídeos, apps e artigos para medicina",
-    estimatedTime: "8 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["recursos", "curadoria", "livros", "apps"],
-    aiRecommended: "perplexity",
-    prompt: `# PAPEL
-Você é curador de recursos educacionais para medicina.
-
-# TAREFA
-Selecione os melhores recursos para [DISCIPLINA MÉDICA].
-
-# FORMATO DE SAÍDA
-
-## 1. LIVROS-TEXTO ATUALIZADOS
-### Básico
-- [Título] - [Autor] - [Por que é bom]
-
-### Avançado
-- [Título] - [Autor] - [Por que é bom]
-
-### Referência Rápida
-- [Título] - [Para que serve]
-
-## 2. VÍDEOS EDUCACIONAIS
-### Plataformas Recomendadas
-- Osmosis: [O que oferece]
-- Lecturio: [O que oferece]
-- Khan Academy Medicine: [O que oferece]
-- Canais YouTube específicos
-
-## 3. APPS INTERATIVOS
-### Anatomia
-- Complete Anatomy
-- Visible Body
-
-### Flashcards
-- Anki (decks recomendados)
-- Quizlet
-
-### Questões
-- [Apps de questões por área]
-
-## 4. ARTIGOS DE REVISÃO
-### Bases de Dados
-- PubMed
-- UpToDate
-- DynaMed
-
-### Revistas de Alto Impacto
-- NEJM
-- Lancet
-- JAMA
-
-## 5. PODCASTS MÉDICOS
-- [Nome] - [Foco] - [Frequência]
-
-# CRITÉRIOS DE SELEÇÃO
-- Qualidade acadêmica
-- Atualização recente
-- Acessibilidade
-- Custo-benefício`
-  },
-  {
-    id: "checklist-rotina-estudo",
-    title: "Checklist de Rotina de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Checklists diários para garantir consistência no estudo",
-    estimatedTime: "5 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["checklist", "rotina", "consistência", "tracking"],
-    aiRecommended: "gemini",
-    prompt: `# PAPEL
-Você é especialista em design de sistemas de produtividade.
-
-# TAREFA
-Crie checklist de rotina diária de estudos para medicina.
-
-# FORMATO DE SAÍDA
-
-## CHECKLIST DIÁRIO DE ESTUDOS
-
-### ☐ PRÉ-ESTUDO (5 min)
-- [ ] Local organizado
-- [ ] Água/café prontos
-- [ ] Celular em modo avião
-- [ ] Meta do dia definida
-- [ ] Materiais separados
-
-### ☐ REVISÃO ESPAÇADA (15-30 min)
-- [ ] Anki: X cards revisados
-- [ ] Flashcards de ontem
-- [ ] Quick review da semana
-
-### ☐ ESTUDO ATIVO (2-4h)
-- [ ] Bloco 1: [Tema] - [X] min
-- [ ] Pausa ativa (5 min)
-- [ ] Bloco 2: [Tema] - [X] min
-- [ ] Pausa ativa (5 min)
-- [ ] Bloco 3: [Tema] - [X] min
-
-### ☐ QUESTÕES/CASOS (30-60 min)
-- [ ] X questões resolvidas
-- [ ] Análise de erros feita
-- [ ] Conceitos anotados
-
-### ☐ FECHAMENTO (10 min)
-- [ ] O que aprendi hoje?
-- [ ] O que revisar amanhã?
-- [ ] Meta cumprida? (1-10)
-- [ ] Preparar amanhã
-
-## GATILHOS AMBIENTAIS
-- Alarme às [HORÁRIO] = iniciar estudo
-- [LOCAL ESPECÍFICO] = modo estudo
-- [MÚSICA/SOM] = foco ativado
-
-## RECOMPENSAS
-- Bloco completo = [micro-recompensa]
-- Dia completo = [recompensa maior]
-- Semana completa = [celebração]`
-  },
-  {
-    id: "rastrear-progresso-notas",
-    title: "Rastrear Progresso de Notas",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Dashboard visual de evolução por disciplina e gaps",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["tracking", "progresso", "dashboard", "análise"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é analista de dados educacionais especializado em medicina.
-
-# TAREFA
-Crie sistema de tracking de notas e performance para estudante de medicina.
-
-# FORMATO DE SAÍDA
-
-## 1. DASHBOARD DE PROGRESSO
-
-### Visão Geral
-| Disciplina | Nota Atual | Meta | Tendência | Próxima Ação |
-|------------|------------|------|-----------|--------------|
-| Anatomia | 7.5 | 8.5 | ↗️ | Manter ritmo |
-| Fisiologia | 6.0 | 8.0 | ↘️ | Intensificar |
-| [etc] | | | | |
-
-### Gráfico de Evolução
-[Descrição de gráfico de linha temporal]
-
-## 2. IDENTIFICAÇÃO DE LACUNAS
-
-### Mapa de Calor por Tópico
-| Tópico | Domínio | Prioridade |
-|--------|---------|------------|
-| Cardio | 🟢 Alto | Manter |
-| Neuro | 🟡 Médio | Reforçar |
-| Endócrino | 🔴 Baixo | Urgente |
-
-## 3. ANÁLISE DE ERROS RECORRENTES
-- Padrão 1: [Tipo de erro] - [Frequência] - [Solução]
-- Padrão 2: [Tipo de erro] - [Frequência] - [Solução]
-
-## 4. INSIGHTS ACIONÁVEIS
-Baseado nos dados:
-1. [Ação específica para esta semana]
-2. [Ajuste de estratégia]
-3. [Recurso recomendado]
-
-## 5. MÉTRICAS DE ACOMPANHAMENTO
-- Tempo de estudo vs. resultado
-- Questões certas vs. erradas
-- Progressão semanal`
-  },
-  {
-    id: "templates-cronograma",
-    title: "Templates de Cronograma Semestral",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Templates reutilizáveis com visualização Gantt",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["template", "cronograma", "semestre", "gantt"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em gestão de projetos aplicada à educação médica.
-
-# TAREFA
-Crie template de cronograma semestral para medicina.
-
-# INFORMAÇÕES NECESSÁRIAS
-- Disciplinas do semestre:
-- Datas de provas:
-- Horas semanais disponíveis:
-
-# FORMATO DE SAÍDA
-
-## 1. VISÃO GERAL SEMESTRAL (GANTT)
-
-### Mês 1
-| Semana | Disciplina A | Disciplina B | Disciplina C |
-|--------|--------------|--------------|--------------|
-| S1 | [Tópico] | [Tópico] | [Tópico] |
-| S2 | [Tópico] | [Tópico] | [Tópico] |
-
-[Continua para todos os meses]
-
-## 2. DISTRIBUIÇÃO BALANCEADA
-### Carga por Semana
-- Teoria: X horas
-- Prática: X horas
-- Questões: X horas
-- Revisão: X horas
-
-## 3. SLOTS DE REVISÃO ESPAÇADA
-- Revisão D+1: [horário fixo]
-- Revisão D+7: [dia da semana]
-- Revisão D+30: [momento do mês]
-
-## 4. BUFFER PARA IMPREVISTOS
-- 2-3 horas/semana sem programação
-- Flexibilidade para ajustes
-- Recuperação de atrasos
-
-## 5. EXPORTAÇÃO
-### Google Calendar
-- Eventos com alertas
-- Código de cores por disciplina
-- Lembretes de revisão
-
-### Notion/Excel
-- Template estruturado
-- Checkboxes de progresso
-- Fórmulas de acompanhamento`
-  },
-  {
-    id: "organizar-elearning",
-    title: "Organizar E-Learning",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Sistema de organização de materiais digitais médicos",
-    estimatedTime: "8 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["organização", "digital", "pastas", "e-learning"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em gestão de conhecimento digital.
-
-# TAREFA
-Redesenhe a organização de materiais digitais de medicina.
-
-# FORMATO DE SAÍDA
-
-## 1. ESTRUTURA DE PASTAS
-
-### Por Sistema/Disciplina
-📁 Medicina
-├── 📁 01_Ciclo_Basico
-│   ├── 📁 Anatomia
-│   │   ├── 📁 Membros
-│   │   ├── 📁 Tronco
-│   │   └── 📁 Cabeça_Pescoco
-│   ├── 📁 Fisiologia
-│   └── 📁 Bioquimica
-├── 📁 02_Ciclo_Clinico
-│   ├── 📁 Clinica_Medica
-│   ├── 📁 Cirurgia
-│   └── 📁 Pediatria
-└── 📁 03_Internato
-
-## 2. NOMENCLATURA PADRONIZADA
-Formato: [Módulo]_[Tema]_[Tipo]_[Data]
-Exemplo: CM01_ICC_Resumo_2024-03
-
-### Tipos de Arquivo
-- RES = Resumo
-- QST = Questões
-- CASO = Caso clínico
-- AULA = Material de aula
-- REF = Referência
-
-## 3. SISTEMA DE TAGS SEMÂNTICO
-### Tags de Status
-#revisar #dominado #dificil #urgente
-
-### Tags de Tipo
-#teoria #pratica #questoes #imagem
-
-## 4. BUSCA EFICIENTE
-- Ferramenta: [Recomendação]
-- Atalhos de teclado
-- Filtros salvos
-
-## 5. BACKUP E SINCRONIZAÇÃO
-- Google Drive/OneDrive
-- Versionamento automático
-- Acesso multi-dispositivo`
-  },
-  {
-    id: "criar-resumos-estudo",
-    title: "Criar Resumos de Estudo",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Sínteses executivas para revisão rápida pré-prova",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Iniciante",
-    tags: ["resumos", "síntese", "revisão", "pré-prova"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em síntese de alto rendimento para medicina.
-
-# TAREFA
-Produza resumo executivo de [TÓPICO MÉDICO] otimizado para revisão rápida.
-
-# FORMATO DE SAÍDA
-
-## RESUMO EXECUTIVO: [TÓPICO]
-**Tempo de leitura:** 5 minutos
-
-### 1. CONCEITOS-CHAVE (Máx. 5)
-1. [Conceito essencial 1]
-2. [Conceito essencial 2]
-3. [Conceito essencial 3]
-
-### 2. FISIOPATOLOGIA SIMPLIFICADA
-[Mecanismo em 3 frases máximo]
-
-📌 **Mnemônico:** [Se aplicável]
-
-### 3. QUADRO CLÍNICO
-**Clássico:** [Apresentação típica em 1 linha]
-**Atípico:** [O que não esquecer]
-
-### 4. DIAGNÓSTICO DIFERENCIAL
-| Condição | Diferenciador |
-|----------|---------------|
-| [DD 1] | [Chave] |
-| [DD 2] | [Chave] |
-
-### 5. TRATAMENTO
-**1ª Linha:** [Tratamento]
-**Alternativa:** [Se 1ª linha falhar]
-
-### 6. ARMADILHAS DE PROVA ⚠️
-- [Pegadinha comum 1]
-- [Pegadinha comum 2]
-
-### 7. HIGH YIELD
-💡 [Fato de alto rendimento que CAI EM PROVA]
-
----
-📚 **Para aprofundar:** [Referência rápida]`
-  },
-  {
-    id: "testes-digitais-questoes",
-    title: "Criar Banco de Questões Digital",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Sistema de questões com feedback e adaptive testing",
-    estimatedTime: "12 min",
-    evidenceLevel: "Alta",
-    difficulty: "Intermediário",
-    tags: ["questões", "banco", "feedback", "adaptive"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em avaliação educacional e design instrucional.
-
-# TAREFA
-Desenvolva sistema de questões personalizado para [DISCIPLINA].
-
-# FORMATO DE SAÍDA
-
-## 1. BANCO DE QUESTÕES ESTRUTURADO
-
-### Por Nível de Dificuldade
-- 🟢 Fácil (30%): Conceitos básicos
-- 🟡 Médio (50%): Aplicação clínica
-- 🔴 Difícil (20%): Análise e síntese
-
-### Por Tipo
-- Múltipla escolha: X%
-- Casos clínicos: X%
-- Associação: X%
-- V ou F justificado: X%
-
-## 2. QUESTÕES RANDOMIZADAS
-[Sistema de embaralhamento inteligente]
-- Evitar repetição recente
-- Balancear dificuldade
-- Variar tipos
-
-## 3. FEEDBACK EXPLICATIVO
-### Para Resposta Correta
-✅ Correto! [Explicação breve do porquê]
-
-### Para Resposta Incorreta
-❌ Incorreto. 
-- Por que não é [alternativa marcada]
-- A correta é [letra] porque [explicação]
-- 📖 Revisar: [Tópico específico]
-
-## 4. ANÁLISE DE ERROS POR TÓPICO
-| Tópico | Acertos | Erros | Taxa | Ação |
-|--------|---------|-------|------|------|
-| [A] | X | Y | Z% | [Recomendação] |
-
-## 5. ADAPTIVE TESTING
-### Lógica de Progressão
-- 3 acertos consecutivos → aumenta dificuldade
-- 2 erros consecutivos → reduz dificuldade
-- Mantém zona de desafio ótimo (70-85% acerto)
-
-## 6. RELATÓRIO DE PERFORMANCE
-- Gráfico de evolução
-- Áreas fortes/fracas
-- Tempo médio por questão
-- Comparativo com meta`
-  },
-  {
-    id: "modulos-adaptativos",
-    title: "Módulos de Estudo Adaptativos",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Plataforma que ajusta dificuldade conforme desempenho",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["adaptativo", "personalizado", "desempenho"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é especialista em aprendizagem adaptativa.
-
-# TAREFA
-Crie módulos de estudo que se adaptem ao meu desempenho em [DISCIPLINA].
-
-# FORMATO DE SAÍDA
-
-## 1. AVALIAÇÃO DIAGNÓSTICA INICIAL
-[10 questões de diferentes níveis para mapear conhecimento]
-
-### Resultado
-- Nível atual: [Iniciante/Intermediário/Avançado]
-- Gaps identificados: [Lista]
-- Pontos fortes: [Lista]
-
-## 2. TRILHA PERSONALIZADA
-
-### Se Iniciante
-- Módulo 1: Fundamentos [X horas]
-- Módulo 2: Conceitos básicos [X horas]
-- Módulo 3: Introdução à aplicação [X horas]
-
-### Se Intermediário
-- Módulo 1: Revisão rápida [X horas]
-- Módulo 2: Aplicação clínica [X horas]
-- Módulo 3: Casos complexos [X horas]
-
-### Se Avançado
-- Módulo 1: Casos atípicos [X horas]
-- Módulo 2: Integração de sistemas [X horas]
-- Módulo 3: Simulação de prova [X horas]
-
-## 3. AJUSTE DINÂMICO
-### Gatilhos de Progressão
-- >80% acerto → Avançar dificuldade
-- 60-80% acerto → Manter nível
-- <60% acerto → Revisar base
-
-## 4. CHECKPOINTS
-- Avaliação a cada módulo
-- Redirecionamento automático
-- Reforço de gaps
-
-## 5. GAMIFICAÇÃO
-- XP por módulo completo
-- Badges de proficiência
-- Ranking pessoal de evolução`
-  },
-  {
-    id: "dicas-tempo-produtividade",
-    title: "Dicas de Tempo e Produtividade",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Técnicas de produtividade para alta carga de estudos",
-    estimatedTime: "6 min",
-    evidenceLevel: "Média",
-    difficulty: "Iniciante",
-    tags: ["produtividade", "tempo", "técnicas", "eficiência"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é coach de produtividade para estudantes de alta performance.
-
-# TAREFA
-Compartilhe técnicas de produtividade otimizadas para estudante de medicina.
-
-# FORMATO DE SAÍDA
-
-## 1. TÉCNICAS DE FOCO
-
-### Pomodoro Adaptado para Medicina
-- 45 min estudo denso + 10 min pausa
-- Ideal para: casos clínicos, anatomia
-- Meta: 4-6 pomodoros/dia
-
-### Deep Work
-- 2-4h sem interrupções
-- Ideal para: estudo de base, revisão
-- Requisitos: ambiente controlado
-
-### Time Boxing
-- Definir tempo máximo por tarefa
-- Evita perfeccionismo
-- Força priorização
-
-## 2. ELIMINAÇÃO DE DISTRAÇÕES
-- Celular em outra sala
-- Bloqueadores de sites
-- Fones com ruído branco
-- "Não perturbe" ativo
-
-## 3. ENERGIA, NÃO SÓ TEMPO
-### Gestão de Energia
-- Tarefas difíceis = pico de energia
-- Tarefas repetitivas = baixa energia
-- Pausas ativas = recuperação
-
-## 4. BATCH PROCESSING
-- Agrupar tarefas similares
-- Ex: todas as questões juntas
-- Reduz troca de contexto
-
-## 5. REGRA DOS 2 MINUTOS
-- Se leva <2 min, faça agora
-- Evita acúmulo de pequenas tarefas
-- Mantém mente leve
-
-## 6. REVISÃO SEMANAL (30 min)
-- O que funcionou?
-- O que ajustar?
-- Prioridades da próxima semana`
-  },
-  {
-    id: "ferramentas-rastreamento-metas",
-    title: "Ferramentas de Rastreamento de Metas",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Acompanhar objetivos de longo prazo como residência",
-    estimatedTime: "10 min",
-    evidenceLevel: "Média",
-    difficulty: "Intermediário",
-    tags: ["metas", "tracking", "residência", "objetivos"],
-    aiRecommended: "claude",
-    prompt: `# PAPEL
-Você é especialista em definição e acompanhamento de metas.
-
-# TAREFA
-Crie sistema de rastreamento de metas para estudante de medicina com foco em [OBJETIVO: ex. residência].
-
-# FORMATO DE SAÍDA
-
-## 1. DEFINIÇÃO DE META SMART
-
-### Meta Principal
-- **S**pecífico: Passar em residência de [especialidade]
-- **M**ensurável: Nota mínima de X no ENARE
-- **A**tingível: Baseado em histórico e recursos
-- **R**elevante: Alinhado com carreira desejada
-- **T**emporal: Data da prova: [DATA]
-
-## 2. DECOMPOSIÇÃO EM SUBMETAS
-
-### Trimestre 1
-- [ ] Completar revisão de [área]
-- [ ] Atingir X% em simulados
-- [ ] Resolver X questões
-
-### Trimestre 2
-- [ ] [Submetas específicas]
-
-### [Continua...]
-
-## 3. KPIs DE ACOMPANHAMENTO
-| Indicador | Meta | Atual | Status |
-|-----------|------|-------|--------|
-| Questões/dia | 50 | 35 | 🟡 |
-| % acerto simulados | 75% | 68% | 🟡 |
-| Horas estudo/semana | 40h | 38h | 🟢 |
-
-## 4. REVISÕES PERIÓDICAS
-- Semanal: Check rápido (15 min)
-- Mensal: Análise detalhada (1h)
-- Trimestral: Reajuste de rota (2h)
-
-## 5. CELEBRAÇÃO DE MARCOS
-- Pequenas vitórias = pequenas recompensas
-- Grandes marcos = celebração maior
-- Manter motivação ao longo do tempo`
-  },
-  {
-    id: "alivio-estresse-academico",
-    title: "Alívio do Estresse Acadêmico",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Guia de gerenciamento de estresse para burnout acadêmico",
-    estimatedTime: "8 min",
-    evidenceLevel: "Alta",
-    difficulty: "Iniciante",
-    tags: ["estresse", "burnout", "saúde-mental", "bem-estar"],
+    tags: ["estresse", "burnout", "bem-estar", "mindfulness"],
     aiRecommended: "chatgpt",
     prompt: `# PAPEL
 Você é psicólogo especializado em saúde mental de estudantes de medicina.
@@ -4260,151 +1869,56 @@ Crie guia de gerenciamento de estresse para estudante de medicina.
 # FORMATO DE SAÍDA
 
 ## 1. IDENTIFICAÇÃO DE ESTRESSORES
-
 ### Acadêmicos
+- Carga de provas
 - Volume de conteúdo
-- Provas e avaliações
-- Competição por vagas
-- Expectativas próprias e externas
-
-### Práticos
-- Plantões noturnos
-- Contato com sofrimento
-- Responsabilidade crescente
+- Plantões
+- Prazos
 
 ### Pessoais
-- Falta de tempo para lazer
-- Relacionamentos afetados
-- Saúde física negligenciada
+- Sono
+- Alimentação
+- Relacionamentos
+- Finanças
 
-## 2. TÉCNICAS DE MINDFULNESS
+## 2. TÉCNICAS IMEDIATAS (5 min)
 
 ### Respiração 4-7-8
 1. Inspire por 4 segundos
 2. Segure por 7 segundos
 3. Expire por 8 segundos
-4. Repita 3-4 vezes
+4. Repita 3x
 
-### Body Scan (5 min)
-[Guia passo a passo]
+### Grounding (5-4-3-2-1)
+- 5 coisas que você VÊ
+- 4 coisas que você TOCA
+- 3 coisas que você OUVE
+- 2 coisas que você CHEIRA
+- 1 coisa que você SABOREIA
 
-### Âncora no Presente
-- 5 coisas que vê
-- 4 coisas que ouve
-- 3 coisas que sente
-- 2 coisas que cheira
-- 1 coisa que saboreia
+## 3. ROTINA DE PREVENÇÃO
 
-## 3. HIGIENE DO SONO
-- Horário fixo (mesmo fim de semana)
-- Sem telas 1h antes
-- Ambiente escuro e fresco
-- Ritual de descompressão
+### Diário
+- 7-8h de sono
+- 30 min exercício
+- Pausas a cada 90 min
+- Alimentação regular
 
-## 4. ESTRATÉGIAS DE ENFRENTAMENTO
-- Reestruturação cognitiva
-- Suporte social
-- Atividade física regular
-- Hobbies protegidos
+### Semanal
+- 1 atividade prazerosa
+- Conexão social
+- Tempo na natureza
 
-## 5. SINAIS DE ALERTA
-⚠️ Buscar ajuda profissional se:
-- Dificuldade persistente de concentração
-- Alterações de sono ou apetite
+## 4. SINAIS DE ALERTA
+Procure ajuda se:
+- Dificuldade persistente de sono
+- Perda de interesse nas atividades
+- Pensamentos negativos recorrentes
 - Isolamento social
-- Pensamentos negativos recorrentes`
-  },
-  {
-    id: "metodos-alivio-estresse-evidencia",
-    title: "Métodos de Alívio de Estresse Baseados em Evidência",
-    category: "Essenciais para Medicina",
-    categorySlug: "essenciais-medicina",
-    sectionNumber: 12,
-    description: "Lista de métodos validados cientificamente para estudantes",
-    estimatedTime: "6 min",
-    evidenceLevel: "Alta",
-    difficulty: "Iniciante",
-    tags: ["estresse", "evidência", "exercício", "meditação"],
-    aiRecommended: "chatgpt",
-    prompt: `# PAPEL
-Você é pesquisador em neurociência do estresse e bem-estar.
 
-# TAREFA
-Liste métodos de alívio de estresse baseados em evidência científica para estudantes de medicina.
-
-# FORMATO DE SAÍDA
-
-## 1. EXERCÍCIO FÍSICO
-**Evidência:** Meta-análises mostram redução de 40% em sintomas de ansiedade
-
-### Recomendações
-- **Aeróbico:** 30 min, 3-5x/semana
-  - Caminhada, corrida, natação
-- **HIIT:** 15-20 min, 2-3x/semana
-  - Eficiente para quem tem pouco tempo
-- **Yoga:** 1-2x/semana
-  - Combina movimento + mindfulness
-
-## 2. MEDITAÇÃO E MINDFULNESS
-**Evidência:** Reduz cortisol em 23% após 8 semanas
-
-### Apps Recomendados
-- Headspace
-- Calm
-- Insight Timer
-
-### Prática Mínima Efetiva
-- 10 min/dia
-- Melhor que nada: 5 min
-
-## 3. RESPIRAÇÃO DIAFRAGMÁTICA
-**Evidência:** Ativa sistema parassimpático em 60-90 segundos
-
-### Técnicas
-- 4-7-8 (Weil)
-- Respiração quadrada (4-4-4-4)
-- Suspiro fisiológico (dupla inspiração + expiração longa)
-
-## 4. JOURNALING
-**Evidência:** Expressão escrita reduz rumination
-
-### Formatos
-- 3 gratidões do dia
-- Brain dump (descarregar pensamentos)
-- Reflexão pós-prova
-
-## 5. CONEXÃO SOCIAL
-**Evidência:** Suporte social é protetor de burnout
-
-### Ações
-- Grupo de estudos
-- Tempo com amigos (não de medicina)
-- Conversa com família
-
-## 6. NATUREZA
-**Evidência:** 20 min em área verde reduz cortisol
-
-### Opções
-- Caminhada em parque
-- Estudo ao ar livre
-- Plantas no ambiente`
+## 5. RECURSOS
+- CAPS/Apoio psicológico da faculdade
+- CVV: 188
+- Grupos de apoio entre estudantes`
   }
 ];
-
-export const getPromptsBySection = (sectionNumber: number): Prompt[] => {
-  return prompts.filter(p => p.sectionNumber === sectionNumber);
-};
-
-export const getPromptById = (id: string): Prompt | undefined => {
-  return prompts.find(p => p.id === id);
-};
-
-export const searchPrompts = (query: string): Prompt[] => {
-  const lowerQuery = query.toLowerCase();
-  return prompts.filter(p => 
-    p.title.toLowerCase().includes(lowerQuery) ||
-    p.description.toLowerCase().includes(lowerQuery) ||
-    p.tags.some(t => t.toLowerCase().includes(lowerQuery)) ||
-    p.category.toLowerCase().includes(lowerQuery)
-  );
-};
