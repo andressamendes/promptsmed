@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { Play, Pause, RotateCcw, X, Copy, Check, ExternalLink, Clock, Brain, Coffee, Maximize2, Minimize2 } from "lucide-react";
+import { Play, Pause, RotateCcw, X, Copy, Check, ExternalLink, Clock, Brain, Coffee, Maximize2, Minimize2, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -14,9 +15,12 @@ interface StudyModeProps {
 
 type TimerMode = "focus" | "break";
 
-const TIMER_PRESETS = {
-  focus: 25 * 60,
-  break: 5 * 60,
+const FOCUS_OPTIONS = [15, 25, 45, 60];
+const BREAK_OPTIONS = [5, 10, 15];
+
+const getStoredDuration = (key: string, defaultValue: number): number => {
+  const stored = localStorage.getItem(key);
+  return stored ? parseInt(stored, 10) : defaultValue;
 };
 
 const aiLinks = {
@@ -37,12 +41,18 @@ const aiNames = {
 
 export function StudyMode({ prompt, open, onClose }: StudyModeProps) {
   const [mode, setMode] = useState<TimerMode>("focus");
-  const [timeLeft, setTimeLeft] = useState(TIMER_PRESETS.focus);
+  const [focusDuration, setFocusDuration] = useState(() => getStoredDuration("studyMode_focusDuration", 25));
+  const [breakDuration, setBreakDuration] = useState(() => getStoredDuration("studyMode_breakDuration", 5));
+  const [timeLeft, setTimeLeft] = useState(focusDuration * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [sessions, setSessions] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { toast } = useToast();
+
+  const getCurrentDuration = useCallback((timerMode: TimerMode) => {
+    return timerMode === "focus" ? focusDuration * 60 : breakDuration * 60;
+  }, [focusDuration, breakDuration]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -50,18 +60,39 @@ export function StudyMode({ prompt, open, onClose }: StudyModeProps) {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const progress = ((TIMER_PRESETS[mode] - timeLeft) / TIMER_PRESETS[mode]) * 100;
+  const totalTime = getCurrentDuration(mode);
+  const progress = ((totalTime - timeLeft) / totalTime) * 100;
 
   const reset = useCallback(() => {
     setIsRunning(false);
-    setTimeLeft(TIMER_PRESETS[mode]);
-  }, [mode]);
+    setTimeLeft(getCurrentDuration(mode));
+  }, [mode, getCurrentDuration]);
 
   const switchMode = useCallback((newMode: TimerMode) => {
     setMode(newMode);
-    setTimeLeft(TIMER_PRESETS[newMode]);
+    setTimeLeft(getCurrentDuration(newMode));
     setIsRunning(false);
-  }, []);
+  }, [getCurrentDuration]);
+
+  const handleFocusDurationChange = (value: string) => {
+    const duration = parseInt(value, 10);
+    setFocusDuration(duration);
+    localStorage.setItem("studyMode_focusDuration", value);
+    if (mode === "focus") {
+      setTimeLeft(duration * 60);
+      setIsRunning(false);
+    }
+  };
+
+  const handleBreakDurationChange = (value: string) => {
+    const duration = parseInt(value, 10);
+    setBreakDuration(duration);
+    localStorage.setItem("studyMode_breakDuration", value);
+    if (mode === "break") {
+      setTimeLeft(duration * 60);
+      setIsRunning(false);
+    }
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -275,6 +306,49 @@ export function StudyMode({ prompt, open, onClose }: StudyModeProps) {
                 </Button>
               </div>
 
+              {/* Duration Settings */}
+              <div className="flex items-center justify-center gap-3 pt-2 border-t border-border">
+                <Settings2 className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Foco:</span>
+                  <Select
+                    value={focusDuration.toString()}
+                    onValueChange={handleFocusDurationChange}
+                    disabled={isRunning}
+                  >
+                    <SelectTrigger className="w-[70px] h-7 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {FOCUS_OPTIONS.map((mins) => (
+                        <SelectItem key={mins} value={mins.toString()}>
+                          {mins} min
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Pausa:</span>
+                  <Select
+                    value={breakDuration.toString()}
+                    onValueChange={handleBreakDurationChange}
+                    disabled={isRunning}
+                  >
+                    <SelectTrigger className="w-[70px] h-7 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {BREAK_OPTIONS.map((mins) => (
+                        <SelectItem key={mins} value={mins.toString()}>
+                          {mins} min
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
               {/* Sessions Counter */}
               <div className="text-center text-sm text-muted-foreground">
                 <Clock className="w-4 h-4 inline mr-1" />
@@ -337,9 +411,9 @@ export function StudyMode({ prompt, open, onClose }: StudyModeProps) {
                 Dica de Estudo
               </h3>
               <p className="text-sm text-muted-foreground">
-                Use os 25 minutos de foco para trabalhar com este prompt. 
+                Use os {focusDuration} minutos de foco para trabalhar com este prompt. 
                 Copie-o para sua IA preferida e interaja ativamente. 
-                Na pausa, revise mentalmente o que aprendeu.
+                Na pausa de {breakDuration} minutos, revise mentalmente o que aprendeu.
               </p>
             </div>
           </div>
