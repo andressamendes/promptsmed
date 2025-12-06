@@ -16,11 +16,11 @@ export function Hero() {
             <span className="text-sm text-primary font-medium">Para futuros médicos</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold mb-3">
-            Prompts de IA para sua Jornada na Medicina
+            Prompts Inteligentes para sua Jornada na Medicina
           </h1>
           <p className="text-muted-foreground mb-6">
             Prompts prontos com técnicas de aprendizado baseadas em evidências.
-            Acelere seus estudos e domine o conteúdo médico com IA.
+            Acelere seus estudos e domine o conteúdo médico.
           </p>
 
           <div className="flex items-center gap-6">

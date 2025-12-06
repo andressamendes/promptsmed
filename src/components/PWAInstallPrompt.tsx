@@ -74,7 +74,7 @@ export function PWAInstallPrompt() {
             <Download className="w-6 h-6 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-sm mb-1">Instale o PromptLab</h3>
+            <h3 className="font-semibold text-sm mb-1">Instale o MedPrompts</h3>
             <p className="text-xs text-muted-foreground mb-3">
               Acesse offline e estude onde quiser, futuro(a) médico(a)!
             </p>

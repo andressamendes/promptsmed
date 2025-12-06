@@ -9,7 +9,7 @@ import { PomodoroTimer } from "@/components/PomodoroTimer";
 import { TaskList } from "@/components/TaskList";
 import { MentorSection } from "@/components/MentorSection";
 import { EthicsSection } from "@/components/EthicsSection";
-import { AITutor } from "@/components/AITutor";
+import { StudyMentor } from "@/components/StudyMentor";
 import { FocusModeOverlay } from "@/components/FocusModeOverlay";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { useFocusMode } from "@/contexts/FocusModeContext";
@@ -62,7 +62,7 @@ const Index = () => {
         onClose={() => setFavoritesOpen(false)} 
       />
       
-      <AITutor />
+      <StudyMentor />
       <PWAInstallPrompt />
     </div>
   );

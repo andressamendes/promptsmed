@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { X, Send, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,7 +12,7 @@ interface Message {
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-export function AITutor() {
+export function StudyMentor() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -47,7 +47,7 @@ export function AITutor() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || "Erro ao conectar com o tutor");
+        throw new Error(error.error || "Erro ao conectar com o mentor");
       }
 
       const reader = response.body?.getReader();
@@ -126,7 +126,7 @@ export function AITutor() {
           <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-primary/10 to-accent/10">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary" />
-              <span className="font-semibold">Tutor IA</span>
+              <span className="font-semibold">Mentor de Estudos</span>
             </div>
             <div className="flex gap-1">
               <Button
@@ -155,7 +155,7 @@ export function AITutor() {
                 <Sparkles className="w-8 h-8 mx-auto mb-3 opacity-50" />
                 <p>Olá, futuro(a) médico(a)!</p>
                 <p className="mt-1">
-                  Sou seu tutor IA. Posso te ajudar a entender conceitos usando o método socrático.
+                  Sou seu mentor de estudos. Posso te ajudar a entender conceitos usando o método socrático.
                 </p>
                 <p className="text-xs mt-3 text-primary">
                   Pergunte sobre qualquer tema médico!

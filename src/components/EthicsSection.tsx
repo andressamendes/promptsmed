@@ -2,10 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle } from "lucide-react";
 
 const guidelines = [
-  "Não substitua avaliação clínica por respostas de IA.",
+  "Não substitua avaliação clínica por respostas automáticas.",
   "Nunca insira dados reais de pacientes em prompts.",
   "Verifique informações em fontes confiáveis.",
-  "Use IA como ferramenta de estudo, não como diagnóstico.",
+  "Use tecnologia como ferramenta de estudo, não como diagnóstico.",
 ];
 
 export function EthicsSection() {

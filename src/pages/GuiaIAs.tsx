@@ -237,8 +237,8 @@ export default function GuiaIAs() {
   return (
     <>
       <Helmet>
-        <title>Guia de IAs para Estudantes de Medicina | PromptLab MED</title>
-        <meta name="description" content="Comparativo completo das melhores IAs para estudantes de medicina: ChatGPT, Claude, Gemini, NotebookLM e Perplexity. Descubra qual usar para cada tipo de estudo." />
+        <title>Guia para Estudantes de Medicina | MedPrompts</title>
+        <meta name="description" content="Comparativo completo das melhores ferramentas para estudantes de medicina: ChatGPT, Claude, Gemini, NotebookLM e Perplexity. Descubra qual usar para cada tipo de estudo." />
       </Helmet>
 
       <div className="min-h-screen bg-background">
