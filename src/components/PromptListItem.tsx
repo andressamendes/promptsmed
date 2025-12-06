@@ -11,6 +11,7 @@ import { PromptModal } from "./PromptModal";
 
 interface PromptListItemProps {
   prompt: Prompt;
+  isFocused?: boolean;
 }
 
 const aiColors: Record<string, string> = {
@@ -37,7 +38,7 @@ const aiLinks: Record<string, string> = {
   perplexity: "https://www.perplexity.ai/",
 };
 
-export function PromptListItem({ prompt }: PromptListItemProps) {
+export function PromptListItem({ prompt, isFocused = false }: PromptListItemProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -73,7 +74,13 @@ export function PromptListItem({ prompt }: PromptListItemProps) {
     <>
       <div
         onClick={() => setShowModal(true)}
-        className="group flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50 hover:bg-card hover:border-border hover:shadow-md transition-all duration-200 cursor-pointer"
+        data-prompt-id={prompt.id}
+        className={cn(
+          "group flex items-center gap-3 p-3 rounded-lg border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-200 cursor-pointer",
+          isFocused 
+            ? "border-primary ring-2 ring-primary ring-offset-2 ring-offset-background" 
+            : "border-border/50 hover:border-border"
+        )}
       >
         {/* AI Indicator */}
         <div
