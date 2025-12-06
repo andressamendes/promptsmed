@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, Heart, Menu, X, Stethoscope } from "lucide-react";
+import { Moon, Sun, Heart, Menu, X, Stethoscope, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useFavorites } from "@/hooks/use-favorites";
@@ -61,6 +62,15 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
                 </a>
               </li>
             ))}
+            <li>
+              <Link
+                to="/guia-ias"
+                className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wide"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Guia IAs
+              </Link>
+            </li>
           </ul>
 
           <div className="flex items-center gap-2 ml-4 pl-4 border-l border-border">
@@ -126,6 +136,16 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/guia-ias"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors uppercase tracking-wide"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Guia IAs
+                </Link>
+              </li>
               <li>
                 <button
                   onClick={() => {
