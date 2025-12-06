@@ -1,11 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { LayoutGrid, List } from "lucide-react";
 import { PromptCard } from "./PromptCard";
+import { PromptListItem } from "./PromptListItem";
 import { SearchBar } from "./SearchBar";
 import { useSearch } from "@/hooks/use-search";
 import { sections, Prompt } from "@/data/prompts-data";
 import { cn } from "@/lib/utils";
 
+type ViewMode = "grid" | "list";
+
 export function PromptsSection() {
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  
   const {
     query,
     setQuery,
@@ -47,27 +53,77 @@ export function PromptsSection() {
     10: "border-l-medical-red",
   };
 
+  const renderPrompts = (prompts: Prompt[]) => {
+    if (viewMode === "list") {
+      return (
+        <div className="space-y-2">
+          {prompts.map((prompt) => (
+            <PromptListItem key={prompt.id} prompt={prompt} />
+          ))}
+        </div>
+      );
+    }
+    
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {prompts.map((prompt, index) => (
+          <PromptCard key={prompt.id} prompt={prompt} index={index} />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <section id="prompts" className="py-4">
-      {/* Search */}
-      <div className="max-w-4xl mb-6">
-        <SearchBar
-          query={query}
-          onQueryChange={setQuery}
-          selectedSection={selectedSection}
-          onSectionChange={setSelectedSection}
-          selectedEvidence={selectedEvidence}
-          onEvidenceChange={setSelectedEvidence}
-          selectedAI={selectedAI}
-          onAIChange={setSelectedAI}
-          onClear={clearFilters}
-          hasActiveFilters={hasActiveFilters}
-          resultCount={resultCount}
-          totalCount={totalCount}
-        />
+      {/* Header with Search and View Toggle */}
+      <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-6">
+        <div className="flex-1 max-w-4xl">
+          <SearchBar
+            query={query}
+            onQueryChange={setQuery}
+            selectedSection={selectedSection}
+            onSectionChange={setSelectedSection}
+            selectedEvidence={selectedEvidence}
+            onEvidenceChange={setSelectedEvidence}
+            selectedAI={selectedAI}
+            onAIChange={setSelectedAI}
+            onClear={clearFilters}
+            hasActiveFilters={hasActiveFilters}
+            resultCount={resultCount}
+            totalCount={totalCount}
+          />
+        </div>
+        
+        {/* View Toggle */}
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-muted/50 border border-border/50 self-start">
+          <button
+            onClick={() => setViewMode("grid")}
+            className={cn(
+              "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
+              viewMode === "grid"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <LayoutGrid className="w-3.5 h-3.5" />
+            Grid
+          </button>
+          <button
+            onClick={() => setViewMode("list")}
+            className={cn(
+              "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
+              viewMode === "list"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <List className="w-3.5 h-3.5" />
+            Lista
+          </button>
+        </div>
       </div>
 
-      {/* Prompts Grid by Section */}
+      {/* Prompts */}
       {!hasActiveFilters ? (
         <div className="space-y-10">
           {sections.map((section) => {
@@ -90,11 +146,7 @@ export function PromptsSection() {
                 </div>
 
                 {/* Section Prompts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {sectionPrompts.map((prompt, index) => (
-                    <PromptCard key={prompt.id} prompt={prompt} index={index} />
-                  ))}
-                </div>
+                {renderPrompts(sectionPrompts)}
               </div>
             );
           })}
@@ -102,11 +154,7 @@ export function PromptsSection() {
       ) : (
         <div>
           {filteredPrompts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredPrompts.map((prompt, index) => (
-                <PromptCard key={prompt.id} prompt={prompt} index={index} />
-              ))}
-            </div>
+            renderPrompts(filteredPrompts)
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground mb-2">

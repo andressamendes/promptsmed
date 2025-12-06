@@ -1,0 +1,167 @@
+import { useState } from "react";
+import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Prompt } from "@/data/prompts-data";
+import { useFavorites } from "@/hooks/use-favorites";
+import { useToast } from "@/hooks/use-toast";
+import { useConfetti } from "@/hooks/use-confetti";
+import { cn } from "@/lib/utils";
+import { PromptModal } from "./PromptModal";
+
+interface PromptListItemProps {
+  prompt: Prompt;
+}
+
+const aiColors: Record<string, string> = {
+  chatgpt: "#10a37f",
+  claude: "#cc785c",
+  gemini: "#8e8ea0",
+  notebooklm: "#4285f4",
+  perplexity: "#20b8cd",
+};
+
+const aiNames: Record<string, string> = {
+  chatgpt: "ChatGPT",
+  claude: "Claude",
+  gemini: "Gemini",
+  notebooklm: "NotebookLM",
+  perplexity: "Perplexity",
+};
+
+const aiLinks: Record<string, string> = {
+  chatgpt: "https://chat.openai.com/",
+  claude: "https://claude.ai/",
+  gemini: "https://gemini.google.com/",
+  notebooklm: "https://notebooklm.google.com/",
+  perplexity: "https://www.perplexity.ai/",
+};
+
+export function PromptListItem({ prompt }: PromptListItemProps) {
+  const [copied, setCopied] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { toast } = useToast();
+  const { fireSuccessConfetti } = useConfetti();
+  const favorite = isFavorite(prompt.id);
+  const aiColor = aiColors[prompt.aiRecommended];
+
+  const handleCopy = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    await navigator.clipboard.writeText(prompt.prompt);
+    setCopied(true);
+    fireSuccessConfetti(event);
+    toast({
+      title: "Prompt copiado!",
+      description: "Cole na IA de sua escolha.",
+    });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleOpenAI = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    await navigator.clipboard.writeText(prompt.prompt);
+    fireSuccessConfetti(event);
+    toast({
+      title: "Prompt copiado!",
+      description: `Cole no ${aiNames[prompt.aiRecommended]}.`,
+    });
+    window.open(aiLinks[prompt.aiRecommended], "_blank");
+  };
+
+  return (
+    <>
+      <div
+        onClick={() => setShowModal(true)}
+        className="group flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50 hover:bg-card hover:border-border hover:shadow-md transition-all duration-200 cursor-pointer"
+      >
+        {/* AI Indicator */}
+        <div
+          className="flex-shrink-0 w-1.5 h-12 rounded-full"
+          style={{ backgroundColor: aiColor }}
+        />
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <h4 className="font-medium text-sm truncate">{prompt.title}</h4>
+            {favorite && (
+              <Heart className="w-3 h-3 text-destructive fill-current flex-shrink-0" />
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground truncate mb-1">
+            {prompt.description}
+          </p>
+          <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4">
+              {prompt.category}
+            </Badge>
+            <span className="flex items-center gap-0.5">
+              <Clock className="w-2.5 h-2.5" />
+              {prompt.estimatedTime}
+            </span>
+            <span className="flex items-center gap-0.5">
+              <BarChart3 className="w-2.5 h-2.5" />
+              {prompt.evidenceLevel}
+            </span>
+          </div>
+        </div>
+
+        {/* Recommended AI */}
+        <div className="flex-shrink-0 flex items-center gap-1.5">
+          <button
+            onClick={handleOpenAI}
+            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors hover:opacity-80"
+            style={{ 
+              backgroundColor: `${aiColor}15`,
+              color: aiColor,
+            }}
+          >
+            <Star className="w-3 h-3" />
+            {aiNames[prompt.aiRecommended]}
+            <ExternalLink className="w-2.5 h-2.5" />
+          </button>
+        </div>
+
+        {/* Actions */}
+        <div className="flex-shrink-0 flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFavorite(prompt.id);
+            }}
+          >
+            <Heart
+              className={cn(
+                "w-3.5 h-3.5",
+                favorite && "text-destructive fill-current"
+              )}
+            />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            onClick={handleCopy}
+          >
+            {copied ? (
+              <Check className="w-3.5 h-3.5 text-accent" />
+            ) : (
+              <Copy className="w-3.5 h-3.5" />
+            )}
+          </Button>
+          <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+        </div>
+      </div>
+
+      <PromptModal
+        prompt={prompt}
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
+    </>
+  );
+}
