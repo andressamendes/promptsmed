@@ -33,20 +33,19 @@ export function Hero() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
             <GraduationCap className="w-4 h-4 text-primary" />
             <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-              Baseado em Ciência Cognitiva
+              Fundamentado em Ciência Cognitiva
             </span>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-slide-up text-balance">
-            Prompts Inteligentes para{" "}
-            <span className="gradient-text">Estudantes de Medicina</span>
+            Estude Menos, Aprenda Mais:{" "}
+            <span className="gradient-text">Prompts para Medicina</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in leading-relaxed">
-            Biblioteca de prompts otimizados com técnicas de aprendizado 
-            baseadas em evidências para maximizar sua retenção e desempenho acadêmico.
+            Chega de horas perdidas. Use prompts construídos com técnicas de aprendizado que realmente funcionam para fixar conteúdo e ir melhor nas provas.
           </p>
 
           {/* CTA Buttons */}
@@ -61,7 +60,7 @@ export function Hero() {
               }
             >
               <Sparkles className="w-4 h-4" />
-              Explorar Prompts
+              Ver Prompts
             </Button>
             <Button
               variant="outline"
@@ -74,7 +73,7 @@ export function Hero() {
               }
             >
               <Brain className="w-4 h-4" />
-              Recomendação Personalizada
+              Qual prompt usar agora?
             </Button>
           </div>
 
