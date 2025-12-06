@@ -14,6 +14,7 @@ import { PromptModal } from "./PromptModal";
 interface PromptCardProps {
   prompt: Prompt;
   index?: number;
+  isFocused?: boolean;
 }
 
 const aiColors = {
@@ -40,7 +41,7 @@ const aiNames = {
   perplexity: "Perplexity",
 };
 
-export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
+export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -99,7 +100,11 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
           ref={tiltRef}
           style={tiltStyle}
           {...handlers}
-          className="prompt-card flex flex-col h-full relative overflow-hidden cursor-pointer"
+          data-prompt-id={prompt.id}
+          className={cn(
+            "prompt-card flex flex-col h-full relative overflow-hidden cursor-pointer transition-all duration-200",
+            isFocused && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+          )}
         >
           {/* Glare Effect */}
           <div style={glareStyle} className="z-10" />

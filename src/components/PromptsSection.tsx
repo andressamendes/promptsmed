@@ -1,11 +1,18 @@
-import { useMemo, useState } from "react";
-import { LayoutGrid, List } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { LayoutGrid, List, Keyboard } from "lucide-react";
 import { PromptCard } from "./PromptCard";
 import { PromptListItem } from "./PromptListItem";
 import { SearchBar } from "./SearchBar";
 import { useSearch } from "@/hooks/use-search";
+import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { sections, Prompt } from "@/data/prompts-data";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type ViewMode = "grid" | "list";
 
@@ -27,6 +34,21 @@ export function PromptsSection() {
     resultCount,
     totalCount,
   } = useSearch();
+
+  const { focusedIndex, focusedPrompt } = useKeyboardNavigation({
+    prompts: filteredPrompts,
+    enabled: true,
+  });
+
+  // Scroll focused prompt into view
+  useEffect(() => {
+    if (focusedPrompt) {
+      const element = document.querySelector(`[data-prompt-id="${focusedPrompt.id}"]`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [focusedPrompt]);
 
   // Group prompts by section
   const groupedPrompts = useMemo(() => {
@@ -58,7 +80,11 @@ export function PromptsSection() {
       return (
         <div className="space-y-2">
           {prompts.map((prompt) => (
-            <PromptListItem key={prompt.id} prompt={prompt} />
+            <PromptListItem 
+              key={prompt.id} 
+              prompt={prompt} 
+              isFocused={focusedPrompt?.id === prompt.id}
+            />
           ))}
         </div>
       );
@@ -67,7 +93,12 @@ export function PromptsSection() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {prompts.map((prompt, index) => (
-          <PromptCard key={prompt.id} prompt={prompt} index={index} />
+          <PromptCard 
+            key={prompt.id} 
+            prompt={prompt} 
+            index={index}
+            isFocused={focusedPrompt?.id === prompt.id}
+          />
         ))}
       </div>
     );
@@ -94,34 +125,74 @@ export function PromptsSection() {
           />
         </div>
         
-        {/* View Toggle */}
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-muted/50 border border-border/50 self-start">
-          <button
-            onClick={() => setViewMode("grid")}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
-              viewMode === "grid"
-                ? "bg-background text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            )}
-          >
-            <LayoutGrid className="w-3.5 h-3.5" />
-            Grid
-          </button>
-          <button
-            onClick={() => setViewMode("list")}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
-              viewMode === "list"
-                ? "bg-background text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            )}
-          >
-            <List className="w-3.5 h-3.5" />
-            Lista
-          </button>
+        {/* View Toggle and Keyboard Hint */}
+        <div className="flex items-center gap-2 self-start">
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-muted/50 border border-border/50">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
+                viewMode === "grid"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              Grid
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200",
+                viewMode === "list"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <List className="w-3.5 h-3.5" />
+              Lista
+            </button>
+          </div>
+
+          {/* Keyboard shortcuts hint */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="p-2 rounded-lg bg-muted/30 border border-border/30 cursor-help">
+                  <Keyboard className="w-4 h-4 text-muted-foreground" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="max-w-xs">
+                <div className="space-y-1.5 text-xs">
+                  <p className="font-medium">Atalhos de teclado:</p>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                    <span className="text-muted-foreground">↑↓←→</span>
+                    <span>Navegar</span>
+                    <span className="text-muted-foreground">Ctrl+C</span>
+                    <span>Copiar prompt</span>
+                    <span className="text-muted-foreground">Enter</span>
+                    <span>Abrir detalhes</span>
+                    <span className="text-muted-foreground">Esc</span>
+                    <span>Limpar seleção</span>
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
+
+      {/* Focused prompt indicator */}
+      {focusedPrompt && (
+        <div className="mb-4 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20 flex items-center gap-2 text-sm">
+          <Keyboard className="w-4 h-4 text-primary" />
+          <span className="text-muted-foreground">Selecionado:</span>
+          <span className="font-medium">{focusedPrompt.title}</span>
+          <span className="text-xs text-muted-foreground ml-auto">
+            Pressione Ctrl+C para copiar ou Enter para abrir
+          </span>
+        </div>
+      )}
 
       {/* Prompts */}
       {!hasActiveFilters ? (
