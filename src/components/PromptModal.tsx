@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
+import { useConfetti } from "@/hooks/use-confetti";
 import { cn } from "@/lib/utils";
 
 interface PromptModalProps {
@@ -135,18 +136,21 @@ function HighlightedPrompt({ text }: { text: string }) {
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const { fireSuccessConfetti } = useConfetti();
   const recommendedAI = prompt.aiRecommended;
   const aiStyle = aiColors[recommendedAI];
 
-  const handleCopy = async () => {
+  const handleCopy = async (event?: React.MouseEvent) => {
     await navigator.clipboard.writeText(prompt.prompt);
     setCopied(true);
+    fireSuccessConfetti(event);
     toast({ title: "Prompt copiado!", description: "Cole na ferramenta de sua escolha." });
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: keyof typeof aiLinks) => {
+  const handleOpenAI = async (ai: keyof typeof aiLinks, event?: React.MouseEvent) => {
     await navigator.clipboard.writeText(prompt.prompt);
+    fireSuccessConfetti(event);
     toast({ title: "Prompt copiado!", description: `Abrindo ${aiNames[ai]}...` });
     window.open(aiLinks[ai], "_blank");
   };
@@ -209,7 +213,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleOpenAI(ai)}
+                      onClick={(e) => handleOpenAI(ai, e)}
                       className={cn("gap-1.5 h-9", aiColors[ai].bg, aiColors[ai].text, aiColors[ai].border, aiColors[ai].hover)}
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -229,7 +233,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
             <div className="relative rounded-xl bg-card/80 backdrop-blur border border-border/50 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border/30">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Prompt</span>
-                <Button size="sm" variant="ghost" onClick={handleCopy} className="h-7 text-xs gap-1.5">
+                <Button size="sm" variant="ghost" onClick={(e) => handleCopy(e)} className="h-7 text-xs gap-1.5">
                   {copied ? <><Check className="w-3.5 h-3.5" />Copiado</> : <><Copy className="w-3.5 h-3.5" />Copiar</>}
                 </Button>
               </div>
