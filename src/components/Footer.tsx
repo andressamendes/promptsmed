@@ -12,7 +12,7 @@ export function Footer() {
             <span className="text-sm font-medium">PromptLab MED</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            {currentYear}
+            Feito por Andressa Mendes (Acadêmica de Medicina - Afya Guanambi) • {currentYear}
           </p>
         </div>
       </div>
