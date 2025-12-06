@@ -18,18 +18,24 @@ const aiColors = {
   chatgpt: { bg: "bg-[#10a37f]/10", text: "text-[#10a37f]", border: "border-[#10a37f]/30" },
   claude: { bg: "bg-[#cc785c]/10", text: "text-[#cc785c]", border: "border-[#cc785c]/30" },
   gemini: { bg: "bg-[#8e8ea0]/10", text: "text-[#8e8ea0]", border: "border-[#8e8ea0]/30" },
+  notebooklm: { bg: "bg-[#4285f4]/10", text: "text-[#4285f4]", border: "border-[#4285f4]/30" },
+  perplexity: { bg: "bg-[#20b8cd]/10", text: "text-[#20b8cd]", border: "border-[#20b8cd]/30" },
 };
 
 const aiLinks = {
   chatgpt: "https://chat.openai.com/",
   claude: "https://claude.ai/",
   gemini: "https://gemini.google.com/",
+  notebooklm: "https://notebooklm.google.com/",
+  perplexity: "https://www.perplexity.ai/",
 };
 
 const aiNames = {
   chatgpt: "ChatGPT",
   claude: "Claude",
   gemini: "Gemini",
+  notebooklm: "NotebookLM",
+  perplexity: "Perplexity",
 };
 
 export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
@@ -52,7 +58,7 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini") => {
+  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity") => {
     await navigator.clipboard.writeText(prompt.prompt);
     toast({
       title: "Prompt copiado!",
@@ -130,7 +136,7 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
         </div>
 
         {/* AI Buttons */}
-        <div className="px-4 pb-3">
+        <div className="px-4 pb-3 space-y-1.5">
           <div className="flex gap-1.5">
             <button
               onClick={() => handleOpenAI("chatgpt")}
@@ -152,6 +158,22 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
             >
               <ExternalLink className="w-3 h-3" />
               Gemini
+            </button>
+          </div>
+          <div className="flex gap-1.5">
+            <button
+              onClick={() => handleOpenAI("notebooklm")}
+              className="ai-btn flex-1 bg-[#4285f4]/10 text-[#4285f4] hover:bg-[#4285f4]/20 border-[#4285f4]/30"
+            >
+              <ExternalLink className="w-3 h-3" />
+              NotebookLM
+            </button>
+            <button
+              onClick={() => handleOpenAI("perplexity")}
+              className="ai-btn flex-1 bg-[#20b8cd]/10 text-[#20b8cd] hover:bg-[#20b8cd]/20 border-[#20b8cd]/30"
+            >
+              <ExternalLink className="w-3 h-3" />
+              Perplexity
             </button>
           </div>
         </div>
