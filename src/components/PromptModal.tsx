@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Star, Info } from "lucide-react";
+import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Star, BookOpen } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
 import { useConfetti } from "@/hooks/use-confetti";
 import { cn } from "@/lib/utils";
+import { StudyMode } from "./StudyMode";
 
 interface PromptModalProps {
   prompt: Prompt;
@@ -135,6 +136,7 @@ function HighlightedPrompt({ text }: { text: string }) {
 
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
+  const [studyModeOpen, setStudyModeOpen] = useState(false);
   const { toast } = useToast();
   const { fireSuccessConfetti } = useConfetti();
   const recommendedAI = prompt.aiRecommended;
@@ -146,6 +148,11 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
     fireSuccessConfetti(event);
     toast({ title: "Prompt copiado!", description: "Cole na ferramenta de sua escolha." });
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleOpenStudyMode = () => {
+    onClose();
+    setTimeout(() => setStudyModeOpen(true), 100);
   };
 
   const handleOpenAI = async (ai: keyof typeof aiLinks, event?: React.MouseEvent) => {
@@ -206,6 +213,15 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
 
           {/* Abrir com IA */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleOpenStudyMode}
+              className="col-span-2 sm:col-span-3 gap-2 bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20"
+            >
+              <BookOpen className="w-4 h-4" />
+              Iniciar Modo de Estudo
+            </Button>
             {(Object.keys(aiLinks) as Array<keyof typeof aiLinks>).map((ai) => (
               <TooltipProvider key={ai}>
                 <Tooltip>
@@ -244,6 +260,12 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
           </div>
         </div>
       </DialogContent>
+      
+      <StudyMode 
+        prompt={prompt} 
+        open={studyModeOpen} 
+        onClose={() => setStudyModeOpen(false)} 
+      />
     </Dialog>
   );
 }
