@@ -7,9 +7,7 @@ import { Footer } from "@/components/Footer";
 import { ToolsSidebar } from "@/components/ToolsSidebar";
 import { PomodoroTimer } from "@/components/PomodoroTimer";
 import { TaskList } from "@/components/TaskList";
-import { MentorSection } from "@/components/MentorSection";
 import { EthicsSection } from "@/components/EthicsSection";
-import { StudyMentor } from "@/components/StudyMentor";
 import { FocusModeOverlay } from "@/components/FocusModeOverlay";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { useFocusMode } from "@/contexts/FocusModeContext";
@@ -48,7 +46,6 @@ const Index = () => {
         </section>
         
         <div className={cn(isFocusMode && "hidden")}>
-          <MentorSection />
           <EthicsSection />
         </div>
       </div>
@@ -62,7 +59,6 @@ const Index = () => {
         onClose={() => setFavoritesOpen(false)} 
       />
       
-      <StudyMentor />
       <PWAInstallPrompt />
     </div>
   );
