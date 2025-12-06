@@ -40,7 +40,7 @@ export function useSearch() {
     setSelectedEvidence(null);
   }, []);
 
-  const hasActiveFilters = query.trim() || selectedSection !== null || selectedEvidence !== null;
+  const hasActiveFilters = !!(query.trim() || selectedSection !== null || selectedEvidence !== null);
 
   return {
     query,
