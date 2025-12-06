@@ -7,6 +7,8 @@ import { Footer } from "@/components/Footer";
 import { ToolsSidebar } from "@/components/ToolsSidebar";
 import { PomodoroTimer } from "@/components/PomodoroTimer";
 import { TaskList } from "@/components/TaskList";
+import { MentorSection } from "@/components/MentorSection";
+import { EthicsSection } from "@/components/EthicsSection";
 
 const Index = () => {
   const [favoritesOpen, setFavoritesOpen] = useState(false);
@@ -35,6 +37,9 @@ const Index = () => {
             <TaskList />
           </div>
         </section>
+        
+        <MentorSection />
+        <EthicsSection />
       </div>
       
       <Footer />
