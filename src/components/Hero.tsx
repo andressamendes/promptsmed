@@ -1,5 +1,4 @@
-import { Sparkles, Target, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Sparkles, Target, Stethoscope } from "lucide-react";
 import { prompts, sections } from "@/data/prompts-data";
 
 export function Hero() {
@@ -12,12 +11,16 @@ export function Hero() {
     <section id="hero" className="pt-24 pb-8">
       <div className="container">
         <div className="max-w-2xl">
+          <div className="flex items-center gap-2 mb-3">
+            <Stethoscope className="w-5 h-5 text-primary" />
+            <span className="text-sm text-primary font-medium">Para futuros médicos</span>
+          </div>
           <h1 className="text-2xl md:text-3xl font-bold mb-3">
-            Prompts para Medicina
+            Prompts de IA para sua Jornada na Medicina
           </h1>
           <p className="text-muted-foreground mb-6">
-            Prompts prontos com técnicas de aprendizado que funcionam. 
-            Escolha, copie e use na IA que preferir.
+            Prompts prontos com técnicas de aprendizado baseadas em evidências.
+            Acelere seus estudos e domine o conteúdo médico com IA.
           </p>
 
           <div className="flex items-center gap-6">
