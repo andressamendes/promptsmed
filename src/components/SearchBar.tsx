@@ -1,4 +1,4 @@
-import { Search, X, Filter } from "lucide-react";
+import { Search, X, Filter, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { sections } from "@/data/prompts-data";
+import { AIFilter } from "@/hooks/use-search";
+import { cn } from "@/lib/utils";
 
 interface SearchBarProps {
   query: string;
@@ -18,11 +20,21 @@ interface SearchBarProps {
   onSectionChange: (value: number | null) => void;
   selectedEvidence: string | null;
   onEvidenceChange: (value: string | null) => void;
+  selectedAI: AIFilter;
+  onAIChange: (value: AIFilter) => void;
   onClear: () => void;
   hasActiveFilters: boolean;
   resultCount: number;
   totalCount: number;
 }
+
+const aiOptions = [
+  { value: "chatgpt", label: "ChatGPT", color: "text-[#10a37f]", bg: "bg-[#10a37f]/10" },
+  { value: "claude", label: "Claude", color: "text-[#cc785c]", bg: "bg-[#cc785c]/10" },
+  { value: "gemini", label: "Gemini", color: "text-[#8e8ea0]", bg: "bg-[#8e8ea0]/10" },
+  { value: "notebooklm", label: "NotebookLM", color: "text-[#4285f4]", bg: "bg-[#4285f4]/10" },
+  { value: "perplexity", label: "Perplexity", color: "text-[#20b8cd]", bg: "bg-[#20b8cd]/10" },
+];
 
 export function SearchBar({
   query,
@@ -31,6 +43,8 @@ export function SearchBar({
   onSectionChange,
   selectedEvidence,
   onEvidenceChange,
+  selectedAI,
+  onAIChange,
   onClear,
   hasActiveFilters,
   resultCount,
@@ -58,7 +72,42 @@ export function SearchBar({
         )}
       </div>
 
-      {/* Filters */}
+      {/* AI Filter Pills */}
+      <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mr-1">
+          <Sparkles className="w-4 h-4" />
+          IA:
+        </div>
+        <Button
+          variant={selectedAI === null ? "default" : "outline"}
+          size="sm"
+          onClick={() => onAIChange(null)}
+          className="h-8 text-xs"
+        >
+          Todas
+        </Button>
+        {aiOptions.map((ai) => (
+          <Button
+            key={ai.value}
+            variant="outline"
+            size="sm"
+            onClick={() => onAIChange(ai.value as AIFilter)}
+            className={cn(
+              "h-8 text-xs gap-1.5 transition-all",
+              selectedAI === ai.value && [ai.bg, ai.color, "border-current"]
+            )}
+          >
+            <span className={cn("w-2 h-2 rounded-full", ai.bg, selectedAI !== ai.value && "opacity-60")} 
+                  style={{ backgroundColor: ai.value === "chatgpt" ? "#10a37f" : 
+                                           ai.value === "claude" ? "#cc785c" : 
+                                           ai.value === "gemini" ? "#8e8ea0" :
+                                           ai.value === "notebooklm" ? "#4285f4" : "#20b8cd" }} />
+            {ai.label}
+          </Button>
+        ))}
+      </div>
+
+      {/* Other Filters */}
       <div className="flex flex-wrap gap-3 items-center">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Filter className="w-4 h-4" />

@@ -13,6 +13,8 @@ export function PromptsSection() {
     setSelectedSection,
     selectedEvidence,
     setSelectedEvidence,
+    selectedAI,
+    setSelectedAI,
     filteredPrompts,
     clearFilters,
     hasActiveFilters,
@@ -69,6 +71,8 @@ export function PromptsSection() {
             onSectionChange={setSelectedSection}
             selectedEvidence={selectedEvidence}
             onEvidenceChange={setSelectedEvidence}
+            selectedAI={selectedAI}
+            onAIChange={setSelectedAI}
             onClear={clearFilters}
             hasActiveFilters={hasActiveFilters}
             resultCount={resultCount}
