@@ -17,9 +17,9 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "icons/*.png"],
       manifest: {
-        name: "PromptLab MED",
-        short_name: "PromptLab",
-        description: "Biblioteca de prompts de IA para estudantes de medicina - Estude de forma mais inteligente",
+        name: "MedPrompts",
+        short_name: "MedPrompts",
+        description: "Biblioteca de prompts para estudantes de medicina - Estude de forma mais inteligente",
         theme_color: "#0ea5e9",
         background_color: "#0a0f1a",
         display: "standalone",

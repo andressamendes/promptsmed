@@ -44,7 +44,7 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
           <div className="p-1.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
             <Stethoscope className="w-5 h-5" />
           </div>
-          <span className="text-lg font-bold gradient-text">PromptLab MED</span>
+          <span className="text-lg font-bold gradient-text">MedPrompts</span>
         </a>
 
         <div className="hidden md:flex items-center gap-6">

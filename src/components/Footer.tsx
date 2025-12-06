@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Stethoscope className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">PromptLab MED</span>
+            <span className="text-sm font-medium">MedPrompts</span>
           </div>
           <p className="text-xs text-muted-foreground">
             Feito por Andressa Mendes (Acadêmica de Medicina - Afya Guanambi) • {currentYear}
