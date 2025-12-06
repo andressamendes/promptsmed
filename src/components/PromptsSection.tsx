@@ -28,6 +28,8 @@ export function PromptsSection() {
     setSelectedEvidence,
     selectedAI,
     setSelectedAI,
+    selectedTags,
+    toggleTag,
     filteredPrompts,
     clearFilters,
     hasActiveFilters,
@@ -118,6 +120,8 @@ export function PromptsSection() {
             onEvidenceChange={setSelectedEvidence}
             selectedAI={selectedAI}
             onAIChange={setSelectedAI}
+            selectedTags={selectedTags}
+            onTagToggle={toggleTag}
             onClear={clearFilters}
             hasActiveFilters={hasActiveFilters}
             resultCount={resultCount}
