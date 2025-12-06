@@ -1,7 +1,6 @@
-import { Search, X, Filter, Sparkles } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -51,68 +50,63 @@ export function SearchBar({
   totalCount,
 }: SearchBarProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           type="text"
-          placeholder="Buscar prompts por título, tag ou categoria..."
+          placeholder="Buscar prompts..."
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          className="pl-12 pr-12 h-12 text-base"
+          className="pl-10 pr-10 h-10"
         />
         {query && (
           <button
             onClick={() => onQueryChange("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      {/* AI Filter Pills */}
+      {/* Filters Row */}
       <div className="flex flex-wrap gap-2 items-center">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mr-1">
-          <Sparkles className="w-4 h-4" />
-          IA:
-        </div>
-        <Button
-          variant={selectedAI === null ? "default" : "outline"}
-          size="sm"
-          onClick={() => onAIChange(null)}
-          className="h-8 text-xs"
-        >
-          Todas
-        </Button>
-        {aiOptions.map((ai) => (
+        {/* AI Filter */}
+        <div className="flex flex-wrap gap-1.5">
           <Button
-            key={ai.value}
-            variant="outline"
+            variant={selectedAI === null ? "default" : "outline"}
             size="sm"
-            onClick={() => onAIChange(ai.value as AIFilter)}
-            className={cn(
-              "h-8 text-xs gap-1.5 transition-all",
-              selectedAI === ai.value && [ai.bg, ai.color, "border-current"]
-            )}
+            onClick={() => onAIChange(null)}
+            className="h-7 text-xs px-2"
           >
-            <span className={cn("w-2 h-2 rounded-full", ai.bg, selectedAI !== ai.value && "opacity-60")} 
-                  style={{ backgroundColor: ai.value === "chatgpt" ? "#10a37f" : 
-                                           ai.value === "claude" ? "#cc785c" : 
-                                           ai.value === "gemini" ? "#8e8ea0" :
-                                           ai.value === "notebooklm" ? "#4285f4" : "#20b8cd" }} />
-            {ai.label}
+            Todas
           </Button>
-        ))}
-      </div>
-
-      {/* Other Filters */}
-      <div className="flex flex-wrap gap-3 items-center">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Filter className="w-4 h-4" />
-          Filtros:
+          {aiOptions.map((ai) => (
+            <Button
+              key={ai.value}
+              variant="outline"
+              size="sm"
+              onClick={() => onAIChange(ai.value as AIFilter)}
+              className={cn(
+                "h-7 text-xs px-2 gap-1",
+                selectedAI === ai.value && [ai.bg, ai.color, "border-current"]
+              )}
+            >
+              <span 
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: ai.value === "chatgpt" ? "#10a37f" : 
+                                         ai.value === "claude" ? "#cc785c" : 
+                                         ai.value === "gemini" ? "#8e8ea0" :
+                                         ai.value === "notebooklm" ? "#4285f4" : "#20b8cd" }} 
+              />
+              {ai.label}
+            </Button>
+          ))}
         </div>
+
+        <div className="h-4 w-px bg-border mx-1" />
 
         {/* Section Filter */}
         <Select
@@ -121,14 +115,14 @@ export function SearchBar({
             onSectionChange(value === "all" ? null : parseInt(value))
           }
         >
-          <SelectTrigger className="w-[180px] h-9">
-            <SelectValue placeholder="Todas as seções" />
+          <SelectTrigger className="w-[150px] h-7 text-xs">
+            <SelectValue placeholder="Categoria" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas as seções</SelectItem>
+            <SelectItem value="all">Todas</SelectItem>
             {sections.map((section) => (
               <SelectItem key={section.number} value={section.number.toString()}>
-                {section.number}. {section.title}
+                {section.title}
               </SelectItem>
             ))}
           </SelectContent>
@@ -141,36 +135,32 @@ export function SearchBar({
             onEvidenceChange(value === "all" ? null : value)
           }
         >
-          <SelectTrigger className="w-[160px] h-9">
-            <SelectValue placeholder="Nível de evidência" />
+          <SelectTrigger className="w-[120px] h-7 text-xs">
+            <SelectValue placeholder="Evidência" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos os níveis</SelectItem>
+            <SelectItem value="all">Todas</SelectItem>
             <SelectItem value="Alta">Alta</SelectItem>
             <SelectItem value="Média">Média</SelectItem>
             <SelectItem value="Emergente">Emergente</SelectItem>
           </SelectContent>
         </Select>
 
-        {/* Clear Filters */}
         {hasActiveFilters && (
           <Button
             variant="ghost"
             size="sm"
             onClick={onClear}
-            className="h-9 gap-1.5 text-muted-foreground"
+            className="h-7 text-xs px-2 text-muted-foreground"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3 h-3 mr-1" />
             Limpar
           </Button>
         )}
 
-        {/* Results Count */}
-        <div className="ml-auto">
-          <Badge variant="secondary" className="font-mono">
-            {resultCount} / {totalCount} prompts
-          </Badge>
-        </div>
+        <span className="ml-auto text-xs text-muted-foreground">
+          {resultCount} de {totalCount}
+        </span>
       </div>
     </div>
   );
