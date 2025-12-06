@@ -7,6 +7,7 @@ import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useTilt } from "@/hooks/use-tilt";
+import { useConfetti } from "@/hooks/use-confetti";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
 
@@ -44,6 +45,7 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+  const { fireSuccessConfetti } = useConfetti();
   const favorite = isFavorite(prompt.id);
   
   const { ref: scrollRef, isVisible } = useScrollAnimation<HTMLDivElement>();
@@ -55,9 +57,10 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
   });
   const animationDelay = Math.min(index * 100, 500);
 
-  const handleCopy = async () => {
+  const handleCopy = async (event?: React.MouseEvent) => {
     await navigator.clipboard.writeText(prompt.prompt);
     setCopied(true);
+    fireSuccessConfetti(event);
     toast({
       title: "Prompt copiado!",
       description: "Cole na IA de sua escolha.",
@@ -65,8 +68,9 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity") => {
+  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity", event?: React.MouseEvent) => {
     await navigator.clipboard.writeText(prompt.prompt);
+    fireSuccessConfetti(event);
     toast({
       title: "Prompt copiado!",
       description: `Cole no ${aiNames[ai]}.`,
@@ -160,21 +164,21 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
           <div className="px-4 pb-3 space-y-1.5 relative z-20">
             <div className="flex gap-1.5">
               <button
-                onClick={() => handleOpenAI("chatgpt")}
+                onClick={(e) => handleOpenAI("chatgpt", e)}
                 className="ai-btn ai-btn-chatgpt flex-1"
               >
                 <ExternalLink className="w-3 h-3" />
                 ChatGPT
               </button>
               <button
-                onClick={() => handleOpenAI("claude")}
+                onClick={(e) => handleOpenAI("claude", e)}
                 className="ai-btn ai-btn-claude flex-1"
               >
                 <ExternalLink className="w-3 h-3" />
                 Claude
               </button>
               <button
-                onClick={() => handleOpenAI("gemini")}
+                onClick={(e) => handleOpenAI("gemini", e)}
                 className="ai-btn ai-btn-gemini flex-1"
               >
                 <ExternalLink className="w-3 h-3" />
@@ -183,14 +187,14 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
             </div>
             <div className="flex gap-1.5">
               <button
-                onClick={() => handleOpenAI("notebooklm")}
+                onClick={(e) => handleOpenAI("notebooklm", e)}
                 className="ai-btn flex-1 bg-[#4285f4]/10 text-[#4285f4] hover:bg-[#4285f4]/20 border-[#4285f4]/30"
               >
                 <ExternalLink className="w-3 h-3" />
                 NotebookLM
               </button>
               <button
-                onClick={() => handleOpenAI("perplexity")}
+                onClick={(e) => handleOpenAI("perplexity", e)}
                 className="ai-btn flex-1 bg-[#20b8cd]/10 text-[#20b8cd] hover:bg-[#20b8cd]/20 border-[#20b8cd]/30"
               >
                 <ExternalLink className="w-3 h-3" />
@@ -218,7 +222,7 @@ export function PromptCard({ prompt, index = 0 }: PromptCardProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleCopy}
+                onClick={(e) => handleCopy(e)}
                 className="gap-1.5 h-8"
               >
                 {copied ? (
