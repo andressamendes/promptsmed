@@ -29,19 +29,19 @@ const questions: Question[] = [
     text: "Quanto tempo você tem disponível?",
     icon: Lightbulb,
     options: [
-      { value: "5min", label: "5-10 minutos" },
-      { value: "15min", label: "15-30 minutos" },
+      { value: "5min", label: "5 a 10 minutos" },
+      { value: "15min", label: "15 a 30 minutos" },
       { value: "1h", label: "1 hora ou mais" },
     ],
   },
   {
     id: 3,
-    text: "Qual seu nível de experiência com prompts?",
+    text: "Qual é o seu nível de experiência com prompts?",
     icon: Sparkles,
     options: [
-      { value: "iniciante", label: "Iniciante - nunca usei" },
-      { value: "intermediario", label: "Intermediário - uso às vezes" },
-      { value: "avancado", label: "Avançado - uso frequentemente" },
+      { value: "iniciante", label: "Iniciante – nunca usei" },
+      { value: "intermediario", label: "Intermediário – uso às vezes" },
+      { value: "avancado", label: "Avançado – uso frequentemente" },
     ],
   },
 ];

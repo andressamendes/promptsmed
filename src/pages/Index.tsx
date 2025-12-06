@@ -15,9 +15,9 @@ const Index = () => {
       <Navbar onFavoritesClick={() => setFavoritesOpen(true)} />
       <Hero />
       <PromptsSection />
+      <MentorSection />
       <EthicsSection />
       <Footer />
-      <MentorSection />
       <FavoritesDrawer 
         open={favoritesOpen} 
         onClose={() => setFavoritesOpen(false)} 
