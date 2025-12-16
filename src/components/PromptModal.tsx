@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Star, BookOpen } from "lucide-react";
+import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Sparkles, FileText, Star } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Prompt } from "@/data/prompts-data";
 import { useToast } from "@/hooks/use-toast";
-import { useConfetti } from "@/hooks/use-confetti";
 import { cn } from "@/lib/utils";
-import { StudyMode } from "./StudyMode";
 
 interface PromptModalProps {
   prompt: Prompt;
@@ -136,28 +134,19 @@ function HighlightedPrompt({ text }: { text: string }) {
 
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
-  const [studyModeOpen, setStudyModeOpen] = useState(false);
   const { toast } = useToast();
-  const { fireSuccessConfetti } = useConfetti();
   const recommendedAI = prompt.aiRecommended;
   const aiStyle = aiColors[recommendedAI];
 
-  const handleCopy = async (event?: React.MouseEvent) => {
+  const handleCopy = async () => {
     await navigator.clipboard.writeText(prompt.prompt);
     setCopied(true);
-    fireSuccessConfetti(event);
     toast({ title: "Prompt copiado!", description: "Cole na ferramenta de sua escolha." });
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenStudyMode = () => {
-    onClose();
-    setTimeout(() => setStudyModeOpen(true), 100);
-  };
-
-  const handleOpenAI = async (ai: keyof typeof aiLinks, event?: React.MouseEvent) => {
+  const handleOpenAI = async (ai: keyof typeof aiLinks) => {
     await navigator.clipboard.writeText(prompt.prompt);
-    fireSuccessConfetti(event);
     toast({ title: "Prompt copiado!", description: `Abrindo ${aiNames[ai]}...` });
     window.open(aiLinks[ai], "_blank");
   };
@@ -213,15 +202,6 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
 
           {/* Abrir com IA */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleOpenStudyMode}
-              className="col-span-2 sm:col-span-3 gap-2 bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20"
-            >
-              <BookOpen className="w-4 h-4" />
-              Iniciar Modo de Estudo
-            </Button>
             {(Object.keys(aiLinks) as Array<keyof typeof aiLinks>).map((ai) => (
               <TooltipProvider key={ai}>
                 <Tooltip>
@@ -229,7 +209,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={(e) => handleOpenAI(ai, e)}
+                      onClick={() => handleOpenAI(ai)}
                       className={cn("gap-1.5 h-9", aiColors[ai].bg, aiColors[ai].text, aiColors[ai].border, aiColors[ai].hover)}
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -249,7 +229,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
             <div className="relative rounded-xl bg-card/80 backdrop-blur border border-border/50 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border/30">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Prompt</span>
-                <Button size="sm" variant="ghost" onClick={(e) => handleCopy(e)} className="h-7 text-xs gap-1.5">
+                <Button size="sm" variant="ghost" onClick={handleCopy} className="h-7 text-xs gap-1.5">
                   {copied ? <><Check className="w-3.5 h-3.5" />Copiado</> : <><Copy className="w-3.5 h-3.5" />Copiar</>}
                 </Button>
               </div>
@@ -260,12 +240,6 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
           </div>
         </div>
       </DialogContent>
-      
-      <StudyMode 
-        prompt={prompt} 
-        open={studyModeOpen} 
-        onClose={() => setStudyModeOpen(false)} 
-      />
     </Dialog>
   );
 }

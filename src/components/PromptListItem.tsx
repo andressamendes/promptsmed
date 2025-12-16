@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
-import { useConfetti } from "@/hooks/use-confetti";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
 
@@ -43,7 +42,6 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
-  const { fireSuccessConfetti } = useConfetti();
   const favorite = isFavorite(prompt.id);
   const aiColor = aiColors[prompt.aiRecommended];
 
@@ -51,7 +49,6 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     event.stopPropagation();
     await navigator.clipboard.writeText(prompt.prompt);
     setCopied(true);
-    fireSuccessConfetti(event);
     toast({
       title: "Prompt copiado!",
       description: "Cole na IA de sua escolha.",
@@ -62,7 +59,6 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
   const handleOpenAI = async (event: React.MouseEvent) => {
     event.stopPropagation();
     await navigator.clipboard.writeText(prompt.prompt);
-    fireSuccessConfetti(event);
     toast({
       title: "Prompt copiado!",
       description: `Cole no ${aiNames[prompt.aiRecommended]}.`,

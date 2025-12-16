@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useFavorites } from "@/hooks/use-favorites";
-import { FocusModeToggle } from "@/components/FocusModeToggle";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -27,7 +26,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
 
   const navLinks = [
     { href: "#prompts", label: "Prompts" },
-    { href: "#ferramentas", label: "Ferramentas" },
   ];
 
   return (
@@ -71,7 +69,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
           </ul>
 
           <div className="flex items-center gap-2 ml-4 pl-4 border-l border-border">
-            <FocusModeToggle />
             <Button
               variant="ghost"
               size="icon"
@@ -96,7 +93,6 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
         </div>
 
         <div className="flex md:hidden items-center gap-2">
-          <FocusModeToggle />
           <Button variant="ghost" size="icon" onClick={toggleTheme}>
             {theme === "dark" ? (
               <Sun className="w-4 h-4" />
