@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Search, X, Sparkles, Brain, MessageSquare, BookOpen, Compass, Tag, ChevronDown, ChevronUp } from "lucide-react";
+import { Search, X, Sparkles, Brain, MessageSquare, BookOpen, Compass } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -11,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { sections } from "@/data/prompts-data";
-import { AIFilter, allTags } from "@/hooks/use-search";
+import { AIFilter } from "@/hooks/use-search";
 import { cn } from "@/lib/utils";
 
 interface SearchBarProps {
@@ -23,8 +21,6 @@ interface SearchBarProps {
   onEvidenceChange: (value: string | null) => void;
   selectedAI: AIFilter;
   onAIChange: (value: AIFilter) => void;
-  selectedTags: string[];
-  onTagToggle: (tag: string) => void;
   onClear: () => void;
   hasActiveFilters: boolean;
   resultCount: number;
@@ -73,19 +69,11 @@ export function SearchBar({
   onEvidenceChange,
   selectedAI,
   onAIChange,
-  selectedTags,
-  onTagToggle,
   onClear,
   hasActiveFilters,
   resultCount,
   totalCount,
 }: SearchBarProps) {
-  const [showAllTags, setShowAllTags] = useState(false);
-  
-  // Show popular tags first, then rest when expanded
-  const popularTags = allTags.slice(0, 12);
-  const displayedTags = showAllTags ? allTags : popularTags;
-
   return (
     <div className="space-y-4">
       {/* Search Input */}
@@ -158,57 +146,6 @@ export function SearchBar({
             </button>
           );
         })}
-      </div>
-
-      {/* Tags Filter */}
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Tag className="w-4 h-4 text-muted-foreground" />
-          <span className="text-xs font-medium text-muted-foreground">Filtrar por tags:</span>
-          {selectedTags.length > 0 && (
-            <Badge variant="secondary" className="text-xs">
-              {selectedTags.length} selecionadas
-            </Badge>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {displayedTags.map((tag) => {
-            const isSelected = selectedTags.includes(tag);
-            return (
-              <button
-                key={tag}
-                onClick={() => onTagToggle(tag)}
-                className={cn(
-                  "px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200",
-                  "border hover:scale-105",
-                  isSelected
-                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                    : "bg-muted/30 text-muted-foreground border-border/50 hover:bg-muted hover:text-foreground hover:border-border"
-                )}
-              >
-                {tag}
-              </button>
-            );
-          })}
-          {allTags.length > 12 && (
-            <button
-              onClick={() => setShowAllTags(!showAllTags)}
-              className="px-2.5 py-1 rounded-full text-xs font-medium text-primary hover:bg-primary/10 transition-colors flex items-center gap-1"
-            >
-              {showAllTags ? (
-                <>
-                  <ChevronUp className="w-3 h-3" />
-                  Menos tags
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-3 h-3" />
-                  +{allTags.length - 12} tags
-                </>
-              )}
-            </button>
-          )}
-        </div>
       </div>
 
       {/* Additional Filters Row */}
