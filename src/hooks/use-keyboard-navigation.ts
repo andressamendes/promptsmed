@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useConfetti } from "@/hooks/use-confetti";
 import { Prompt } from "@/data/prompts-data";
 
 interface UseKeyboardNavigationOptions {
@@ -11,7 +10,6 @@ interface UseKeyboardNavigationOptions {
 export function useKeyboardNavigation({ prompts, enabled = true }: UseKeyboardNavigationOptions) {
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const { toast } = useToast();
-  const { fireConfetti } = useConfetti();
 
   const focusedPrompt = focusedIndex >= 0 && focusedIndex < prompts.length 
     ? prompts[focusedIndex] 
@@ -21,13 +19,12 @@ export function useKeyboardNavigation({ prompts, enabled = true }: UseKeyboardNa
     if (!focusedPrompt) return false;
     
     await navigator.clipboard.writeText(focusedPrompt.prompt);
-    fireConfetti();
     toast({
       title: "Prompt copiado!",
       description: `"${focusedPrompt.title}" copiado para a área de transferência.`,
     });
     return true;
-  }, [focusedPrompt, toast, fireConfetti]);
+  }, [focusedPrompt, toast]);
 
   const navigateUp = useCallback(() => {
     if (prompts.length === 0) return;
