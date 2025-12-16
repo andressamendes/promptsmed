@@ -1,19 +1,13 @@
 import { useState, useMemo, useCallback } from "react";
-import { prompts, Prompt } from "@/data/prompts-data";
+import { prompts } from "@/data/prompts-data";
 
 export type AIFilter = "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity" | null;
-
-// Extract all unique tags from prompts
-export const allTags = Array.from(
-  new Set(prompts.flatMap((p) => p.tags))
-).sort();
 
 export function useSearch() {
   const [query, setQuery] = useState("");
   const [selectedSection, setSelectedSection] = useState<number | null>(null);
   const [selectedEvidence, setSelectedEvidence] = useState<string | null>(null);
   const [selectedAI, setSelectedAI] = useState<AIFilter>(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const filteredPrompts = useMemo(() => {
     let result = [...prompts];
@@ -45,36 +39,21 @@ export function useSearch() {
       result = result.filter((p) => p.aiRecommended === selectedAI);
     }
 
-    // Filter by selected tags (prompt must have ALL selected tags)
-    if (selectedTags.length > 0) {
-      result = result.filter((p) =>
-        selectedTags.every((tag) => p.tags.includes(tag))
-      );
-    }
-
     return result;
-  }, [query, selectedSection, selectedEvidence, selectedAI, selectedTags]);
-
-  const toggleTag = useCallback((tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  }, []);
+  }, [query, selectedSection, selectedEvidence, selectedAI]);
 
   const clearFilters = useCallback(() => {
     setQuery("");
     setSelectedSection(null);
     setSelectedEvidence(null);
     setSelectedAI(null);
-    setSelectedTags([]);
   }, []);
 
   const hasActiveFilters = !!(
     query.trim() ||
     selectedSection !== null ||
     selectedEvidence !== null ||
-    selectedAI !== null ||
-    selectedTags.length > 0
+    selectedAI !== null
   );
 
   return {
@@ -86,9 +65,6 @@ export function useSearch() {
     setSelectedEvidence,
     selectedAI,
     setSelectedAI,
-    selectedTags,
-    toggleTag,
-    setSelectedTags,
     filteredPrompts,
     clearFilters,
     hasActiveFilters,
