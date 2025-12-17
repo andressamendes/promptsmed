@@ -14,7 +14,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/promptsmed">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/guia-ias" element={<GuiaIAs />} />
