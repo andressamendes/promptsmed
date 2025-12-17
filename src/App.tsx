@@ -14,7 +14,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/promptsmed">
+      <BrowserRouter basename={import.meta.env.PROD ? "/promptsmed" : ""}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/guia-ias" element={<GuiaIAs />} />
