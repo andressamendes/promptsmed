@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
+import { usePromptEdits } from "@/hooks/use-prompt-edits";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
 
@@ -42,15 +43,17 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+  const { getEditedPrompt } = usePromptEdits();
   const favorite = isFavorite(prompt.id);
   const aiColor = aiColors[prompt.aiRecommended];
+  const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
 
   const handleCopy = async (event: React.MouseEvent) => {
     event.stopPropagation();
-    await navigator.clipboard.writeText(prompt.prompt);
+    await navigator.clipboard.writeText(currentPromptText);
     setCopied(true);
     toast({
-      title: "Prompt copiado!",
+      title: "Prompt copiado",
       description: "Cole na IA de sua escolha.",
     });
     setTimeout(() => setCopied(false), 2000);
@@ -58,9 +61,9 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
 
   const handleOpenAI = async (event: React.MouseEvent) => {
     event.stopPropagation();
-    await navigator.clipboard.writeText(prompt.prompt);
+    await navigator.clipboard.writeText(currentPromptText);
     toast({
-      title: "Prompt copiado!",
+      title: "Prompt copiado",
       description: `Cole no ${aiNames[prompt.aiRecommended]}.`,
     });
     window.open(aiLinks[prompt.aiRecommended], "_blank");

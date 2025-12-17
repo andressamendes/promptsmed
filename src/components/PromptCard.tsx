@@ -7,6 +7,7 @@ import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useTilt } from "@/hooks/use-tilt";
+import { usePromptEdits } from "@/hooks/use-prompt-edits";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
 
@@ -45,6 +46,7 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
   const [showModal, setShowModal] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+  const { getEditedPrompt } = usePromptEdits();
   const favorite = isFavorite(prompt.id);
   
   const { ref: scrollRef, isVisible } = useScrollAnimation<HTMLDivElement>();
@@ -55,21 +57,22 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
     glare: true,
   });
   const animationDelay = Math.min(index * 100, 500);
+  const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(prompt.prompt);
+    await navigator.clipboard.writeText(currentPromptText);
     setCopied(true);
     toast({
-      title: "Prompt copiado!",
+      title: "Prompt copiado",
       description: "Cole na IA de sua escolha.",
     });
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity") => {
-    await navigator.clipboard.writeText(prompt.prompt);
+    await navigator.clipboard.writeText(currentPromptText);
     toast({
-      title: "Prompt copiado!",
+      title: "Prompt copiado",
       description: `Cole no ${aiNames[ai]}.`,
     });
     window.open(aiLinks[ai], "_blank");
