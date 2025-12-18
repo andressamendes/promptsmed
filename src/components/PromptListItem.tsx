@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star, ChevronRight } from "lucide-react";
+import { Copy, Check, Heart, ExternalLink, Star, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
@@ -54,7 +53,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     setCopied(true);
     toast({
       title: "Prompt copiado",
-      description: "Cole na IA de sua escolha.",
+      description: "Cole na ferramenta de sua escolha.",
     });
     setTimeout(() => setCopied(false), 2000);
   };
@@ -64,7 +63,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     await navigator.clipboard.writeText(currentPromptText);
     toast({
       title: "Prompt copiado",
-      description: `Cole no ${aiNames[prompt.aiRecommended]}.`,
+      description: `Abrindo ${aiNames[prompt.aiRecommended]}...`,
     });
     window.open(aiLinks[prompt.aiRecommended], "_blank");
   };
@@ -75,7 +74,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
         onClick={() => setShowModal(true)}
         data-prompt-id={prompt.id}
         className={cn(
-          "group flex items-center gap-3 p-3 rounded-lg border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-200 cursor-pointer",
+          "group flex items-center gap-4 px-4 py-3 rounded-lg border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-200 cursor-pointer",
           isFocused 
             ? "border-primary ring-2 ring-primary ring-offset-2 ring-offset-background" 
             : "border-border/50 hover:border-border"
@@ -83,51 +82,36 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
       >
         {/* AI Indicator */}
         <div
-          className="flex-shrink-0 w-1.5 h-12 rounded-full"
+          className="flex-shrink-0 w-1 h-10 rounded-full"
           style={{ backgroundColor: aiColor }}
         />
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-0.5">
+          <div className="flex items-center gap-2 mb-1">
             <h4 className="font-medium text-sm truncate">{prompt.title}</h4>
             {favorite && (
-              <Heart className="w-3 h-3 text-destructive fill-current flex-shrink-0" />
+              <Heart className="w-3 h-3 text-rose-500 fill-current flex-shrink-0" />
             )}
           </div>
-          <p className="text-xs text-muted-foreground truncate mb-1">
+          <p className="text-xs text-muted-foreground truncate">
             {prompt.description}
           </p>
-          <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4">
-              {prompt.category}
-            </Badge>
-            <span className="flex items-center gap-0.5">
-              <Clock className="w-2.5 h-2.5" />
-              {prompt.estimatedTime}
-            </span>
-            <span className="flex items-center gap-0.5">
-              <BarChart3 className="w-2.5 h-2.5" />
-              {prompt.evidenceLevel}
-            </span>
-          </div>
         </div>
 
         {/* Recommended AI */}
-        <div className="flex-shrink-0 flex items-center gap-1.5">
-          <button
-            onClick={handleOpenAI}
-            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors hover:opacity-80"
-            style={{ 
-              backgroundColor: `${aiColor}15`,
-              color: aiColor,
-            }}
-          >
-            <Star className="w-3 h-3" />
-            {aiNames[prompt.aiRecommended]}
-            <ExternalLink className="w-2.5 h-2.5" />
-          </button>
-        </div>
+        <button
+          onClick={handleOpenAI}
+          className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors hover:opacity-80"
+          style={{ 
+            backgroundColor: `${aiColor}12`,
+            color: aiColor,
+          }}
+        >
+          <Star className="w-3 h-3" />
+          {aiNames[prompt.aiRecommended]}
+          <ExternalLink className="w-2.5 h-2.5" />
+        </button>
 
         {/* Actions */}
         <div className="flex-shrink-0 flex items-center gap-1">
@@ -143,7 +127,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
             <Heart
               className={cn(
                 "w-3.5 h-3.5",
-                favorite && "text-destructive fill-current"
+                favorite && "text-rose-500 fill-current"
               )}
             />
           </Button>
@@ -154,7 +138,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
             onClick={handleCopy}
           >
             {copied ? (
-              <Check className="w-3.5 h-3.5 text-accent" />
+              <Check className="w-3.5 h-3.5 text-emerald-500" />
             ) : (
               <Copy className="w-3.5 h-3.5" />
             )}
