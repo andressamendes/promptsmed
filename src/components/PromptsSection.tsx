@@ -24,8 +24,6 @@ export function PromptsSection() {
     setQuery,
     selectedSection,
     setSelectedSection,
-    selectedEvidence,
-    setSelectedEvidence,
     selectedAI,
     setSelectedAI,
     filteredPrompts,
@@ -114,8 +112,6 @@ export function PromptsSection() {
             onQueryChange={setQuery}
             selectedSection={selectedSection}
             onSectionChange={setSelectedSection}
-            selectedEvidence={selectedEvidence}
-            onEvidenceChange={setSelectedEvidence}
             selectedAI={selectedAI}
             onAIChange={setSelectedAI}
             onClear={clearFilters}

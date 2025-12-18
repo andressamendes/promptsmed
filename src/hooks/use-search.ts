@@ -6,7 +6,6 @@ export type AIFilter = "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplex
 export function useSearch() {
   const [query, setQuery] = useState("");
   const [selectedSection, setSelectedSection] = useState<number | null>(null);
-  const [selectedEvidence, setSelectedEvidence] = useState<string | null>(null);
   const [selectedAI, setSelectedAI] = useState<AIFilter>(null);
 
   const filteredPrompts = useMemo(() => {
@@ -19,7 +18,6 @@ export function useSearch() {
         (p) =>
           p.title.toLowerCase().includes(lowerQuery) ||
           p.description.toLowerCase().includes(lowerQuery) ||
-          p.tags.some((t) => t.toLowerCase().includes(lowerQuery)) ||
           p.category.toLowerCase().includes(lowerQuery)
       );
     }
@@ -29,30 +27,23 @@ export function useSearch() {
       result = result.filter((p) => p.sectionNumber === selectedSection);
     }
 
-    // Filter by evidence level
-    if (selectedEvidence) {
-      result = result.filter((p) => p.evidenceLevel === selectedEvidence);
-    }
-
     // Filter by recommended AI
     if (selectedAI) {
       result = result.filter((p) => p.aiRecommended === selectedAI);
     }
 
     return result;
-  }, [query, selectedSection, selectedEvidence, selectedAI]);
+  }, [query, selectedSection, selectedAI]);
 
   const clearFilters = useCallback(() => {
     setQuery("");
     setSelectedSection(null);
-    setSelectedEvidence(null);
     setSelectedAI(null);
   }, []);
 
   const hasActiveFilters = !!(
     query.trim() ||
     selectedSection !== null ||
-    selectedEvidence !== null ||
     selectedAI !== null
   );
 
@@ -61,8 +52,6 @@ export function useSearch() {
     setQuery,
     selectedSection,
     setSelectedSection,
-    selectedEvidence,
-    setSelectedEvidence,
     selectedAI,
     setSelectedAI,
     filteredPrompts,

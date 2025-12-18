@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { Copy, Check, Heart, ExternalLink, Clock, BarChart3, Star } from "lucide-react";
+import { Copy, Check, Heart, ExternalLink, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Prompt } from "@/data/prompts-data";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { useTilt } from "@/hooks/use-tilt";
 import { usePromptEdits } from "@/hooks/use-prompt-edits";
 import { cn } from "@/lib/utils";
 import { PromptModal } from "./PromptModal";
@@ -17,15 +15,15 @@ interface PromptCardProps {
   isFocused?: boolean;
 }
 
-const aiColors = {
-  chatgpt: { bg: "bg-[#10a37f]/10", text: "text-[#10a37f]", border: "border-[#10a37f]/30" },
-  claude: { bg: "bg-[#cc785c]/10", text: "text-[#cc785c]", border: "border-[#cc785c]/30" },
-  gemini: { bg: "bg-[#8e8ea0]/10", text: "text-[#8e8ea0]", border: "border-[#8e8ea0]/30" },
-  notebooklm: { bg: "bg-[#4285f4]/10", text: "text-[#4285f4]", border: "border-[#4285f4]/30" },
-  perplexity: { bg: "bg-[#20b8cd]/10", text: "text-[#20b8cd]", border: "border-[#20b8cd]/30" },
+const aiColors: Record<string, { bg: string; text: string; border: string }> = {
+  chatgpt: { bg: "bg-emerald-500/8", text: "text-emerald-600", border: "border-emerald-500/20" },
+  claude: { bg: "bg-amber-500/8", text: "text-amber-600", border: "border-amber-500/20" },
+  gemini: { bg: "bg-violet-500/8", text: "text-violet-600", border: "border-violet-500/20" },
+  notebooklm: { bg: "bg-blue-500/8", text: "text-blue-600", border: "border-blue-500/20" },
+  perplexity: { bg: "bg-cyan-500/8", text: "text-cyan-600", border: "border-cyan-500/20" },
 };
 
-const aiLinks = {
+const aiLinks: Record<string, string> = {
   chatgpt: "https://chat.openai.com/",
   claude: "https://claude.ai/",
   gemini: "https://gemini.google.com/",
@@ -33,7 +31,7 @@ const aiLinks = {
   perplexity: "https://www.perplexity.ai/",
 };
 
-const aiNames = {
+const aiNames: Record<string, string> = {
   chatgpt: "ChatGPT",
   claude: "Claude",
   gemini: "Gemini",
@@ -50,200 +48,131 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
   const favorite = isFavorite(prompt.id);
   
   const { ref: scrollRef, isVisible } = useScrollAnimation<HTMLDivElement>();
-  const { ref: tiltRef, style: tiltStyle, glareStyle, handlers } = useTilt<HTMLElement>({
-    max: 8,
-    scale: 1.02,
-    speed: 300,
-    glare: true,
-  });
-  const animationDelay = Math.min(index * 100, 500);
+  const animationDelay = Math.min(index * 80, 400);
   const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
+  const colors = aiColors[prompt.aiRecommended];
 
-  const handleCopy = async () => {
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     await navigator.clipboard.writeText(currentPromptText);
     setCopied(true);
     toast({
       title: "Prompt copiado",
-      description: "Cole na IA de sua escolha.",
+      description: "Cole na ferramenta de sua escolha.",
     });
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity") => {
+  const handleOpenAI = async (e: React.MouseEvent, ai: string) => {
+    e.stopPropagation();
     await navigator.clipboard.writeText(currentPromptText);
     toast({
       title: "Prompt copiado",
-      description: `Cole no ${aiNames[ai]}.`,
+      description: `Abrindo ${aiNames[ai]}...`,
     });
     window.open(aiLinks[ai], "_blank");
   };
-
-  const colors = aiColors[prompt.aiRecommended];
 
   return (
     <>
       <div
         ref={scrollRef}
         className={cn(
-          "transition-all duration-700 ease-out will-change-transform",
+          "transition-all duration-500 ease-out",
           isVisible 
-            ? "opacity-100 translate-y-0 scale-100 blur-0" 
-            : "opacity-0 translate-y-12 scale-95 blur-sm"
+            ? "opacity-100 translate-y-0" 
+            : "opacity-0 translate-y-6"
         )}
         style={{ 
           transitionDelay: isVisible ? `${animationDelay}ms` : "0ms",
-          transitionProperty: "opacity, transform, filter",
         }}
       >
         <article 
-          ref={tiltRef}
-          style={tiltStyle}
-          {...handlers}
           data-prompt-id={prompt.id}
+          onClick={() => setShowModal(true)}
           className={cn(
-            "prompt-card flex flex-col h-full relative overflow-hidden cursor-pointer transition-all duration-200",
+            "group relative flex flex-col h-full bg-card border border-border/60 rounded-xl overflow-hidden cursor-pointer",
+            "transition-all duration-200 hover:border-border hover:shadow-lg hover:shadow-black/5",
             isFocused && "ring-2 ring-primary ring-offset-2 ring-offset-background"
           )}
         >
-          {/* Glare Effect */}
-          <div style={glareStyle} className="z-10" />
-          
-          
-          {/* Header - Melhor IA */}
-          <div
-            className={cn(
-              "flex items-center justify-between px-4 py-3 border-b border-border relative z-20",
-              colors.bg
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <Star className={cn("w-3.5 h-3.5", colors.text)} />
-              <span
+          {/* Header - Clean category indicator */}
+          <div className="px-5 pt-5 pb-3">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                {prompt.category}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite(prompt.id);
+                }}
                 className={cn(
-                  "text-xs font-bold uppercase tracking-wide",
-                  colors.text
+                  "p-1.5 rounded-full transition-colors",
+                  favorite 
+                    ? "text-rose-500 bg-rose-500/10" 
+                    : "text-muted-foreground/50 hover:text-muted-foreground hover:bg-muted/50"
                 )}
               >
-                Melhor: {aiNames[prompt.aiRecommended]}
-              </span>
+                <Heart className={cn("w-4 h-4", favorite && "fill-current")} />
+              </button>
             </div>
-            <Badge variant="outline" className="text-[10px] font-medium">
-              {prompt.category}
-            </Badge>
-          </div>
-
-          {/* Body */}
-          <div className="flex-1 p-4 relative z-20">
-            <h3 className="text-base font-bold mb-2 line-clamp-2">{prompt.title}</h3>
-            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+            
+            <h3 className="text-base font-semibold leading-snug mb-2 text-foreground group-hover:text-primary transition-colors">
+              {prompt.title}
+            </h3>
+            
+            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
               {prompt.description}
             </p>
-
-            {/* Tags */}
-            <div className="flex flex-wrap gap-1 mb-3">
-              {prompt.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[10px] px-2 py-0.5 bg-muted rounded-full text-muted-foreground"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* Meta */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
-                {prompt.estimatedTime}
-              </span>
-              <span className="flex items-center gap-1">
-                <BarChart3 className="w-3 h-3" />
-                {prompt.evidenceLevel}
-              </span>
-            </div>
           </div>
 
-          {/* AI Buttons */}
-          <div className="px-4 pb-3 space-y-1.5 relative z-20">
-            <div className="flex gap-1.5">
+          {/* Footer - Actions */}
+          <div className="mt-auto px-5 py-4 border-t border-border/40 bg-muted/20">
+            <div className="flex items-center justify-between gap-3">
+              {/* Recommended AI */}
               <button
-                onClick={() => handleOpenAI("chatgpt")}
-                className="ai-btn ai-btn-chatgpt flex-1"
-              >
-                <ExternalLink className="w-3 h-3" />
-                ChatGPT
-              </button>
-              <button
-                onClick={() => handleOpenAI("claude")}
-                className="ai-btn ai-btn-claude flex-1"
-              >
-                <ExternalLink className="w-3 h-3" />
-                Claude
-              </button>
-              <button
-                onClick={() => handleOpenAI("gemini")}
-                className="ai-btn ai-btn-gemini flex-1"
-              >
-                <ExternalLink className="w-3 h-3" />
-                Gemini
-              </button>
-            </div>
-            <div className="flex gap-1.5">
-              <button
-                onClick={() => handleOpenAI("notebooklm")}
-                className="ai-btn flex-1 bg-[#4285f4]/10 text-[#4285f4] hover:bg-[#4285f4]/20 border-[#4285f4]/30"
-              >
-                <ExternalLink className="w-3 h-3" />
-                NotebookLM
-              </button>
-              <button
-                onClick={() => handleOpenAI("perplexity")}
-                className="ai-btn flex-1 bg-[#20b8cd]/10 text-[#20b8cd] hover:bg-[#20b8cd]/20 border-[#20b8cd]/30"
-              >
-                <ExternalLink className="w-3 h-3" />
-                Perplexity
-              </button>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-muted/30 relative z-20">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => toggleFavorite(prompt.id)}
-              className={cn(
-                "gap-1.5 h-8",
-                favorite && "text-destructive"
-              )}
-            >
-              <Heart className={cn("w-3.5 h-3.5", favorite && "fill-current")} />
-              <span className="text-xs">{favorite ? "Salvo" : "Salvar"}</span>
-            </Button>
-
-            <div className="flex gap-1.5">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopy}
-                className="gap-1.5 h-8"
-              >
-                {copied ? (
-                  <Check className="w-3.5 h-3.5 text-accent" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5" />
+                onClick={(e) => handleOpenAI(e, prompt.aiRecommended)}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
+                  "border hover:scale-[1.02]",
+                  colors.bg, colors.text, colors.border
                 )}
-                <span className="text-xs">{copied ? "Copiado" : "Copiar"}</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowModal(true)}
-                className="h-8 text-xs"
               >
-                Ver Completo
-              </Button>
+                <Star className="w-3.5 h-3.5 fill-current opacity-60" />
+                {aiNames[prompt.aiRecommended]}
+                <ExternalLink className="w-3 h-3 opacity-60" />
+              </button>
+
+              {/* Copy & Open */}
+              <div className="flex items-center gap-1.5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="h-8 px-3 text-xs gap-1.5"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      Copiado
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      Copiar
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowModal(true)}
+                  className="h-8 px-3 text-xs"
+                >
+                  Ver completo
+                </Button>
+              </div>
             </div>
           </div>
         </article>

@@ -17,8 +17,6 @@ interface SearchBarProps {
   onQueryChange: (value: string) => void;
   selectedSection: number | null;
   onSectionChange: (value: number | null) => void;
-  selectedEvidence: string | null;
-  onEvidenceChange: (value: string | null) => void;
   selectedAI: AIFilter;
   onAIChange: (value: AIFilter) => void;
   onClear: () => void;
@@ -28,36 +26,11 @@ interface SearchBarProps {
 }
 
 const aiOptions = [
-  { 
-    value: "chatgpt", 
-    label: "ChatGPT", 
-    color: "#10a37f",
-    icon: MessageSquare,
-  },
-  { 
-    value: "claude", 
-    label: "Claude", 
-    color: "#cc785c",
-    icon: Brain,
-  },
-  { 
-    value: "gemini", 
-    label: "Gemini", 
-    color: "#8e8ea0",
-    icon: Sparkles,
-  },
-  { 
-    value: "notebooklm", 
-    label: "NotebookLM", 
-    color: "#4285f4",
-    icon: BookOpen,
-  },
-  { 
-    value: "perplexity", 
-    label: "Perplexity", 
-    color: "#20b8cd",
-    icon: Compass,
-  },
+  { value: "chatgpt", label: "ChatGPT", color: "#10a37f", icon: MessageSquare },
+  { value: "claude", label: "Claude", color: "#cc785c", icon: Brain },
+  { value: "gemini", label: "Gemini", color: "#8e8ea0", icon: Sparkles },
+  { value: "notebooklm", label: "NotebookLM", color: "#4285f4", icon: BookOpen },
+  { value: "perplexity", label: "Perplexity", color: "#20b8cd", icon: Compass },
 ];
 
 export function SearchBar({
@@ -65,8 +38,6 @@ export function SearchBar({
   onQueryChange,
   selectedSection,
   onSectionChange,
-  selectedEvidence,
-  onEvidenceChange,
   selectedAI,
   onAIChange,
   onClear,
@@ -102,9 +73,9 @@ export function SearchBar({
           onClick={() => onAIChange(null)}
           className={cn(
             "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-            "border hover:scale-105",
+            "border hover:scale-[1.02]",
             selectedAI === null
-              ? "bg-primary text-primary-foreground border-primary shadow-md"
+              ? "bg-primary text-primary-foreground border-primary shadow-sm"
               : "bg-muted/50 text-muted-foreground border-border hover:bg-muted hover:text-foreground"
           )}
         >
@@ -122,16 +93,15 @@ export function SearchBar({
               onClick={() => onAIChange(ai.value as AIFilter)}
               className={cn(
                 "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                "border hover:scale-105",
+                "border hover:scale-[1.02]",
                 isSelected
-                  ? "shadow-lg"
+                  ? "shadow-sm"
                   : "bg-card/50 border-border hover:border-current"
               )}
               style={{
-                backgroundColor: isSelected ? `${ai.color}20` : undefined,
+                backgroundColor: isSelected ? `${ai.color}15` : undefined,
                 borderColor: isSelected ? ai.color : undefined,
                 color: isSelected ? ai.color : undefined,
-                boxShadow: isSelected ? `0 4px 14px ${ai.color}30` : undefined,
               }}
             >
               <Icon 
@@ -139,25 +109,20 @@ export function SearchBar({
                 style={{ color: isSelected ? ai.color : undefined }}
               />
               <span>{ai.label}</span>
-              <span 
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: ai.color }}
-              />
             </button>
           );
         })}
       </div>
 
-      {/* Additional Filters Row */}
+      {/* Category Filter Row */}
       <div className="flex flex-wrap gap-2 items-center">
-        {/* Section Filter */}
         <Select
           value={selectedSection?.toString() || "all"}
           onValueChange={(value) =>
             onSectionChange(value === "all" ? null : parseInt(value))
           }
         >
-          <SelectTrigger className="w-[160px] h-9 text-xs">
+          <SelectTrigger className="w-[180px] h-9 text-xs">
             <SelectValue placeholder="Categoria" />
           </SelectTrigger>
           <SelectContent className="bg-popover">
@@ -170,24 +135,6 @@ export function SearchBar({
           </SelectContent>
         </Select>
 
-        {/* Evidence Filter */}
-        <Select
-          value={selectedEvidence || "all"}
-          onValueChange={(value) =>
-            onEvidenceChange(value === "all" ? null : value)
-          }
-        >
-          <SelectTrigger className="w-[140px] h-9 text-xs">
-            <SelectValue placeholder="Evidência" />
-          </SelectTrigger>
-          <SelectContent className="bg-popover">
-            <SelectItem value="all">Todas evidências</SelectItem>
-            <SelectItem value="Alta">Alta</SelectItem>
-            <SelectItem value="Média">Média</SelectItem>
-            <SelectItem value="Emergente">Emergente</SelectItem>
-          </SelectContent>
-        </Select>
-
         {hasActiveFilters && (
           <Button
             variant="ghost"
@@ -196,12 +143,12 @@ export function SearchBar({
             className="h-9 text-xs px-3 text-muted-foreground hover:text-destructive"
           >
             <X className="w-3.5 h-3.5 mr-1" />
-            Limpar filtros
+            Limpar
           </Button>
         )}
 
-        <span className="ml-auto text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
-          {resultCount} de {totalCount} prompts
+        <span className="ml-auto text-xs text-muted-foreground">
+          {resultCount} de {totalCount}
         </span>
       </div>
     </div>

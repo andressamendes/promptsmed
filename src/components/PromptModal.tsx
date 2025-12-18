@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Copy, Check, ExternalLink, Clock, BarChart3, Tag, Star, Pencil, RotateCcw, X, Save } from "lucide-react";
+import { Copy, Check, ExternalLink, Star, Pencil, RotateCcw, X, Save } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -18,7 +17,7 @@ interface PromptModalProps {
   onClose: () => void;
 }
 
-const aiLinks = {
+const aiLinks: Record<string, string> = {
   chatgpt: "https://chat.openai.com/",
   claude: "https://claude.ai/",
   gemini: "https://gemini.google.com/",
@@ -26,7 +25,7 @@ const aiLinks = {
   perplexity: "https://www.perplexity.ai/",
 };
 
-const aiNames = {
+const aiNames: Record<string, string> = {
   chatgpt: "ChatGPT",
   claude: "Claude",
   gemini: "Gemini",
@@ -34,20 +33,20 @@ const aiNames = {
   perplexity: "Perplexity",
 };
 
-const aiColors = {
-  chatgpt: { text: "text-[#10a37f]", bg: "bg-[#10a37f]/10", border: "border-[#10a37f]/30", hover: "hover:bg-[#10a37f]/20" },
-  claude: { text: "text-[#cc785c]", bg: "bg-[#cc785c]/10", border: "border-[#cc785c]/30", hover: "hover:bg-[#cc785c]/20" },
-  gemini: { text: "text-[#8e8ea0]", bg: "bg-[#8e8ea0]/10", border: "border-[#8e8ea0]/30", hover: "hover:bg-[#8e8ea0]/20" },
-  notebooklm: { text: "text-[#4285f4]", bg: "bg-[#4285f4]/10", border: "border-[#4285f4]/30", hover: "hover:bg-[#4285f4]/20" },
-  perplexity: { text: "text-[#20b8cd]", bg: "bg-[#20b8cd]/10", border: "border-[#20b8cd]/30", hover: "hover:bg-[#20b8cd]/20" },
+const aiColors: Record<string, { text: string; bg: string; border: string; hover: string }> = {
+  chatgpt: { text: "text-emerald-600", bg: "bg-emerald-500/8", border: "border-emerald-500/20", hover: "hover:bg-emerald-500/15" },
+  claude: { text: "text-amber-600", bg: "bg-amber-500/8", border: "border-amber-500/20", hover: "hover:bg-amber-500/15" },
+  gemini: { text: "text-violet-600", bg: "bg-violet-500/8", border: "border-violet-500/20", hover: "hover:bg-violet-500/15" },
+  notebooklm: { text: "text-blue-600", bg: "bg-blue-500/8", border: "border-blue-500/20", hover: "hover:bg-blue-500/15" },
+  perplexity: { text: "text-cyan-600", bg: "bg-cyan-500/8", border: "border-cyan-500/20", hover: "hover:bg-cyan-500/15" },
 };
 
 const aiReasons: Record<string, string> = {
-  chatgpt: "Listas estruturadas, flashcards, cronogramas e tarefas rapidas.",
-  claude: "Raciocinio complexo, casos clinicos, tutoria socratica.",
-  gemini: "Descricoes visuais, conteudo multimodal, mapas conceituais.",
-  notebooklm: "Geracao de podcasts, sintese de documentos em audio.",
-  perplexity: "Busca de evidencias atualizadas, pesquisa cientifica.",
+  chatgpt: "Listas estruturadas, flashcards e tarefas rapidas",
+  claude: "Raciocinio complexo e tutoria socratica",
+  gemini: "Conteudo visual e mapas conceituais",
+  notebooklm: "Sintese de documentos e podcasts",
+  perplexity: "Busca de evidencias atualizadas",
 };
 
 function HighlightedText({ text }: { text: string }) {
@@ -58,7 +57,7 @@ function HighlightedText({ text }: { text: string }) {
         part.isVariable ? (
           <span
             key={index}
-            className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded bg-primary/15 text-primary font-medium text-xs border border-primary/20"
+            className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded bg-primary/10 text-primary font-medium text-xs border border-primary/15"
           >
             {part.text}
           </span>
@@ -74,12 +73,12 @@ function PromptContent({ text }: { text: string }) {
   const sections = parsePromptSections(text);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       {sections.map((section, index) => {
         switch (section.type) {
           case "header":
             return (
-              <div key={index} className="flex items-center gap-3 pt-4 pb-2 first:pt-0">
+              <div key={index} className="flex items-center gap-3 pt-5 pb-2 first:pt-0">
                 <div className="w-1 h-5 bg-primary rounded-full flex-shrink-0" />
                 <h3 className="text-sm font-bold text-foreground uppercase tracking-wide">
                   {section.content}
@@ -89,7 +88,6 @@ function PromptContent({ text }: { text: string }) {
           case "subheader":
             return (
               <div key={index} className="flex items-center gap-2 pt-3 pb-1">
-                <div className="w-0.5 h-4 bg-muted-foreground/40 rounded-full flex-shrink-0" />
                 <h4 className="text-sm font-semibold text-foreground/90">
                   <HighlightedText text={section.content} />
                 </h4>
@@ -97,8 +95,8 @@ function PromptContent({ text }: { text: string }) {
             );
           case "list":
             return (
-              <div key={index} className="flex items-start gap-3 pl-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 mt-2 flex-shrink-0" />
+              <div key={index} className="flex items-start gap-3 pl-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 mt-2 flex-shrink-0" />
                 <p className="text-sm text-foreground/80 leading-relaxed">
                   <HighlightedText text={section.content} />
                 </p>
@@ -106,7 +104,7 @@ function PromptContent({ text }: { text: string }) {
             );
           case "numbered":
             return (
-              <div key={index} className="flex items-start gap-3 pl-4">
+              <div key={index} className="flex items-start gap-3 pl-3">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-muted text-muted-foreground text-xs font-medium flex-shrink-0 mt-0.5">
                   {section.level}
                 </span>
@@ -122,10 +120,10 @@ function PromptContent({ text }: { text: string }) {
               </pre>
             );
           case "divider":
-            return <div key={index} className="border-t border-border/30 my-2" />;
+            return <div key={index} className="border-t border-border/20 my-3" />;
           default:
             return (
-              <p key={index} className="text-sm text-foreground/80 leading-relaxed pl-4">
+              <p key={index} className="text-sm text-foreground/80 leading-relaxed pl-3">
                 <HighlightedText text={section.content} />
               </p>
             );
@@ -168,7 +166,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const handleSaveEdit = () => {
     saveEdit(prompt.id, editText);
     setIsEditing(false);
-    toast({ title: "Prompt salvo", description: "Suas alteracoes foram salvas localmente." });
+    toast({ title: "Prompt salvo", description: "Alteracoes salvas localmente." });
   };
 
   const handleResetEdit = () => {
@@ -181,74 +179,29 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
     setIsEditing(false);
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case "iniciante":
-        return "bg-emerald-500/10 text-emerald-600 border-emerald-500/20";
-      case "intermediario":
-        return "bg-amber-500/10 text-amber-600 border-amber-500/20";
-      case "avancado":
-        return "bg-rose-500/10 text-rose-600 border-rose-500/20";
-      default:
-        return "bg-muted text-muted-foreground";
-    }
-  };
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
-        {/* Header */}
-        <DialogHeader className="flex-shrink-0 p-6 pb-4 border-b border-border/50">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0 gap-0">
+        {/* Compact Header */}
+        <DialogHeader className="flex-shrink-0 px-6 py-4 border-b border-border/40">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <Badge variant="outline" className="text-xs font-medium">
-                  {prompt.category}
-                </Badge>
-                <Badge className={cn("text-xs border", getDifficultyColor(prompt.difficulty))}>
-                  {prompt.difficulty}
-                </Badge>
+              <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                {prompt.category}
                 {isModified && (
-                  <Badge variant="secondary" className="text-xs">
-                    Modificado
-                  </Badge>
+                  <span className="ml-2 text-primary">(modificado)</span>
                 )}
-              </div>
-              <DialogTitle className="text-xl font-semibold leading-tight pr-8">
+              </span>
+              <DialogTitle className="text-lg font-semibold leading-snug">
                 {prompt.title}
               </DialogTitle>
             </div>
           </div>
-
-          {/* Metadata */}
-          <div className="flex flex-wrap gap-4 mt-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="w-4 h-4" />
-              <span>{prompt.estimatedTime}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <BarChart3 className="w-4 h-4" />
-              <span>Evidencia: {prompt.evidenceLevel}</span>
-            </div>
-          </div>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {prompt.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
-                <Tag className="w-3 h-3 mr-1" />
-                {tag}
-              </Badge>
-            ))}
-          </div>
         </DialogHeader>
 
-        {/* AI Buttons */}
-        <div className="flex-shrink-0 px-6 py-4 border-b border-border/30 bg-muted/20">
-          <p className="text-xs text-muted-foreground mb-3 uppercase tracking-wide font-medium">
-            Abrir em
-          </p>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+        {/* AI Buttons - Compact */}
+        <div className="flex-shrink-0 px-6 py-3 border-b border-border/30 bg-muted/10">
+          <div className="flex flex-wrap gap-2">
             {(Object.keys(aiLinks) as Array<keyof typeof aiLinks>).map((ai) => (
               <TooltipProvider key={ai}>
                 <Tooltip>
@@ -258,20 +211,20 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
                       size="sm"
                       onClick={() => handleOpenAI(ai)}
                       className={cn(
-                        "gap-1.5 h-9 text-xs",
+                        "gap-1.5 h-8 text-xs",
                         aiColors[ai].bg,
                         aiColors[ai].text,
                         aiColors[ai].border,
                         aiColors[ai].hover
                       )}
                     >
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <ExternalLink className="w-3 h-3" />
                       {aiNames[ai]}
                       {ai === recommendedAI && <Star className="w-3 h-3 fill-current" />}
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="text-xs max-w-xs">{aiReasons[ai]}</p>
+                    <p className="text-xs">{aiReasons[ai]}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -279,67 +232,62 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
           </div>
         </div>
 
-        {/* Content */}
+        {/* Main Content - Prompt is Hero */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-          {/* Toolbar */}
-          <div className="flex items-center justify-between px-6 py-3 bg-muted/30 border-b border-border/30">
-            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Prompt
-            </span>
-            <div className="flex items-center gap-2">
-              {isEditing ? (
-                <>
-                  <Button size="sm" variant="ghost" onClick={handleCancelEdit} className="h-7 text-xs gap-1.5">
-                    <X className="w-3.5 h-3.5" />
-                    Cancelar
+          {/* Minimal Toolbar */}
+          <div className="flex items-center justify-end gap-2 px-6 py-2 bg-background/50">
+            {isEditing ? (
+              <>
+                <Button size="sm" variant="ghost" onClick={handleCancelEdit} className="h-7 text-xs gap-1.5">
+                  <X className="w-3.5 h-3.5" />
+                  Cancelar
+                </Button>
+                <Button size="sm" variant="default" onClick={handleSaveEdit} className="h-7 text-xs gap-1.5">
+                  <Save className="w-3.5 h-3.5" />
+                  Salvar
+                </Button>
+              </>
+            ) : (
+              <>
+                {isModified && (
+                  <Button size="sm" variant="ghost" onClick={handleResetEdit} className="h-7 text-xs gap-1.5 text-muted-foreground">
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    Restaurar
                   </Button>
-                  <Button size="sm" variant="default" onClick={handleSaveEdit} className="h-7 text-xs gap-1.5">
-                    <Save className="w-3.5 h-3.5" />
-                    Salvar
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {isModified && (
-                    <Button size="sm" variant="ghost" onClick={handleResetEdit} className="h-7 text-xs gap-1.5">
-                      <RotateCcw className="w-3.5 h-3.5" />
-                      Restaurar
-                    </Button>
+                )}
+                <Button size="sm" variant="ghost" onClick={handleStartEdit} className="h-7 text-xs gap-1.5 text-muted-foreground">
+                  <Pencil className="w-3.5 h-3.5" />
+                  Editar
+                </Button>
+                <Button size="sm" variant="default" onClick={handleCopy} className="h-7 text-xs gap-1.5">
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      Copiado
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      Copiar
+                    </>
                   )}
-                  <Button size="sm" variant="ghost" onClick={handleStartEdit} className="h-7 text-xs gap-1.5">
-                    <Pencil className="w-3.5 h-3.5" />
-                    Editar
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={handleCopy} className="h-7 text-xs gap-1.5">
-                    {copied ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        Copiado
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3.5 h-3.5" />
-                        Copiar
-                      </>
-                    )}
-                  </Button>
-                </>
-              )}
-            </div>
+                </Button>
+              </>
+            )}
           </div>
 
-          {/* Prompt Text */}
+          {/* Prompt Content - Full Focus */}
           <ScrollArea className="flex-1 min-h-0">
-            <div className="p-6">
+            <div className="px-6 py-5">
               {isEditing ? (
                 <Textarea
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
-                  className="min-h-[400px] font-mono text-sm resize-none"
+                  className="min-h-[400px] font-mono text-sm resize-none border-border/50"
                   placeholder="Digite o prompt..."
                 />
               ) : (
-                <div className="rounded-lg bg-card/50 border border-border/30 p-5">
+                <div className="bg-muted/20 rounded-xl border border-border/30 p-6">
                   <PromptContent text={currentPromptText} />
                 </div>
               )}
