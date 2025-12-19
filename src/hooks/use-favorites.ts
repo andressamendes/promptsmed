@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const FAVORITES_KEY = "promptlab-favorites";
+const FAVORITES_KEY = "medprompts-favorites";
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);

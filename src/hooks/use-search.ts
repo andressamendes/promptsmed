@@ -1,7 +1,8 @@
 import { useState, useMemo, useCallback } from "react";
 import { prompts } from "@/data/prompts-data";
+import { AIProvider } from "@/data/ai-config";
 
-export type AIFilter = "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity" | null;
+export type AIFilter = AIProvider | null;
 
 export function useSearch() {
   const [query, setQuery] = useState("");

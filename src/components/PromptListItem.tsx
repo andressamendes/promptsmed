@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Copy, Check, Heart, ExternalLink, Star, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Prompt } from "@/data/prompts-data";
+import { AI_CONFIGS } from "@/data/ai-config";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { usePromptEdits } from "@/hooks/use-prompt-edits";
@@ -13,30 +14,6 @@ interface PromptListItemProps {
   isFocused?: boolean;
 }
 
-const aiColors: Record<string, string> = {
-  chatgpt: "#10a37f",
-  claude: "#cc785c",
-  gemini: "#8e8ea0",
-  notebooklm: "#4285f4",
-  perplexity: "#20b8cd",
-};
-
-const aiNames: Record<string, string> = {
-  chatgpt: "ChatGPT",
-  claude: "Claude",
-  gemini: "Gemini",
-  notebooklm: "NotebookLM",
-  perplexity: "Perplexity",
-};
-
-const aiLinks: Record<string, string> = {
-  chatgpt: "https://chat.openai.com/",
-  claude: "https://claude.ai/",
-  gemini: "https://gemini.google.com/",
-  notebooklm: "https://notebooklm.google.com/",
-  perplexity: "https://www.perplexity.ai/",
-};
-
 export function PromptListItem({ prompt, isFocused = false }: PromptListItemProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -44,7 +21,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
   const { toast } = useToast();
   const { getEditedPrompt } = usePromptEdits();
   const favorite = isFavorite(prompt.id);
-  const aiColor = aiColors[prompt.aiRecommended];
+  const aiConfig = AI_CONFIGS[prompt.aiRecommended];
   const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
 
   const handleCopy = async (event: React.MouseEvent) => {
@@ -63,9 +40,9 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     await navigator.clipboard.writeText(currentPromptText);
     toast({
       title: "Prompt copiado",
-      description: `Abrindo ${aiNames[prompt.aiRecommended]}...`,
+      description: `Abrindo ${aiConfig.name}...`,
     });
-    window.open(aiLinks[prompt.aiRecommended], "_blank");
+    window.open(aiConfig.url, "_blank");
   };
 
   return (
@@ -83,7 +60,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
         {/* AI Indicator */}
         <div
           className="flex-shrink-0 w-1 h-10 rounded-full"
-          style={{ backgroundColor: aiColor }}
+          style={{ backgroundColor: aiConfig.colors.hex }}
         />
 
         {/* Content */}
@@ -91,7 +68,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
           <div className="flex items-center gap-2 mb-1">
             <h4 className="font-medium text-sm truncate">{prompt.title}</h4>
             {favorite && (
-              <Heart className="w-3 h-3 text-rose-500 fill-current flex-shrink-0" />
+              <Heart className="w-3 h-3 text-destructive fill-current flex-shrink-0" />
             )}
           </div>
           <p className="text-xs text-muted-foreground truncate">
@@ -102,14 +79,13 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
         {/* Recommended AI */}
         <button
           onClick={handleOpenAI}
-          className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors hover:opacity-80"
-          style={{ 
-            backgroundColor: `${aiColor}12`,
-            color: aiColor,
-          }}
+          className={cn(
+            "flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors",
+            aiConfig.colors.bg, aiConfig.colors.text, aiConfig.colors.border, aiConfig.colors.hover
+          )}
         >
           <Star className="w-3 h-3" />
-          {aiNames[prompt.aiRecommended]}
+          {aiConfig.name}
           <ExternalLink className="w-2.5 h-2.5" />
         </button>
 
@@ -127,7 +103,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
             <Heart
               className={cn(
                 "w-3.5 h-3.5",
-                favorite && "text-rose-500 fill-current"
+                favorite && "text-destructive fill-current"
               )}
             />
           </Button>
@@ -138,7 +114,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
             onClick={handleCopy}
           >
             {copied ? (
-              <Check className="w-3.5 h-3.5 text-emerald-500" />
+              <Check className="w-3.5 h-3.5 text-accent" />
             ) : (
               <Copy className="w-3.5 h-3.5" />
             )}
