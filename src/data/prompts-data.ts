@@ -1,16 +1,19 @@
+import { AIProvider } from "./ai-config";
+
 export interface Prompt {
   id: string;
   title: string;
   category: string;
-  categorySlug: string;
   sectionNumber: number;
   description: string;
-  estimatedTime: string;
-  evidenceLevel: "Alta" | "Média" | "Emergente";
-  difficulty: "Iniciante" | "Intermediário" | "Avançado";
-  tags: string[];
   prompt: string;
-  aiRecommended: "chatgpt" | "claude" | "gemini" | "notebooklm" | "perplexity";
+  aiRecommended: AIProvider;
+  // Deprecated fields - kept for backward compatibility
+  categorySlug?: string;
+  estimatedTime?: string;
+  evidenceLevel?: "Alta" | "Média" | "Emergente";
+  difficulty?: "Iniciante" | "Intermediário" | "Avançado";
+  tags?: string[];
 }
 
 export interface Section {

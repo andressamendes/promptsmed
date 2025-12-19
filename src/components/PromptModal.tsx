@@ -6,6 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Prompt } from "@/data/prompts-data";
+import { AI_CONFIGS, AI_LIST, AIProvider } from "@/data/ai-config";
 import { useToast } from "@/hooks/use-toast";
 import { usePromptEdits } from "@/hooks/use-prompt-edits";
 import { parsePromptSections, highlightVariables } from "@/lib/format-prompt";
@@ -16,38 +17,6 @@ interface PromptModalProps {
   open: boolean;
   onClose: () => void;
 }
-
-const aiLinks: Record<string, string> = {
-  chatgpt: "https://chat.openai.com/",
-  claude: "https://claude.ai/",
-  gemini: "https://gemini.google.com/",
-  notebooklm: "https://notebooklm.google.com/",
-  perplexity: "https://www.perplexity.ai/",
-};
-
-const aiNames: Record<string, string> = {
-  chatgpt: "ChatGPT",
-  claude: "Claude",
-  gemini: "Gemini",
-  notebooklm: "NotebookLM",
-  perplexity: "Perplexity",
-};
-
-const aiColors: Record<string, { text: string; bg: string; border: string; hover: string }> = {
-  chatgpt: { text: "text-emerald-600", bg: "bg-emerald-500/8", border: "border-emerald-500/20", hover: "hover:bg-emerald-500/15" },
-  claude: { text: "text-amber-600", bg: "bg-amber-500/8", border: "border-amber-500/20", hover: "hover:bg-amber-500/15" },
-  gemini: { text: "text-violet-600", bg: "bg-violet-500/8", border: "border-violet-500/20", hover: "hover:bg-violet-500/15" },
-  notebooklm: { text: "text-blue-600", bg: "bg-blue-500/8", border: "border-blue-500/20", hover: "hover:bg-blue-500/15" },
-  perplexity: { text: "text-cyan-600", bg: "bg-cyan-500/8", border: "border-cyan-500/20", hover: "hover:bg-cyan-500/15" },
-};
-
-const aiReasons: Record<string, string> = {
-  chatgpt: "Listas estruturadas, flashcards e tarefas rapidas",
-  claude: "Raciocinio complexo e tutoria socratica",
-  gemini: "Conteudo visual e mapas conceituais",
-  notebooklm: "Sintese de documentos e podcasts",
-  perplexity: "Busca de evidencias atualizadas",
-};
 
 function HighlightedText({ text }: { text: string }) {
   const parts = highlightVariables(text);
@@ -141,7 +110,6 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const { saveEdit, resetEdit, getEditedPrompt, hasEdit } = usePromptEdits();
   
   const recommendedAI = prompt.aiRecommended;
-  const aiStyle = aiColors[recommendedAI];
   const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
   const isModified = hasEdit(prompt.id);
 
@@ -152,10 +120,11 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (ai: keyof typeof aiLinks) => {
+  const handleOpenAI = async (ai: AIProvider) => {
+    const config = AI_CONFIGS[ai];
     await navigator.clipboard.writeText(currentPromptText);
-    toast({ title: "Prompt copiado", description: `Abrindo ${aiNames[ai]}...` });
-    window.open(aiLinks[ai], "_blank");
+    toast({ title: "Prompt copiado", description: `Abrindo ${config.name}...` });
+    window.open(config.url, "_blank");
   };
 
   const handleStartEdit = () => {
@@ -166,7 +135,7 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const handleSaveEdit = () => {
     saveEdit(prompt.id, editText);
     setIsEditing(false);
-    toast({ title: "Prompt salvo", description: "Alteracoes salvas localmente." });
+    toast({ title: "Prompt salvo", description: "Alterações salvas localmente." });
   };
 
   const handleResetEdit = () => {
@@ -202,33 +171,36 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
         {/* AI Buttons - Compact */}
         <div className="flex-shrink-0 px-6 py-3 border-b border-border/30 bg-muted/10">
           <div className="flex flex-wrap gap-2">
-            {(Object.keys(aiLinks) as Array<keyof typeof aiLinks>).map((ai) => (
-              <TooltipProvider key={ai}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleOpenAI(ai)}
-                      className={cn(
-                        "gap-1.5 h-8 text-xs",
-                        aiColors[ai].bg,
-                        aiColors[ai].text,
-                        aiColors[ai].border,
-                        aiColors[ai].hover
-                      )}
-                    >
-                      <ExternalLink className="w-3 h-3" />
-                      {aiNames[ai]}
-                      {ai === recommendedAI && <Star className="w-3 h-3 fill-current" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="text-xs">{aiReasons[ai]}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ))}
+            {AI_LIST.map((ai) => {
+              const isRecommended = ai.id === recommendedAI;
+              return (
+                <TooltipProvider key={ai.id}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleOpenAI(ai.id)}
+                        className={cn(
+                          "gap-1.5 h-8 text-xs",
+                          ai.colors.bg,
+                          ai.colors.text,
+                          ai.colors.border,
+                          ai.colors.hover
+                        )}
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        {ai.name}
+                        {isRecommended && <Star className="w-3 h-3 fill-current" />}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-xs">{ai.reason}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              );
+            })}
           </div>
         </div>
 

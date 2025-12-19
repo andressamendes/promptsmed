@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Copy, Check, Heart, ExternalLink, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Prompt } from "@/data/prompts-data";
+import { AI_CONFIGS } from "@/data/ai-config";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
@@ -15,30 +16,6 @@ interface PromptCardProps {
   isFocused?: boolean;
 }
 
-const aiColors: Record<string, { bg: string; text: string; border: string }> = {
-  chatgpt: { bg: "bg-emerald-500/8", text: "text-emerald-600", border: "border-emerald-500/20" },
-  claude: { bg: "bg-amber-500/8", text: "text-amber-600", border: "border-amber-500/20" },
-  gemini: { bg: "bg-violet-500/8", text: "text-violet-600", border: "border-violet-500/20" },
-  notebooklm: { bg: "bg-blue-500/8", text: "text-blue-600", border: "border-blue-500/20" },
-  perplexity: { bg: "bg-cyan-500/8", text: "text-cyan-600", border: "border-cyan-500/20" },
-};
-
-const aiLinks: Record<string, string> = {
-  chatgpt: "https://chat.openai.com/",
-  claude: "https://claude.ai/",
-  gemini: "https://gemini.google.com/",
-  notebooklm: "https://notebooklm.google.com/",
-  perplexity: "https://www.perplexity.ai/",
-};
-
-const aiNames: Record<string, string> = {
-  chatgpt: "ChatGPT",
-  claude: "Claude",
-  gemini: "Gemini",
-  notebooklm: "NotebookLM",
-  perplexity: "Perplexity",
-};
-
 export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -50,7 +27,7 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
   const { ref: scrollRef, isVisible } = useScrollAnimation<HTMLDivElement>();
   const animationDelay = Math.min(index * 80, 400);
   const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
-  const colors = aiColors[prompt.aiRecommended];
+  const aiConfig = AI_CONFIGS[prompt.aiRecommended];
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -63,14 +40,14 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleOpenAI = async (e: React.MouseEvent, ai: string) => {
+  const handleOpenAI = async (e: React.MouseEvent) => {
     e.stopPropagation();
     await navigator.clipboard.writeText(currentPromptText);
     toast({
       title: "Prompt copiado",
-      description: `Abrindo ${aiNames[ai]}...`,
+      description: `Abrindo ${aiConfig.name}...`,
     });
-    window.open(aiLinks[ai], "_blank");
+    window.open(aiConfig.url, "_blank");
   };
 
   return (
@@ -110,7 +87,7 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
                 className={cn(
                   "p-1.5 rounded-full transition-colors",
                   favorite 
-                    ? "text-rose-500 bg-rose-500/10" 
+                    ? "text-destructive bg-destructive/10" 
                     : "text-muted-foreground/50 hover:text-muted-foreground hover:bg-muted/50"
                 )}
               >
@@ -132,15 +109,15 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
             <div className="flex items-center justify-between gap-3">
               {/* Recommended AI */}
               <button
-                onClick={(e) => handleOpenAI(e, prompt.aiRecommended)}
+                onClick={handleOpenAI}
                 className={cn(
                   "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
                   "border hover:scale-[1.02]",
-                  colors.bg, colors.text, colors.border
+                  aiConfig.colors.bg, aiConfig.colors.text, aiConfig.colors.border
                 )}
               >
                 <Star className="w-3.5 h-3.5 fill-current opacity-60" />
-                {aiNames[prompt.aiRecommended]}
+                {aiConfig.name}
                 <ExternalLink className="w-3 h-3 opacity-60" />
               </button>
 
@@ -154,7 +131,7 @@ export function PromptCard({ prompt, index = 0, isFocused = false }: PromptCardP
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      <Check className="w-3.5 h-3.5 text-accent" />
                       Copiado
                     </>
                   ) : (

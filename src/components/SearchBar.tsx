@@ -1,4 +1,4 @@
-import { Search, X, Sparkles, Brain, MessageSquare, BookOpen, Compass } from "lucide-react";
+import { Search, X, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +9,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { sections } from "@/data/prompts-data";
-import { AIFilter } from "@/hooks/use-search";
+import { AI_LIST, AIProvider } from "@/data/ai-config";
 import { cn } from "@/lib/utils";
+
+export type AIFilter = AIProvider | null;
 
 interface SearchBarProps {
   query: string;
@@ -24,14 +26,6 @@ interface SearchBarProps {
   resultCount: number;
   totalCount: number;
 }
-
-const aiOptions = [
-  { value: "chatgpt", label: "ChatGPT", color: "#10a37f", icon: MessageSquare },
-  { value: "claude", label: "Claude", color: "#cc785c", icon: Brain },
-  { value: "gemini", label: "Gemini", color: "#8e8ea0", icon: Sparkles },
-  { value: "notebooklm", label: "NotebookLM", color: "#4285f4", icon: BookOpen },
-  { value: "perplexity", label: "Perplexity", color: "#20b8cd", icon: Compass },
-];
 
 export function SearchBar({
   query,
@@ -83,32 +77,27 @@ export function SearchBar({
           Todas
         </button>
         
-        {aiOptions.map((ai) => {
+        {AI_LIST.map((ai) => {
           const Icon = ai.icon;
-          const isSelected = selectedAI === ai.value;
+          const isSelected = selectedAI === ai.id;
           
           return (
             <button
-              key={ai.value}
-              onClick={() => onAIChange(ai.value as AIFilter)}
+              key={ai.id}
+              onClick={() => onAIChange(ai.id)}
               className={cn(
                 "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                 "border hover:scale-[1.02]",
                 isSelected
-                  ? "shadow-sm"
+                  ? cn("shadow-sm", ai.colors.bg, ai.colors.text, ai.colors.border)
                   : "bg-card/50 border-border hover:border-current"
               )}
               style={{
-                backgroundColor: isSelected ? `${ai.color}15` : undefined,
-                borderColor: isSelected ? ai.color : undefined,
-                color: isSelected ? ai.color : undefined,
+                color: isSelected ? undefined : ai.colors.hex,
               }}
             >
-              <Icon 
-                className="w-4 h-4" 
-                style={{ color: isSelected ? ai.color : undefined }}
-              />
-              <span>{ai.label}</span>
+              <Icon className="w-4 h-4" />
+              <span>{ai.name}</span>
             </button>
           );
         })}

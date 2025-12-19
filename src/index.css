@@ -48,6 +48,8 @@
     --ai-chatgpt: 160 84% 39%;
     --ai-claude: 15 57% 58%;
     --ai-gemini: 240 5% 56%;
+    --ai-notebooklm: 217 91% 60%;
+    --ai-perplexity: 186 77% 47%;
 
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
@@ -101,6 +103,8 @@
     --ai-chatgpt: 160 84% 39%;
     --ai-claude: 15 57% 58%;
     --ai-gemini: 240 5% 56%;
+    --ai-notebooklm: 217 91% 60%;
+    --ai-perplexity: 186 77% 47%;
 
     /* Sidebar Dark */
     --sidebar-background: 222 47% 8%;
@@ -190,6 +194,11 @@
   .ai-btn-gemini:hover {
     background-color: hsl(240 5% 56%);
     color: white;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-background/80 backdrop-blur-md;
   }
 
   /* Glass Card Effect */
