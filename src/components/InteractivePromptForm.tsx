@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { Copy, Check, Sparkles, ChevronRight, RotateCcw } from "lucide-react";
+import { Copy, Check, Sparkles, ChevronRight, RotateCcw, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,14 +20,22 @@ interface InteractivePromptFormProps {
   onGeneratedPrompt?: (text: string) => void;
 }
 
+interface FieldError {
+  hasError: boolean;
+  message: string;
+}
+
 export function InteractivePromptForm({
   promptText,
   onGeneratedPrompt,
 }: InteractivePromptFormProps) {
   const { toast } = useToast();
   const [values, setValues] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [errors, setErrors] = useState<Record<string, FieldError>>({});
   const [copied, setCopied] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
 
   const variables = useMemo(() => extractVariables(promptText), [promptText]);
   const { filled, total } = countFilledVariables(variables, values);
@@ -37,23 +45,91 @@ export function InteractivePromptForm({
     return replaceVariables(promptText, values);
   }, [promptText, values]);
 
-  const handleValueChange = useCallback((variableName: string, value: string) => {
-    setValues(prev => ({ ...prev, [variableName]: value }));
-    setShowGenerated(false);
+  // Validação de campo individual
+  const validateField = useCallback((variable: PromptVariable, value: string): FieldError => {
+    const trimmedValue = value.trim();
+    
+    if (!trimmedValue) {
+      return { hasError: true, message: "Campo obrigatório" };
+    }
+    
+    if (trimmedValue.length < 2) {
+      return { hasError: true, message: "Mínimo de 2 caracteres" };
+    }
+    
+    if (trimmedValue.length > 2000) {
+      return { hasError: true, message: "Máximo de 2000 caracteres" };
+    }
+    
+    return { hasError: false, message: "" };
   }, []);
 
+  // Valida todos os campos
+  const validateAllFields = useCallback((): boolean => {
+    const newErrors: Record<string, FieldError> = {};
+    let hasAnyError = false;
+
+    variables.forEach(variable => {
+      const value = values[variable.name] || "";
+      const fieldError = validateField(variable, value);
+      newErrors[variable.name] = fieldError;
+      if (fieldError.hasError) {
+        hasAnyError = true;
+      }
+    });
+
+    setErrors(newErrors);
+    return !hasAnyError;
+  }, [variables, values, validateField]);
+
+  const handleValueChange = useCallback((variable: PromptVariable, value: string) => {
+    setValues(prev => ({ ...prev, [variable.name]: value }));
+    setShowGenerated(false);
+    
+    // Valida em tempo real se já foi tocado ou tentou submeter
+    if (touched[variable.name] || attemptedSubmit) {
+      const fieldError = validateField(variable, value);
+      setErrors(prev => ({ ...prev, [variable.name]: fieldError }));
+    }
+  }, [touched, attemptedSubmit, validateField]);
+
+  const handleBlur = useCallback((variable: PromptVariable) => {
+    setTouched(prev => ({ ...prev, [variable.name]: true }));
+    const value = values[variable.name] || "";
+    const fieldError = validateField(variable, value);
+    setErrors(prev => ({ ...prev, [variable.name]: fieldError }));
+  }, [values, validateField]);
+
   const handleGenerate = useCallback(() => {
-    if (!allFilled) {
+    setAttemptedSubmit(true);
+    
+    const isValid = validateAllFields();
+    
+    if (!isValid) {
+      // Encontra o primeiro campo com erro para focar
+      const firstErrorField = variables.find(v => errors[v.name]?.hasError || !values[v.name]?.trim());
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField.id);
+        element?.focus();
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
       toast({
         title: "Campos incompletos",
-        description: "Preencha todos os campos antes de gerar o prompt.",
+        description: "Preencha todos os campos corretamente antes de gerar o prompt.",
         variant: "destructive",
       });
       return;
     }
+    
     setShowGenerated(true);
     onGeneratedPrompt?.(generatedPrompt);
-  }, [allFilled, generatedPrompt, onGeneratedPrompt, toast]);
+    
+    toast({
+      title: "Prompt gerado",
+      description: "Seu prompt personalizado está pronto para copiar.",
+    });
+  }, [validateAllFields, variables, errors, values, generatedPrompt, onGeneratedPrompt, toast]);
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(generatedPrompt);
@@ -67,7 +143,10 @@ export function InteractivePromptForm({
 
   const handleReset = useCallback(() => {
     setValues({});
+    setTouched({});
+    setErrors({});
     setShowGenerated(false);
+    setAttemptedSubmit(false);
   }, []);
 
   const isTextArea = (variable: PromptVariable): boolean => {
@@ -77,91 +156,185 @@ export function InteractivePromptForm({
     );
   };
 
+  const getFieldState = (variable: PromptVariable): 'idle' | 'valid' | 'error' => {
+    const value = values[variable.name] || "";
+    const fieldError = errors[variable.name];
+    const isTouched = touched[variable.name] || attemptedSubmit;
+    
+    if (!isTouched && !value.trim()) return 'idle';
+    if (fieldError?.hasError) return 'error';
+    if (value.trim()) return 'valid';
+    return 'idle';
+  };
+
   if (variables.length === 0) {
     return null;
   }
+
+  const errorCount = Object.values(errors).filter(e => e.hasError).length;
+  const emptyCount = variables.filter(v => !values[v.name]?.trim()).length;
+  const pendingCount = attemptedSubmit ? (errorCount + emptyCount) : emptyCount;
 
   return (
     <div className="space-y-6">
       {/* Header com progresso */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-primary" />
+          <div className={cn(
+            "w-8 h-8 rounded-full flex items-center justify-center transition-colors",
+            allFilled ? "bg-green-500/10" : "bg-primary/10"
+          )}>
+            {allFilled ? (
+              <Check className="w-4 h-4 text-green-500" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-primary" />
+            )}
           </div>
           <div>
             <h3 className="text-sm font-semibold text-foreground">
               Personalize o Prompt
             </h3>
             <p className="text-xs text-muted-foreground">
-              Preencha os campos para gerar automaticamente
+              {allFilled 
+                ? "Todos os campos preenchidos. Pronto para gerar!" 
+                : "Preencha os campos obrigatórios abaixo"
+              }
             </p>
           </div>
         </div>
         <Badge 
-          variant={allFilled ? "default" : "secondary"}
-          className="text-xs"
+          variant={allFilled ? "default" : pendingCount > 0 && attemptedSubmit ? "destructive" : "secondary"}
+          className={cn(
+            "text-xs transition-colors",
+            allFilled && "bg-green-500 hover:bg-green-600"
+          )}
         >
           {filled}/{total} campos
         </Badge>
       </div>
 
+      {/* Aviso de campos pendentes após tentativa de submit */}
+      {attemptedSubmit && pendingCount > 0 && (
+        <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20 animate-in fade-in-50 slide-in-from-top-2">
+          <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0" />
+          <p className="text-xs text-destructive">
+            {pendingCount === 1 
+              ? "1 campo precisa de atenção" 
+              : `${pendingCount} campos precisam de atenção`
+            }
+          </p>
+        </div>
+      )}
+
       {/* Formulário de campos */}
-      <div className="space-y-4">
-        {variables.map((variable, index) => (
-          <div key={variable.id} className="space-y-2">
-            <Label 
-              htmlFor={variable.id}
-              className="text-sm font-medium flex items-center gap-2"
-            >
-              <span className="w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
-                {index + 1}
-              </span>
-              {variable.label}
-              {values[variable.name]?.trim() && (
-                <Check className="w-3.5 h-3.5 text-green-500" />
+      <div className="space-y-5">
+        {variables.map((variable, index) => {
+          const fieldState = getFieldState(variable);
+          const fieldError = errors[variable.name];
+          const isTouched = touched[variable.name] || attemptedSubmit;
+          const showError = isTouched && fieldError?.hasError;
+          
+          return (
+            <div key={variable.id} className="space-y-2">
+              <Label 
+                htmlFor={variable.id}
+                className={cn(
+                  "text-sm font-medium flex items-center gap-2 transition-colors",
+                  showError && "text-destructive"
+                )}
+              >
+                <span className={cn(
+                  "w-5 h-5 rounded-full flex items-center justify-center text-xs transition-colors",
+                  fieldState === 'valid' && "bg-green-500/20 text-green-600",
+                  fieldState === 'error' && "bg-destructive/20 text-destructive",
+                  fieldState === 'idle' && "bg-muted text-muted-foreground"
+                )}>
+                  {fieldState === 'valid' ? (
+                    <Check className="w-3 h-3" />
+                  ) : fieldState === 'error' ? (
+                    <AlertCircle className="w-3 h-3" />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
+                {variable.label}
+                <span className="text-destructive">*</span>
+              </Label>
+              <p className={cn(
+                "text-xs pl-7 transition-colors",
+                showError ? "text-destructive" : "text-muted-foreground"
+              )}>
+                {showError ? fieldError.message : variable.description}
+              </p>
+              {isTextArea(variable) ? (
+                <Textarea
+                  id={variable.id}
+                  value={values[variable.name] || ""}
+                  onChange={(e) => handleValueChange(variable, e.target.value)}
+                  onBlur={() => handleBlur(variable)}
+                  placeholder={variable.placeholder}
+                  className={cn(
+                    "min-h-[100px] text-sm resize-none ml-7 transition-colors",
+                    fieldState === 'valid' && "border-green-500/50 focus-visible:ring-green-500/20",
+                    fieldState === 'error' && "border-destructive focus-visible:ring-destructive/20"
+                  )}
+                  aria-invalid={showError}
+                  aria-describedby={showError ? `${variable.id}-error` : undefined}
+                />
+              ) : (
+                <Input
+                  id={variable.id}
+                  value={values[variable.name] || ""}
+                  onChange={(e) => handleValueChange(variable, e.target.value)}
+                  onBlur={() => handleBlur(variable)}
+                  placeholder={variable.placeholder}
+                  className={cn(
+                    "text-sm ml-7 transition-colors",
+                    fieldState === 'valid' && "border-green-500/50 focus-visible:ring-green-500/20",
+                    fieldState === 'error' && "border-destructive focus-visible:ring-destructive/20"
+                  )}
+                  aria-invalid={showError}
+                  aria-describedby={showError ? `${variable.id}-error` : undefined}
+                />
               )}
-            </Label>
-            <p className="text-xs text-muted-foreground pl-7">
-              {variable.description}
-            </p>
-            {isTextArea(variable) ? (
-              <Textarea
-                id={variable.id}
-                value={values[variable.name] || ""}
-                onChange={(e) => handleValueChange(variable.name, e.target.value)}
-                placeholder={variable.placeholder}
-                className="min-h-[100px] text-sm resize-none ml-7"
-              />
-            ) : (
-              <Input
-                id={variable.id}
-                value={values[variable.name] || ""}
-                onChange={(e) => handleValueChange(variable.name, e.target.value)}
-                placeholder={variable.placeholder}
-                className="text-sm ml-7"
-              />
-            )}
-          </div>
-        ))}
+              {showError && (
+                <p 
+                  id={`${variable.id}-error`}
+                  className="text-xs text-destructive pl-7 flex items-center gap-1 animate-in fade-in-50 slide-in-from-top-1"
+                  role="alert"
+                >
+                  <AlertCircle className="w-3 h-3" />
+                  {fieldError.message}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Botões de ação */}
       <div className="flex items-center gap-2 pt-2 border-t border-border/30">
         <Button
           onClick={handleGenerate}
-          disabled={!allFilled}
-          className="flex-1 gap-2"
+          className={cn(
+            "flex-1 gap-2 transition-all",
+            allFilled && "bg-green-600 hover:bg-green-700"
+          )}
         >
-          <ChevronRight className="w-4 h-4" />
-          Gerar Prompt
+          {allFilled ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <ChevronRight className="w-4 h-4" />
+          )}
+          {allFilled ? "Gerar Prompt" : `Preencher ${total - filled} campo${total - filled > 1 ? 's' : ''}`}
         </Button>
         {Object.keys(values).length > 0 && (
           <Button
             variant="ghost"
             size="icon"
             onClick={handleReset}
-            className="text-muted-foreground"
+            className="text-muted-foreground hover:text-foreground"
+            title="Limpar todos os campos"
           >
             <RotateCcw className="w-4 h-4" />
           </Button>
@@ -195,7 +368,7 @@ export function InteractivePromptForm({
               )}
             </Button>
           </div>
-          <ScrollArea className="h-[200px] rounded-lg border border-border/50 bg-muted/20">
+          <ScrollArea className="h-[200px] rounded-lg border border-green-500/30 bg-green-500/5">
             <pre className="p-4 text-sm text-foreground/90 whitespace-pre-wrap font-sans leading-relaxed">
               {generatedPrompt}
             </pre>
