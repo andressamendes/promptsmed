@@ -1,5 +1,5 @@
-import { useState, useMemo, useCallback } from "react";
-import { Copy, Check, Sparkles, ChevronRight, RotateCcw, AlertCircle } from "lucide-react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { Copy, Check, Sparkles, ChevronRight, RotateCcw, AlertCircle, CloudOff, Cloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +15,10 @@ import {
 } from "@/lib/prompt-variables";
 import { cn } from "@/lib/utils";
 
+const STORAGE_KEY_PREFIX = "medprompts-form-";
+
 interface InteractivePromptFormProps {
+  promptId: string;
   promptText: string;
   onGeneratedPrompt?: (text: string) => void;
 }
@@ -25,21 +28,83 @@ interface FieldError {
   message: string;
 }
 
+interface SavedFormData {
+  values: Record<string, string>;
+  savedAt: number;
+}
+
+function getStorageKey(promptId: string): string {
+  return `${STORAGE_KEY_PREFIX}${promptId}`;
+}
+
+function loadSavedValues(promptId: string): Record<string, string> {
+  try {
+    const saved = localStorage.getItem(getStorageKey(promptId));
+    if (saved) {
+      const data: SavedFormData = JSON.parse(saved);
+      // Dados expiram após 7 dias
+      const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+      if (Date.now() - data.savedAt < sevenDaysMs) {
+        return data.values;
+      }
+      // Remove dados expirados
+      localStorage.removeItem(getStorageKey(promptId));
+    }
+  } catch {
+    // Ignora erros de parse
+  }
+  return {};
+}
+
+function saveValues(promptId: string, values: Record<string, string>): void {
+  try {
+    const hasAnyValue = Object.values(values).some(v => v.trim());
+    if (hasAnyValue) {
+      const data: SavedFormData = {
+        values,
+        savedAt: Date.now(),
+      };
+      localStorage.setItem(getStorageKey(promptId), JSON.stringify(data));
+    } else {
+      // Remove se não há valores
+      localStorage.removeItem(getStorageKey(promptId));
+    }
+  } catch {
+    // Ignora erros de storage (quota, etc)
+  }
+}
+
+function clearSavedValues(promptId: string): void {
+  try {
+    localStorage.removeItem(getStorageKey(promptId));
+  } catch {
+    // Ignora erros
+  }
+}
+
 export function InteractivePromptForm({
+  promptId,
   promptText,
   onGeneratedPrompt,
 }: InteractivePromptFormProps) {
   const { toast } = useToast();
-  const [values, setValues] = useState<Record<string, string>>({});
+  const [values, setValues] = useState<Record<string, string>>(() => loadSavedValues(promptId));
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Record<string, FieldError>>({});
   const [copied, setCopied] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+  const [hasSavedData, setHasSavedData] = useState(() => Object.keys(loadSavedValues(promptId)).length > 0);
 
   const variables = useMemo(() => extractVariables(promptText), [promptText]);
   const { filled, total } = countFilledVariables(variables, values);
   const allFilled = filled === total && total > 0;
+
+  // Salva automaticamente quando valores mudam
+  useEffect(() => {
+    saveValues(promptId, values);
+    setHasSavedData(Object.values(values).some(v => v.trim()));
+  }, [promptId, values]);
 
   const generatedPrompt = useMemo(() => {
     return replaceVariables(promptText, values);
@@ -147,7 +212,13 @@ export function InteractivePromptForm({
     setErrors({});
     setShowGenerated(false);
     setAttemptedSubmit(false);
-  }, []);
+    clearSavedValues(promptId);
+    setHasSavedData(false);
+    toast({
+      title: "Campos limpos",
+      description: "Todos os dados foram removidos.",
+    });
+  }, [promptId, toast]);
 
   const isTextArea = (variable: PromptVariable): boolean => {
     const textAreaFields = ['NOTAS', 'TRECHO', 'QUESTAO', 'TEXTO', 'CONTEUDO'];
@@ -191,13 +262,21 @@ export function InteractivePromptForm({
             )}
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
               Personalize o Prompt
+              {hasSavedData && filled > 0 && !allFilled && (
+                <span className="inline-flex items-center gap-1 text-xs font-normal text-muted-foreground">
+                  <Cloud className="w-3 h-3" />
+                  <span className="hidden sm:inline">Rascunho salvo</span>
+                </span>
+              )}
             </h3>
             <p className="text-xs text-muted-foreground">
               {allFilled 
                 ? "Todos os campos preenchidos. Pronto para gerar!" 
-                : "Preencha os campos obrigatórios abaixo"
+                : hasSavedData && filled > 0
+                  ? "Continue de onde parou"
+                  : "Preencha os campos obrigatórios abaixo"
               }
             </p>
           </div>
