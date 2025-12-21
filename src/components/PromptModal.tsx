@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { Copy, Check, ExternalLink, Star, Pencil, RotateCcw, X, Save } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Copy, Check, ExternalLink, Star, FileText, FormInput } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Prompt } from "@/data/prompts-data";
 import { AI_CONFIGS, AI_LIST, AIProvider } from "@/data/ai-config";
 import { useToast } from "@/hooks/use-toast";
 import { usePromptEdits } from "@/hooks/use-prompt-edits";
 import { parsePromptSections, highlightVariables } from "@/lib/format-prompt";
+import { extractVariables } from "@/lib/prompt-variables";
+import { InteractivePromptForm } from "@/components/InteractivePromptForm";
 import { cn } from "@/lib/utils";
 
 interface PromptModalProps {
@@ -104,14 +106,17 @@ function PromptContent({ text }: { text: string }) {
 
 export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
   const [copied, setCopied] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState("");
+  const [activeTab, setActiveTab] = useState<string>("form");
   const { toast } = useToast();
-  const { saveEdit, resetEdit, getEditedPrompt, hasEdit } = usePromptEdits();
+  const { getEditedPrompt, hasEdit } = usePromptEdits();
   
   const recommendedAI = prompt.aiRecommended;
   const currentPromptText = getEditedPrompt(prompt.id, prompt.prompt);
   const isModified = hasEdit(prompt.id);
+
+  // Detecta se o prompt tem variáveis para mostrar a aba de formulário
+  const variables = useMemo(() => extractVariables(currentPromptText), [currentPromptText]);
+  const hasVariables = variables.length > 0;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(currentPromptText);
@@ -125,27 +130,6 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
     await navigator.clipboard.writeText(currentPromptText);
     toast({ title: "Prompt copiado", description: `Abrindo ${config.name}...` });
     window.open(config.url, "_blank");
-  };
-
-  const handleStartEdit = () => {
-    setEditText(currentPromptText);
-    setIsEditing(true);
-  };
-
-  const handleSaveEdit = () => {
-    saveEdit(prompt.id, editText);
-    setIsEditing(false);
-    toast({ title: "Prompt salvo", description: "Alterações salvas localmente." });
-  };
-
-  const handleResetEdit = () => {
-    resetEdit(prompt.id);
-    setIsEditing(false);
-    toast({ title: "Prompt restaurado", description: "Prompt original restaurado." });
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
   };
 
   return (
@@ -204,33 +188,61 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
           </div>
         </div>
 
-        {/* Main Content - Prompt is Hero */}
+        {/* Main Content with Tabs */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
-          {/* Minimal Toolbar */}
-          <div className="flex items-center justify-end gap-2 px-6 py-2 bg-background/50">
-            {isEditing ? (
-              <>
-                <Button size="sm" variant="ghost" onClick={handleCancelEdit} className="h-7 text-xs gap-1.5">
-                  <X className="w-3.5 h-3.5" />
-                  Cancelar
-                </Button>
-                <Button size="sm" variant="default" onClick={handleSaveEdit} className="h-7 text-xs gap-1.5">
-                  <Save className="w-3.5 h-3.5" />
-                  Salvar
-                </Button>
-              </>
-            ) : (
-              <>
-                {isModified && (
-                  <Button size="sm" variant="ghost" onClick={handleResetEdit} className="h-7 text-xs gap-1.5 text-muted-foreground">
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    Restaurar
+          {hasVariables ? (
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+              <div className="flex items-center justify-between px-6 py-2 bg-background/50 border-b border-border/20">
+                <TabsList className="h-8">
+                  <TabsTrigger value="form" className="text-xs gap-1.5 h-7 px-3">
+                    <FormInput className="w-3.5 h-3.5" />
+                    Preencher Campos
+                  </TabsTrigger>
+                  <TabsTrigger value="full" className="text-xs gap-1.5 h-7 px-3">
+                    <FileText className="w-3.5 h-3.5" />
+                    Ver Completo
+                  </TabsTrigger>
+                </TabsList>
+                
+                {activeTab === "full" && (
+                  <Button size="sm" variant="default" onClick={handleCopy} className="h-7 text-xs gap-1.5">
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        Copiado
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        Copiar
+                      </>
+                    )}
                   </Button>
                 )}
-                <Button size="sm" variant="ghost" onClick={handleStartEdit} className="h-7 text-xs gap-1.5 text-muted-foreground">
-                  <Pencil className="w-3.5 h-3.5" />
-                  Editar
-                </Button>
+              </div>
+
+              <TabsContent value="form" className="flex-1 m-0 overflow-hidden">
+                <ScrollArea className="h-full">
+                  <div className="px-6 py-5">
+                    <InteractivePromptForm promptText={currentPromptText} />
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+
+              <TabsContent value="full" className="flex-1 m-0 overflow-hidden">
+                <ScrollArea className="h-full">
+                  <div className="px-6 py-5">
+                    <div className="bg-muted/20 rounded-xl border border-border/30 p-6">
+                      <PromptContent text={currentPromptText} />
+                    </div>
+                  </div>
+                </ScrollArea>
+              </TabsContent>
+            </Tabs>
+          ) : (
+            <>
+              {/* Minimal Toolbar for prompts without variables */}
+              <div className="flex items-center justify-end gap-2 px-6 py-2 bg-background/50">
                 <Button size="sm" variant="default" onClick={handleCopy} className="h-7 text-xs gap-1.5">
                   {copied ? (
                     <>
@@ -244,27 +256,18 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
                     </>
                   )}
                 </Button>
-              </>
-            )}
-          </div>
+              </div>
 
-          {/* Prompt Content - Full Focus */}
-          <ScrollArea className="flex-1 min-h-0">
-            <div className="px-6 py-5">
-              {isEditing ? (
-                <Textarea
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  className="min-h-[400px] font-mono text-sm resize-none border-border/50"
-                  placeholder="Digite o prompt..."
-                />
-              ) : (
-                <div className="bg-muted/20 rounded-xl border border-border/30 p-6">
-                  <PromptContent text={currentPromptText} />
+              {/* Prompt Content - Full Focus */}
+              <ScrollArea className="flex-1 min-h-0">
+                <div className="px-6 py-5">
+                  <div className="bg-muted/20 rounded-xl border border-border/30 p-6">
+                    <PromptContent text={currentPromptText} />
+                  </div>
                 </div>
-              )}
-            </div>
-          </ScrollArea>
+              </ScrollArea>
+            </>
+          )}
         </div>
       </DialogContent>
     </Dialog>
