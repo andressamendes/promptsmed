@@ -224,7 +224,11 @@ export function PromptModal({ prompt, open, onClose }: PromptModalProps) {
               <TabsContent value="form" className="flex-1 m-0 overflow-hidden">
                 <ScrollArea className="h-full">
                   <div className="px-6 py-5">
-                    <InteractivePromptForm promptId={prompt.id} promptText={currentPromptText} />
+                    <InteractivePromptForm 
+                      promptId={prompt.id} 
+                      promptTitle={prompt.title}
+                      promptText={currentPromptText} 
+                    />
                   </div>
                 </ScrollArea>
               </TabsContent>

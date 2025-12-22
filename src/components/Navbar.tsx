@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, Heart, Menu, X, Stethoscope, Sparkles } from "lucide-react";
+import { Moon, Sun, Heart, Menu, X, Stethoscope, Sparkles, History } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useFavorites } from "@/hooks/use-favorites";
+import { usePromptHistory } from "@/hooks/use-prompt-history";
+import { PromptHistoryDrawer } from "@/components/PromptHistoryDrawer";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -15,6 +17,8 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { count: favoritesCount } = useFavorites();
+  const { getHistoryCount } = usePromptHistory();
+  const historyCount = getHistoryCount();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,6 +86,7 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
                 </span>
               )}
             </Button>
+            <PromptHistoryDrawer />
             <Button variant="ghost" size="icon" onClick={toggleTheme}>
               {theme === "dark" ? (
                 <Sun className="w-4 h-4" />
@@ -150,6 +155,12 @@ export function Navbar({ onFavoritesClick }: NavbarProps) {
                   <Heart className="w-4 h-4" />
                   Favoritos ({favoritesCount})
                 </button>
+              </li>
+              <li className="flex items-center">
+                <PromptHistoryDrawer />
+                <span className="ml-2 text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                  Histórico {historyCount > 0 && `(${historyCount})`}
+                </span>
               </li>
             </ul>
           </div>
