@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { usePromptHistory } from "@/hooks/use-prompt-history";
 import {
   extractVariables,
   replaceVariables,
@@ -19,6 +20,7 @@ const STORAGE_KEY_PREFIX = "medprompts-form-";
 
 interface InteractivePromptFormProps {
   promptId: string;
+  promptTitle: string;
   promptText: string;
   onGeneratedPrompt?: (text: string) => void;
 }
@@ -84,10 +86,12 @@ function clearSavedValues(promptId: string): void {
 
 export function InteractivePromptForm({
   promptId,
+  promptTitle,
   promptText,
   onGeneratedPrompt,
 }: InteractivePromptFormProps) {
   const { toast } = useToast();
+  const { addToHistory } = usePromptHistory();
   const [values, setValues] = useState<Record<string, string>>(() => loadSavedValues(promptId));
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Record<string, FieldError>>({});
@@ -190,11 +194,14 @@ export function InteractivePromptForm({
     setShowGenerated(true);
     onGeneratedPrompt?.(generatedPrompt);
     
+    // Salva no histórico
+    addToHistory(promptId, promptTitle, generatedPrompt, values);
+    
     toast({
       title: "Prompt gerado",
       description: "Seu prompt personalizado está pronto para copiar.",
     });
-  }, [validateAllFields, variables, errors, values, generatedPrompt, onGeneratedPrompt, toast]);
+  }, [validateAllFields, variables, errors, values, generatedPrompt, onGeneratedPrompt, promptId, promptTitle, addToHistory, toast]);
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(generatedPrompt);
