@@ -26,6 +26,24 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
   }, [favorites]);
 
+  // Sync between tabs
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === FAVORITES_KEY && e.newValue !== null) {
+        try {
+          setFavorites(JSON.parse(e.newValue));
+        } catch {
+          // Ignore parse errors
+        }
+      } else if (e.key === FAVORITES_KEY && e.newValue === null) {
+        setFavorites([]);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
