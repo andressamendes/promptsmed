@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, Heart, ExternalLink, Star, ChevronRight } from "lucide-react";
+import { Copy, Check, Heart, ExternalLink, Sparkles, ChevronRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Prompt } from "@/data/prompts-data";
 import { AI_CONFIGS } from "@/data/ai-config";
@@ -17,6 +17,7 @@ interface PromptListItemProps {
 export function PromptListItem({ prompt, isFocused = false }: PromptListItemProps) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { toast } = useToast();
   const { getEditedPrompt } = usePromptEdits();
@@ -29,7 +30,7 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     await navigator.clipboard.writeText(currentPromptText);
     setCopied(true);
     toast({
-      title: "Prompt copiado",
+      title: "✓ Prompt copiado!",
       description: "Cole na ferramenta de sua escolha.",
     });
     setTimeout(() => setCopied(false), 2000);
@@ -39,36 +40,69 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
     event.stopPropagation();
     await navigator.clipboard.writeText(currentPromptText);
     toast({
-      title: "Prompt copiado",
+      title: "✓ Prompt copiado!",
       description: `Abrindo ${aiConfig.name}...`,
     });
     window.open(aiConfig.url, "_blank");
+  };
+
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFavorite(prompt.id);
+    toast({
+      title: favorite ? "Removido dos favoritos" : "Adicionado aos favoritos",
+      description: favorite ? "Prompt removido da sua lista." : "Acesse seus favoritos no menu.",
+    });
   };
 
   return (
     <>
       <div
         onClick={() => setShowModal(true)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         data-prompt-id={prompt.id}
         className={cn(
-          "group flex items-center gap-4 px-4 py-3 rounded-lg border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-200 cursor-pointer",
+          "group relative flex items-center gap-4 px-4 py-3 rounded-lg border bg-card/50 transition-all duration-200 cursor-pointer overflow-hidden",
+          isHovered && "bg-card shadow-md -translate-y-0.5",
           isFocused 
             ? "border-primary ring-2 ring-primary ring-offset-2 ring-offset-background" 
-            : "border-border/50 hover:border-border"
+            : "border-border/50 hover:border-primary/40"
         )}
       >
-        {/* AI Indicator */}
-        <div
-          className="flex-shrink-0 w-1 h-10 rounded-full"
-          style={{ backgroundColor: aiConfig.colors.hex }}
+        {/* Gradient overlay */}
+        <div 
+          className={cn(
+            "absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 pointer-events-none",
+            isHovered && "opacity-100"
+          )}
         />
 
+        {/* AI Indicator with pulse */}
+        <div className="relative flex-shrink-0">
+          <div
+            className="w-1.5 h-10 rounded-full transition-all duration-200"
+            style={{ backgroundColor: aiConfig.colors.hex }}
+          />
+          {isHovered && (
+            <div
+              className="absolute inset-0 w-1.5 h-10 rounded-full animate-pulse"
+              style={{ backgroundColor: aiConfig.colors.hex, opacity: 0.5 }}
+            />
+          )}
+        </div>
+
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <div className="relative flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h4 className="font-medium text-sm truncate">{prompt.title}</h4>
+            <h4 className={cn(
+              "font-medium text-sm truncate transition-colors duration-200",
+              isHovered && "text-primary"
+            )}>
+              {prompt.title}
+            </h4>
             {favorite && (
-              <Heart className="w-3 h-3 text-destructive fill-current flex-shrink-0" />
+              <Heart className="w-3 h-3 text-destructive fill-current flex-shrink-0 animate-scale-in" />
             )}
           </div>
           <p className="text-xs text-muted-foreground truncate">
@@ -80,46 +114,58 @@ export function PromptListItem({ prompt, isFocused = false }: PromptListItemProp
         <button
           onClick={handleOpenAI}
           className={cn(
-            "flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors",
+            "relative flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 active:scale-95",
             aiConfig.colors.bg, aiConfig.colors.text, aiConfig.colors.border, aiConfig.colors.hover
           )}
         >
-          <Star className="w-3 h-3" />
+          <Sparkles className="w-3 h-3" />
           {aiConfig.name}
           <ExternalLink className="w-2.5 h-2.5" />
         </button>
 
         {/* Actions */}
-        <div className="flex-shrink-0 flex items-center gap-1">
+        <div className="relative flex-shrink-0 flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleFavorite(prompt.id);
-            }}
+            className={cn(
+              "h-8 w-8 transition-all duration-200 active:scale-90",
+              favorite && "text-destructive"
+            )}
+            onClick={handleFavorite}
           >
             <Heart
               className={cn(
-                "w-3.5 h-3.5",
-                favorite && "text-destructive fill-current"
+                "w-4 h-4 transition-transform duration-200",
+                favorite && "fill-current",
+                isHovered && !favorite && "scale-110"
               )}
             />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
+            className={cn(
+              "h-8 w-8 transition-all duration-200 active:scale-90",
+              copied && "text-accent bg-accent/10"
+            )}
             onClick={handleCopy}
           >
             {copied ? (
-              <Check className="w-3.5 h-3.5 text-accent" />
+              <Check className="w-4 h-4" />
             ) : (
-              <Copy className="w-3.5 h-3.5" />
+              <Copy className="w-4 h-4" />
             )}
           </Button>
-          <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+          <div className={cn(
+            "flex items-center justify-center w-8 h-8 rounded-md transition-all duration-200",
+            isHovered && "bg-primary/10"
+          )}>
+            <ChevronRight className={cn(
+              "w-4 h-4 text-muted-foreground transition-all duration-200",
+              isHovered && "text-primary translate-x-0.5"
+            )} />
+          </div>
         </div>
       </div>
 
