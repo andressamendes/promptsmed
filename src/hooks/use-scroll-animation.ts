@@ -7,8 +7,8 @@ interface UseScrollAnimationOptions {
 }
 
 export function useScrollAnimation<T extends HTMLElement>({
-  threshold = 0.1,
-  rootMargin = "0px 0px -50px 0px",
+  threshold = 0.05,
+  rootMargin = "50px 0px 50px 0px",
   triggerOnce = true,
 }: UseScrollAnimationOptions = {}) {
   const ref = useRef<T>(null);
@@ -16,7 +16,17 @@ export function useScrollAnimation<T extends HTMLElement>({
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element) {
+      // Fallback: make visible if no element
+      setIsVisible(true);
+      return;
+    }
+
+    // Check if IntersectionObserver is supported
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -32,9 +42,15 @@ export function useScrollAnimation<T extends HTMLElement>({
       { threshold, rootMargin }
     );
 
-    observer.observe(element);
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      observer.observe(element);
+    }, 10);
 
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, [threshold, rootMargin, triggerOnce]);
 
   return { ref, isVisible };
